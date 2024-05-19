@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="d-flex justify-content-between mb-1">
-            <span class="fs-3">List of Barangay</span>
+                <span class="fs-3">List of Barangay</span>
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create">
                         Add barangay
                 </button>
