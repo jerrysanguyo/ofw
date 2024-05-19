@@ -6,12 +6,10 @@
         <div class="col-md-12">
             <div class="d-flex justify-content-between mb-1">
             <span class="fs-3">List of Barangay</span>
-                <a href="{{ route('admin.barangay.create') }}" class="text-decoration-none">
-                    <button class="btn btn-primary">
-                            Add barangay
-                    </button>
-                    @include('Barangay.create')
-                </a>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create">
+                        Add barangay
+                </button>
+                @include('Barangay.create')
             </div>
             <div class="card shadow border">
                 <div class="card-body">
