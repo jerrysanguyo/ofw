@@ -9,7 +9,7 @@
                     <div class="row">
                         <div class="col-md-4 d-flex justify-content-center align-items-center">
                             <div class="text-center">
-                                <img src="{{ asset('image/IT-white.webp') }}" alt="" class="img-fluid mx-5">
+                                <img src="{{ asset('image/IT-white.webp') }}" alt="" class="img-fluid mx">
                             </div>
                             <div class="vr ms-3" style="height: 100%;"></div> 
                         </div>
@@ -89,14 +89,14 @@
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="mobile_number" class="col-md-4 col-form-label text-md-end">{{ __('Mobile number') }}</label>
+                                    <label for="contact_number" class="col-md-4 col-form-label text-md-end">{{ __('Contact Number') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="mobile_number" type="mobile_number" class="form-control @error('mobile_number') is-invalid @enderror"
-                                        name="mobile_number" placeholder="Mobile number"
-                                        value="{{ old('mobile_number') }}" required autocomplete="mobile_number">
+                                        <input id="contact_number" type="text" class="form-control @error('contact_number') is-invalid @enderror"
+                                        name="contact_number" placeholder="Contact Number"
+                                        value="{{ old('contact_number') }}" required autocomplete="contact_number">
 
-                                        @error('mobile_number')
+                                        @error('contact_number')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>

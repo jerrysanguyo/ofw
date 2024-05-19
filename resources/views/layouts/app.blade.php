@@ -85,10 +85,10 @@
                         <div class="d-flex justify-content-end">
                             <div class="dropdown navbar-brand">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    {{ Auth::user()->name }}
+                                    {{ Auth::user()->last_name }}, {{ Auth::user()->first_name }} {{ Auth::user()->middle_name }}
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="{{ route('user.account.profile') }}" class="dropdown-item">Account details</a></li>
+                                    <li><a href="#" class="dropdown-item">Account details</a></li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li>
                                         <a class="dropdown-item" href="{{ route('logout') }}"
@@ -108,10 +108,10 @@
                         <div class="d-flex justify-content-end">
                             <div class="dropdown navbar-brand">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    {{ Auth::user()->name }}
+                                    {{ Auth::user()->last_name }}, {{ Auth::user()->first_name }} {{ Auth::user()->middle_name }}
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="{{ route('admin.account.profile') }}" class="dropdown-item">Account details</a></li>
+                                    <li><a href="#" class="dropdown-item">Account details</a></li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li>
                                         <a class="dropdown-item" href="{{ route('logout') }}"
