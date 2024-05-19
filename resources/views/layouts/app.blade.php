@@ -132,19 +132,19 @@
                     <div class="offcanvas-header">
                         <div class="d-flex align-items-center justify-content-center">
                             <img src="{{ asset('image/IT-white.webp') }}" alt="IT-Logo" class="img-fluid" style="width:100px">
-                            <div class="fs-3 mt-2">IT Inventory</div>
+                            <!-- <div class="fs-3 mt-2">IT Inventory</div> -->
                         </div>
                     </div>
                     <hr>
                     <div class="offcanvas-body">
                         @if (Auth::user()->role === 'admin')
                             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                                <li class="side-nav-title mb-3">Navigation</li>
-                                <!-- <li class="nav-item fs-5 {{ Request::is('admin.dashboard') ? 'active' : '' }}">
-                                    <a href="{{ route('admin.dashboard') }}" class="nav-link">
-                                        <i class="fa-solid fa-chart-line mx-3"></i> Dashboard
+                                <li class="side-nav-title mb-3">CMS</li>
+                                <li class="nav-item fs-5 {{ Request::is('admin.barangay.index') ? 'active' : '' }}">
+                                    <a href="{{ route('admin.barangay.index') }}" class="nav-link">
+                                        <i class="fa-solid fa-chart-line mx-3"></i> Barangay
                                     </a>
-                                </li> -->
+                                </li>
                                 <hr>
                             </ul>
                         @endif
