@@ -20,3 +20,22 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+Route::middleware(['auth', Role::class])->group(function() {
+    Route::prefix('user')->name('user.')->group(function () {
+
+    });
+});
+
+Route::middleware(['auth', Role::class])->group(function() {
+    Route::prefix('admin')->name('admin.')->group(function () {
+
+    });
+});
+
+Route::middleware(['auth', Role::class])->group(function() {
+    Route::prefix('superadmin')->name('superadmin.')->group(function () {
+
+    });
+});
