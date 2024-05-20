@@ -150,6 +150,11 @@
                                         <i class="fa-solid fa-chart-line mx-3"></i> City
                                     </a>
                                 </li>
+                                <li class="nav-item fs-5 {{ Request::is('admin.civil.index') ? 'active' : '' }}">
+                                    <a href="{{ route('admin.civil.index') }}" class="nav-link">
+                                        <i class="fa-solid fa-chart-line mx-3"></i> Civil Status
+                                    </a>
+                                </li>
                                 <hr>
                             </ul>
                         @endif
