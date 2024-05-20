@@ -145,6 +145,11 @@
                                         <i class="fa-solid fa-chart-line mx-3"></i> Barangay
                                     </a>
                                 </li>
+                                <li class="nav-item fs-5 {{ Request::is('admin.city.index') ? 'active' : '' }}">
+                                    <a href="{{ route('admin.city.index') }}" class="nav-link">
+                                        <i class="fa-solid fa-chart-line mx-3"></i> City
+                                    </a>
+                                </li>
                                 <hr>
                             </ul>
                         @endif

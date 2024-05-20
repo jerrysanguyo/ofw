@@ -5,6 +5,7 @@ use App\Http\Middleware\User_role;
 use App\Http\Middleware\Admin_role;
 use App\Http\Middleware\Super_admin_role;
 use App\Http\Controllers\BarangayController;
+use App\Http\Controllers\CityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +17,7 @@ use App\Http\Controllers\BarangayController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+    
 Route::get('/', function () {
     return view('welcome');
 });
@@ -35,6 +36,7 @@ Route::middleware(['auth', User_role::class])->group(function() {
 Route::middleware(['auth', Admin_role::class])->group(function() {
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('/barangay', BarangayController::class);
+        Route::resource('city', CityController::class);
     });
 });
 
