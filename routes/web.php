@@ -13,6 +13,7 @@ use App\Http\Controllers\EducationController;
 use App\Http\Controllers\GenderController;
 use App\Http\Controllers\IdController;
 use App\Http\Controllers\ContractController;
+use App\Http\Controllers\JobController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +52,7 @@ Route::middleware(['auth', Admin_role::class])->group(function() {
         Route::resource('/education', EducationController::class);
         Route::resource('/gender', GenderController::class);
         Route::resource('/identification', IdController::class);
+        Route::resource('/job', JobController::class);
     });
 });
 

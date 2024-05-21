@@ -185,6 +185,11 @@
                                         <i class="fa-solid fa-chart-line mx-3"></i> Identification
                                     </a>
                                 </li>
+                                <li class="nav-item fs-7 {{ Request::is('admin.job.index') ? 'active' : '' }}">
+                                    <a href="{{ route('admin.job.index') }}" class="nav-link">
+                                        <i class="fa-solid fa-chart-line mx-3"></i> Job
+                                    </a>
+                                </li>
                                 <hr>
                             </ul>
                         @endif
