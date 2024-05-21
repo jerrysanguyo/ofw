@@ -195,6 +195,11 @@
                                         <i class="fa-solid fa-chart-line mx-3"></i> Sub job
                                     </a>
                                 </li>
+                                <li class="nav-item fs-7 {{ Request::is('admin.owwa.index') ? 'active' : '' }}">
+                                    <a href="{{ route('admin.owwa.index') }}" class="nav-link">
+                                        <i class="fa-solid fa-chart-line mx-3"></i> Owwa
+                                    </a>
+                                </li>
                                 <hr>
                             </ul>
                         @endif

@@ -15,6 +15,7 @@ use App\Http\Controllers\IdController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\SubJobController;
+use App\Http\Controllers\OwwaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,6 +56,7 @@ Route::middleware(['auth', Admin_role::class])->group(function() {
         Route::resource('/identification', IdController::class);
         Route::resource('/job', JobController::class);
         Route::resource('/subjob', SubJobController::class);
+        Route::resource('/owwa', OwwaController::class);
     });
 });
 
