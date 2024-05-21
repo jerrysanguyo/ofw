@@ -200,6 +200,11 @@
                                         <i class="fa-solid fa-chart-line mx-3"></i> Owwa
                                     </a>
                                 </li>
+                                <li class="nav-item fs-7 {{ Request::is('admin.relation.index') ? 'active' : '' }}">
+                                    <a href="{{ route('admin.relation.index') }}" class="nav-link">
+                                        <i class="fa-solid fa-chart-line mx-3"></i> Relationship
+                                    </a>
+                                </li>
                                 <hr>
                             </ul>
                         @endif

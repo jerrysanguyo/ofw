@@ -16,6 +16,7 @@ use App\Http\Controllers\ContractController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\SubJobController;
 use App\Http\Controllers\OwwaController;
+use App\Http\Controllers\RelationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,6 +58,7 @@ Route::middleware(['auth', Admin_role::class])->group(function() {
         Route::resource('/job', JobController::class);
         Route::resource('/subjob', SubJobController::class);
         Route::resource('/owwa', OwwaController::class);
+        Route::resource('/relation', RelationController::class);
     });
 });
 
