@@ -180,6 +180,11 @@
                                         <i class="fa-solid fa-chart-line mx-3"></i> Gender
                                     </a>
                                 </li>
+                                <li class="nav-item fs-7 {{ Request::is('admin.identification.index') ? 'active' : '' }}">
+                                    <a href="{{ route('admin.identification.index') }}" class="nav-link">
+                                        <i class="fa-solid fa-chart-line mx-3"></i> Identification
+                                    </a>
+                                </li>
                                 <hr>
                             </ul>
                         @endif

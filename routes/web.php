@@ -11,6 +11,8 @@ use App\Http\Controllers\ContinentController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\EducationController;
 use App\Http\Controllers\GenderController;
+use App\Http\Controllers\IdController;
+use App\Http\Controllers\ContractController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +50,7 @@ Route::middleware(['auth', Admin_role::class])->group(function() {
         Route::resource('/contract', ContractController::class);
         Route::resource('/education', EducationController::class);
         Route::resource('/gender', GenderController::class);
+        Route::resource('/identification', IdController::class);
     });
 });
 
