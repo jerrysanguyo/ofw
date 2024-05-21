@@ -155,6 +155,11 @@
                                         <i class="fa-solid fa-chart-line mx-3"></i> Civil Status
                                     </a>
                                 </li>
+                                <li class="nav-item fs-5 {{ Request::is('admin.continent.index') ? 'active' : '' }}">
+                                    <a href="{{ route('admin.continent.index') }}" class="nav-link">
+                                        <i class="fa-solid fa-chart-line mx-3"></i> Continent
+                                    </a>
+                                </li>
                                 <hr>
                             </ul>
                         @endif

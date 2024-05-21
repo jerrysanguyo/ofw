@@ -7,6 +7,7 @@ use App\Http\Middleware\Super_admin_role;
 use App\Http\Controllers\BarangayController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\CivilStatusController;
+use App\Http\Controllers\ContinentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,7 @@ Route::middleware(['auth', Admin_role::class])->group(function() {
         Route::resource('/barangay', BarangayController::class);
         Route::resource('/city', CityController::class);
         Route::resource('/civil', CivilStatusController::class);
+        Route::resource('/continent', ContinentController::class);
     });
 });
 
