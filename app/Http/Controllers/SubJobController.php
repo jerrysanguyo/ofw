@@ -31,7 +31,7 @@ class SubJobController extends Controller
         $validated['created_by'] = auth()->id();
         $validated['updated_by'] = auth()->id();
 
-        Type_job::create($validated);
+        Type_sub_job::create($validated);
 
         return redirect()->route('admin.subjob.index')
                         ->with('success', 'Sub job added successfully!');
@@ -44,7 +44,7 @@ class SubJobController extends Controller
     
     public function edit(Type_sub_job $subjob)
     {
-        $listOfSubJob = Type_sub_job::getAllSubJob();
+        $listOfSubjob = Type_sub_job::getAllSubJob();
         $listOfJob = Type_job::getAllJob();
         return view('Sub_job.edit', compact(
             'subjob',
@@ -58,7 +58,7 @@ class SubJobController extends Controller
         $validated = $request->validated();
         $validated['updated_by'] = auth()->id();
 
-        $job->update($validated);
+        $subjob->update($validated);
 
         return redirect()->route('admin.subjob.index')
                         ->with('success', 'Sub job updated successfully!');
@@ -66,7 +66,7 @@ class SubJobController extends Controller
     
     public function destroy(Type_sub_job $subjob)
     {
-        $deleted = $job->delete();
+        $deleted = $subjob->delete();
 
         return redirect()->route('admin.subjob.index')
                         ->with('success', 'Sub job deleted successfully!');

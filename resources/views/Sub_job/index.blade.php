@@ -31,7 +31,8 @@
                     <table class="table table-striped" id="subjob-table">
                         <thead>
                             <tr>
-                                <th>subjob name</th>
+                                <th>Job Type</th>
+                                <th>Sub job name</th>
                                 <th>Created</th>
                                 <th>Updated</th>
                                 <th>Action</th>
@@ -40,6 +41,7 @@
                         <tbody>
                             @foreach($listOfSubJob as $subjob)
                             <tr>
+                                <td>{{ $subjob->job->name }}</td>
                                 <td>{{ $subjob->name }}</td>
                                 <td>{{ $subjob->createdBy->first_name ?? 'N/A'  }} - {{ $subjob->created_at }}</td>
                                 <td>{{ $subjob->updatedBy->first_name ?? 'N/A' }} - {{ $subjob->updated_at }}</td>
