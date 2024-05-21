@@ -175,6 +175,11 @@
                                         <i class="fa-solid fa-chart-line mx-3"></i> Educational Attainment
                                     </a>
                                 </li>
+                                <li class="nav-item fs-7 {{ Request::is('admin.gender.index') ? 'active' : '' }}">
+                                    <a href="{{ route('admin.gender.index') }}" class="nav-link">
+                                        <i class="fa-solid fa-chart-line mx-3"></i> Gender
+                                    </a>
+                                </li>
                                 <hr>
                             </ul>
                         @endif
