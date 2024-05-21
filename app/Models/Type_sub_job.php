@@ -30,6 +30,6 @@ class Type_sub_job extends Model
     }
 
     public function job() {
-        return $this->belongsTo(Type_continent::class, 'job_id');
+        return $this->belongsTo(Type_job::class, 'job_id');
     }
 }

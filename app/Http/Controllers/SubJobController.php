@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Type_sub_job;
+use App\Models\Type_job;
 use App\Http\Requests\StoreType_sub_jobRequest;
 use App\Http\Requests\UpdateType_sub_jobRequest;
 use App\DataTables\GlobalDataTable;
@@ -12,9 +13,10 @@ class SubJobController extends Controller
     public function index(GlobalDataTable $dataTable)
     {
         $listOfSubJob = Type_sub_job::getAllSubJob();
-
+        $listOfJob = Type_job::getAllJob();
         return $dataTable->render('Sub_job.index', compact(
-            'listOfSubJob'
+            'listOfSubJob',
+            'listOfJob',
         ));
     }
     
@@ -32,7 +34,7 @@ class SubJobController extends Controller
         Type_job::create($validated);
 
         return redirect()->route('admin.subjob.index')
-                        ->with('success', 'Job added successfully!');
+                        ->with('success', 'Sub job added successfully!');
     }
     
     public function show(Type_sub_job $type_sub_job)
@@ -42,8 +44,12 @@ class SubJobController extends Controller
     
     public function edit(Type_sub_job $subjob)
     {
+        $listOfSubJob = Type_sub_job::getAllSubJob();
+        $listOfJob = Type_job::getAllJob();
         return view('Sub_job.edit', compact(
             'subjob',
+            'listOfSubjob',
+            'listOfJob',
         ));
     }
     

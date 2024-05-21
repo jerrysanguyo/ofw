@@ -10,6 +10,12 @@
                 <div class="modal-body">
                     <label for="name" class="form-label">Sub job name:</label>
                     <input type="text" name="name" id="name" class="form-control">
+                    <label for="job" class="form-label">Job:</label>
+                    <select name="job_id" id="job" class="form-select">
+                        @foreach($listOfJob as $job)
+                            <option value="{{ $job->id }}">{{ $job->name }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
