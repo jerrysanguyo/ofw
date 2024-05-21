@@ -140,24 +140,29 @@
                         @if (Auth::user()->role === 'admin')
                             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                                 <li class="side-nav-title mb-3">CMS</li>
-                                <li class="nav-item fs-5 {{ Request::is('admin.barangay.index') ? 'active' : '' }}">
+                                <li class="nav-item fs-7 {{ Request::is('admin.barangay.index') ? 'active' : '' }}">
                                     <a href="{{ route('admin.barangay.index') }}" class="nav-link">
                                         <i class="fa-solid fa-chart-line mx-3"></i> Barangay
                                     </a>
                                 </li>
-                                <li class="nav-item fs-5 {{ Request::is('admin.city.index') ? 'active' : '' }}">
+                                <li class="nav-item fs-7 {{ Request::is('admin.city.index') ? 'active' : '' }}">
                                     <a href="{{ route('admin.city.index') }}" class="nav-link">
                                         <i class="fa-solid fa-chart-line mx-3"></i> City
                                     </a>
                                 </li>
-                                <li class="nav-item fs-5 {{ Request::is('admin.civil.index') ? 'active' : '' }}">
+                                <li class="nav-item fs-7 {{ Request::is('admin.civil.index') ? 'active' : '' }}">
                                     <a href="{{ route('admin.civil.index') }}" class="nav-link">
                                         <i class="fa-solid fa-chart-line mx-3"></i> Civil Status
                                     </a>
                                 </li>
-                                <li class="nav-item fs-5 {{ Request::is('admin.continent.index') ? 'active' : '' }}">
+                                <li class="nav-item fs-7 {{ Request::is('admin.continent.index') ? 'active' : '' }}">
                                     <a href="{{ route('admin.continent.index') }}" class="nav-link">
                                         <i class="fa-solid fa-chart-line mx-3"></i> Continent
+                                    </a>
+                                </li>
+                                <li class="nav-item fs-7 {{ Request::is('admin.country.index') ? 'active' : '' }}">
+                                    <a href="{{ route('admin.country.index') }}" class="nav-link">
+                                        <i class="fa-solid fa-chart-line mx-3"></i> Country
                                     </a>
                                 </li>
                                 <hr>

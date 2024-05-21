@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Type_continent;
+use App\Models\Type_country;
 use App\Http\Requests\StoreType_continentRequest;
 use App\Http\Requests\UpdateType_continentRequest;
 use App\DataTables\GlobalDataTable;
@@ -37,9 +38,7 @@ class ContinentController extends Controller
     
     public function show(Type_continent $continent)
     {
-        return view('Continent.details', compact(
-            'continent'
-        ));
+        //
     }
     
     public function edit(Type_continent $continent)

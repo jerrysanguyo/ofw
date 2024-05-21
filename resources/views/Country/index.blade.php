@@ -5,11 +5,11 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="d-flex justify-content-between mb-1">
-                <span class="fs-3">List of continent</span>
+                <span class="fs-3">List of Country</span>
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create">
-                        Add continent
+                        Add country
                 </button>
-                @include('continent.create')
+                @include('country.create')
             </div>
             <div class="card shadow border">
                 <div class="card-body">
@@ -28,33 +28,35 @@
                         </div>
                     @endif
 
-                    <table class="table table-striped" id="continent-table">
+                    <table class="table table-striped" id="country-table">
                         <thead>
                             <tr>
-                                <th>continent name</th>
+                                <th>Country name</th>
+                                <th>Continent name</th>
                                 <th>Created</th>
                                 <th>Updated</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($listOfContinent as $continent)
+                            @foreach($listOfCountry as $country)
                             <tr>
-                                <td>{{ $continent->name }}</td>
-                                <td>{{ $continent->createdBy->first_name ?? 'N/A'  }} - {{ $continent->created_at }}</td>
-                                <td>{{ $continent->updatedBy->first_name ?? 'N/A' }} - {{ $continent->updated_at }}</td>
+                                <td>{{ $country->name }}</td>
+                                <td>{{ $country->continent->name }}</td>
+                                <td>{{ $country->createdBy->first_name ?? 'N/A'  }} - {{ $country->created_at }}</td>
+                                <td>{{ $country->updatedBy->first_name ?? 'N/A' }} - {{ $country->updated_at }}</td>
                                 <td>
                                     <div class="dropdown">
                                         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             Action
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="{{ route('admin.continent.edit', ['continent' => $continent->id]) }}">Update</a></li>
+                                            <li><a class="dropdown-item" href="{{ route('admin.country.edit', ['country' => $country->id]) }}">Update</a></li>
                                             <li>
-                                                <form id="delete-form-{{ $continent->id }}" action="{{ route('admin.continent.destroy', ['continent' => $continent->id]) }}" method="POST">
+                                                <form id="delete-form-{{ $country->id }}" action="{{ route('admin.country.destroy', ['country' => $country->id]) }}" method="POST">
                                                     @csrf
                                                     @method('delete')
-                                                    <button type="button" class="dropdown-item" onclick="confirmDelete({{ $continent->id }})">Delete continent</button>
+                                                    <button type="button" class="dropdown-item" onclick="confirmDelete({{ $country->id }})">Delete country</button>
                                                 </form>
                                             </li>
                                         </ul>
@@ -72,7 +74,7 @@
 @push('scripts')
     <script>
     $(document).ready(function() {
-        $('#continent-table').DataTable({
+        $('#country-table').DataTable({
             "processing": true,
             "serverSide": false,
             "pageLength": 10,
