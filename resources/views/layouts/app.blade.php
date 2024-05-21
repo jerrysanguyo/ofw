@@ -165,6 +165,11 @@
                                         <i class="fa-solid fa-chart-line mx-3"></i> Country
                                     </a>
                                 </li>
+                                <li class="nav-item fs-7 {{ Request::is('admin.contract.index') ? 'active' : '' }}">
+                                    <a href="{{ route('admin.contract.index') }}" class="nav-link">
+                                        <i class="fa-solid fa-chart-line mx-3"></i> Contract
+                                    </a>
+                                </li>
                                 <hr>
                             </ul>
                         @endif

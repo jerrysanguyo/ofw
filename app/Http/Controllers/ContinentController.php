@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Type_continent;
-use App\Models\Type_country;
 use App\Http\Requests\StoreType_continentRequest;
 use App\Http\Requests\UpdateType_continentRequest;
 use App\DataTables\GlobalDataTable;
