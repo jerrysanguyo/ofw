@@ -205,6 +205,11 @@
                                         <i class="fa-solid fa-chart-line mx-3"></i> Relationship
                                     </a>
                                 </li>
+                                <li class="nav-item fs-7 {{ Request::is('admin.religion.index') ? 'active' : '' }}">
+                                    <a href="{{ route('admin.religion.index') }}" class="nav-link">
+                                        <i class="fa-solid fa-chart-line mx-3"></i> Religion
+                                    </a>
+                                </li>
                                 <hr>
                             </ul>
                         @endif

@@ -17,6 +17,7 @@ use App\Http\Controllers\JobController;
 use App\Http\Controllers\SubJobController;
 use App\Http\Controllers\OwwaController;
 use App\Http\Controllers\RelationController;
+use App\Http\Controllers\ReligionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,6 +60,7 @@ Route::middleware(['auth', Admin_role::class])->group(function() {
         Route::resource('/subjob', SubJobController::class);
         Route::resource('/owwa', OwwaController::class);
         Route::resource('/relation', RelationController::class);
+        Route::resource('/religion', ReligionController::class);
     });
 });
 
