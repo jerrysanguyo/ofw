@@ -170,6 +170,11 @@
                                         <i class="fa-solid fa-chart-line mx-3"></i> Contract
                                     </a>
                                 </li>
+                                <li class="nav-item fs-7 {{ Request::is('admin.education.index') ? 'active' : '' }}">
+                                    <a href="{{ route('admin.education.index') }}" class="nav-link">
+                                        <i class="fa-solid fa-chart-line mx-3"></i> Educational Attainment
+                                    </a>
+                                </li>
                                 <hr>
                             </ul>
                         @endif

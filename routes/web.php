@@ -9,7 +9,7 @@ use App\Http\Controllers\CityController;
 use App\Http\Controllers\CivilStatusController;
 use App\Http\Controllers\ContinentController;
 use App\Http\Controllers\CountryController;
-use App\Http\Controllers\ContractController;
+use App\Http\Controllers\EducationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +45,7 @@ Route::middleware(['auth', Admin_role::class])->group(function() {
         Route::resource('/continent', ContinentController::class);
         Route::resource('/country', CountryController::class);
         Route::resource('/contract', ContractController::class);
+        Route::resource('/education', EducationController::class);
     });
 });
 
