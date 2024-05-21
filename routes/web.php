@@ -14,6 +14,7 @@ use App\Http\Controllers\GenderController;
 use App\Http\Controllers\IdController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\JobController;
+use App\Http\Controllers\SubJobController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +54,7 @@ Route::middleware(['auth', Admin_role::class])->group(function() {
         Route::resource('/gender', GenderController::class);
         Route::resource('/identification', IdController::class);
         Route::resource('/job', JobController::class);
+        Route::resource('/subjob', SubJobController::class);
     });
 });
 

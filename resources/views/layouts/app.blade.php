@@ -190,6 +190,11 @@
                                         <i class="fa-solid fa-chart-line mx-3"></i> Job
                                     </a>
                                 </li>
+                                <li class="nav-item fs-7 {{ Request::is('admin.subjob.index') ? 'active' : '' }}">
+                                    <a href="{{ route('admin.subjob.index') }}" class="nav-link">
+                                        <i class="fa-solid fa-chart-line mx-3"></i> Sub job
+                                    </a>
+                                </li>
                                 <hr>
                             </ul>
                         @endif
