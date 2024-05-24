@@ -137,8 +137,14 @@
                     </div>
                     <hr>
                     <div class="offcanvas-body">
-                        @if (Auth::user()->role === 'admin')
                             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                                <li class="side-nav-title mb-3">Navigation</li>
+                                    <li class="nav-item fs-7 {{ Request::is('admin.household.create') ? 'active' : '' }}">
+                                        <a href="{{ route('admin.household.create') }}" class="nav-link">
+                                            <i class="fa-solid fa-chart-line mx-3"></i> Household
+                                        </a>
+                                    </li>
+                        @if (Auth::user()->role === 'admin')
                                 <li class="side-nav-title mb-3">CMS</li>
                                 <li class="nav-item fs-7 {{ Request::is('admin.barangay.index') ? 'active' : '' }}">
                                     <a href="{{ route('admin.barangay.index') }}" class="nav-link">

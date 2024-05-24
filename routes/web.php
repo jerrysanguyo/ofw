@@ -19,6 +19,7 @@ use App\Http\Controllers\OwwaController;
 use App\Http\Controllers\RelationController;
 use App\Http\Controllers\ReligionController;
 use App\Http\Controllers\ResidenceController;
+use App\Http\Controllers\HouseholdController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +49,7 @@ Route::middleware(['auth', User_role::class])->group(function() {
 
 Route::middleware(['auth', Admin_role::class])->group(function() {
     Route::prefix('admin')->name('admin.')->group(function () {
+        Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
         Route::resource('/barangay', BarangayController::class);
         Route::resource('/city', CityController::class);
         Route::resource('/civil', CivilStatusController::class);
@@ -63,6 +65,8 @@ Route::middleware(['auth', Admin_role::class])->group(function() {
         Route::resource('/relation', RelationController::class);
         Route::resource('/religion', ReligionController::class);
         Route::resource('/residence', ResidenceController::class);
+        // to be delete
+        Route::resource('/household', HouseholdController::class);
     });
 });
 
