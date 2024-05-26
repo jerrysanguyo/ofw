@@ -20,6 +20,7 @@ use App\Http\Controllers\RelationController;
 use App\Http\Controllers\ReligionController;
 use App\Http\Controllers\ResidenceController;
 use App\Http\Controllers\HouseholdController;
+use App\Http\Controllers\PersonalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,6 +68,7 @@ Route::middleware(['auth', Admin_role::class])->group(function() {
         Route::resource('/residence', ResidenceController::class);
         // to be delete
         Route::resource('/household', HouseholdController::class);
+        Route::resource('/personal', PersonalController::class);
     });
 });
 

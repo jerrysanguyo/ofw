@@ -85,7 +85,7 @@
                         <div class="d-flex justify-content-end">
                             <div class="dropdown navbar-brand">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    {{ Auth::user()->last_name }}, {{ Auth::user()->first_name }} {{ Auth::user()->middle_name }}
+                                    {{ Auth::user()->last_name . ', ' . Auth::user()->first_name . ' ' . Auth::user()->middle_name  }}
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a href="#" class="dropdown-item">Account details</a></li>
@@ -139,9 +139,9 @@
                     <div class="offcanvas-body">
                             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                                 <li class="side-nav-title mb-3">Navigation</li>
-                                    <li class="nav-item fs-7 {{ Request::is('admin.household.create') ? 'active' : '' }}">
-                                        <a href="{{ route('admin.household.create') }}" class="nav-link">
-                                            <i class="fa-solid fa-chart-line mx-3"></i> Household
+                                    <li class="nav-item fs-7 {{ Request::is('admin.personal.create') ? 'active' : '' }}">
+                                        <a href="{{ route('admin.personal.create') }}" class="nav-link">
+                                            <i class="fa-solid fa-chart-line mx-3"></i> Personal
                                         </a>
                                     </li>
                         @if (Auth::user()->role === 'admin')

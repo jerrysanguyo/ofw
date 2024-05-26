@@ -3,15 +3,21 @@
 @section('content')
 <div class="container-fluid">
     <div class="row justify-content-center">
-        <div class="col-md-12">
-            <div class="d-flex justify-content-between mb-1">
-                <span class="fs-3">Mga kasama sa bahay</span>
-                <a href="{{ route('admin.home') }}" class="text-decoration-none">
-                    <button class="btn btn-primary">
-                        Back
-                    </button>
-                </a>
-            </div>
+        <ul class="nav nav-pills nav-fill">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.personal.create') }}">PERSONAL NA INPORMASIYON</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">IMPORMASIYON NOONG HULING NAG TRABAHO SA ABROAD</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="{{ route('admin.household.create') }}">MGA KASAMA SA BAHAY</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">MGA KAILANGAN NG PAMILYA</a>
+            </li>
+        </ul>
+        <div class="col-md-12 mt-3">
             <div class="card shadow border">
                 <div class="card-body">
                     @if(session('success'))
@@ -28,54 +34,105 @@
                             </ul>
                         </div>
                     @endif
-                    <form action="{{ route('admin.household.store') }}" method="POST">
+
+                    @php
+                        $formAction = $household->isNotEmpty() ? route('admin.household.update') : route('admin.household.store');
+                        $formMethod = $household->isNotEmpty() ? 'PUT' : 'POST';
+                    @endphp
+
+                    <form action="{{ $formAction }}" method="POST">
                         @csrf
+                        @if($household->isNotEmpty())
+                            @method('PUT')
+                        @endif
+
                         <div id="household-container">
-                            <div class="row household-row">
-                                <div class="col-lg-3">
-                                    <label for="full_name" class="form-label">Full name</label>
-                                    <input type="text" name="full_name[]" class="form-control">
+                            @forelse($household as $index => $householdItem)
+                                <div class="row household-row">
+                                    <input type="hidden" name="id[]" value="{{ $householdItem->id }}">
+                                    <div class="col-lg-3">
+                                        <label for="full_name" class="form-label">Full name</label>
+                                        <input type="text" name="full_name[]" class="form-control" value="{{ $householdItem->full_name }}">
+                                    </div>
+                                    <div class="col-lg-1">
+                                        <label for="relation_id" class="form-label">Relationship</label>
+                                        <select name="relation_id[]" class="form-select">
+                                            @foreach($listOfRelation as $relation)
+                                                <option value="{{ $relation->id }}" {{ $householdItem->relation_id == $relation->id ? 'selected' : '' }}>{{ $relation->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-1">
+                                        <label for="birthdate" class="form-label">Birthdate</label>
+                                        <input type="date" name="birthdate[]" class="form-control birthdate-input" value="{{ $householdItem->birthdate }}">
+                                    </div>
+                                    <div class="col-lg-1">
+                                        <label for="age" class="form-label">Age</label>
+                                        <input type="number" name="age[]" class="form-control age-input" readonly value="{{ $householdItem->age }}">
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label for="work" class="form-label">Work</label>
+                                        <input type="text" name="work[]" class="form-control" value="{{ $householdItem->work }}">
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <label for="monthly_income" class="form-label">Monthly income</label>
+                                        <input type="text" name="monthly_income[]" class="form-control" value="{{ $householdItem->monthly_income }}">
+                                    </div>
+                                    <div class="col-lg-1">
+                                        <label for="voters" class="form-label">Taguig voters?</label>
+                                        <select name="voters[]" class="form-select">
+                                            <option value="yes" {{ $householdItem->voters == 'yes' ? 'selected' : '' }}>Yes</option>
+                                            <option value="no" {{ $householdItem->voters == 'no' ? 'selected' : '' }}>No</option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="col-lg-1">
-                                    <label for="relation_id" class="form-label">Relationship</label>
-                                    <select name="relation_id[]" class="form-select">
-                                        @foreach($listOfRelation as $relation)
-                                            <option value="{{ $relation->id }}">{{ $relation->name }}</option>
-                                        @endforeach
-                                    </select>
+                            @empty
+                                <div class="row household-row">
+                                    <div class="col-lg-3">
+                                        <label for="full_name" class="form-label">Full name</label>
+                                        <input type="text" name="full_name[]" class="form-control">
+                                    </div>
+                                    <div class="col-lg-1">
+                                        <label for="relation_id" class="form-label">Relationship</label>
+                                        <select name="relation_id[]" class="form-select">
+                                            @foreach($listOfRelation as $relation)
+                                                <option value="{{ $relation->id }}">{{ $relation->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-1">
+                                        <label for="birthdate" class="form-label">Birthdate</label>
+                                        <input type="date" name="birthdate[]" class="form-control birthdate-input">
+                                    </div>
+                                    <div class="col-lg-1">
+                                        <label for="age" class="form-label">Age</label>
+                                        <input type="number" name="age[]" class="form-control age-input" readonly>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label for="work" class="form-label">Work</label>
+                                        <input type="text" name="work[]" class="form-control">
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <label for="monthly_income" class="form-label">Monthly income</label>
+                                        <input type="text" name="monthly_income[]" class="form-control">
+                                    </div>
+                                    <div class="col-lg-1">
+                                        <label for="voters" class="form-label">Taguig voters?</label>
+                                        <select name="voters[]" class="form-select">
+                                            <option value="yes">Yes</option>
+                                            <option value="no">No</option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="col-lg-1">
-                                    <label for="birthdate" class="form-label">Birthdate</label>
-                                    <input type="date" name="birthdate[]" class="form-control birthdate-input">
-                                </div>
-                                <div class="col-lg-1">
-                                    <label for="age" class="form-label">Age</label>
-                                    <input type="number" name="age[]" class="form-control age-input" readonly>
-                                </div>
-                                <div class="col-lg-3">
-                                    <label for="work" class="form-label">Work</label>
-                                    <input type="text" name="work[]" class="form-control">
-                                </div>
-                                <div class="col-lg-2">
-                                    <label for="monthly_income" class="form-label">Monthly income</label>
-                                    <input type="text" name="monthly_income[]" class="form-control">
-                                </div>
-                                <div class="col-lg-1">
-                                    <label for="voters" class="form-label">Taguig voters?</label>
-                                    <select name="voters[]" class="form-select">
-                                        <option value="yes">Yes</option>
-                                        <option value="no">No</option>
-                                    </select>
-                                </div>
-                            </div>
+                            @endforelse
                         </div>
                         <!-- Buttons for add and remove row -->
                         <div class="d-flex flex-row-reverse mt-3">
-                            <button type="button" id="add-row" class="btn btn-primary ms-2">Add Row</button>
+                            <button type="button" id="add-row" class="btn btn-success ms-2">Add Row</button>
                             <button type="button" id="remove-row" class="btn btn-danger">Remove Last Row</button>
                         </div>
                         <div class="d-flex flex-row-reverse mt-3">
-                            <button type="submit" class="btn btn-success">Submit</button>
+                            <button type="submit" class="btn btn-primary">{{ $household->isNotEmpty() ? 'Update' : 'Submit' }}</button>
                         </div>
                     </form>
                 </div>
@@ -124,7 +181,6 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    // Add event listeners to the initial row
     document.querySelectorAll('.household-row').forEach(addEventListenersToRow);
 });
 </script>
