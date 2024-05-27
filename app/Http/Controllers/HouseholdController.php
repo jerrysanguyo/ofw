@@ -15,8 +15,13 @@ class HouseholdController extends Controller
     {
         $listOfRelation = Type_relation::getAllRelation();
         $household = User_household_composition::where('user_id', auth()->id())->get();
-
-        return view('Form.household', compact('listOfRelation', 'household'));
+        $listOfComposition = $household->isNotEmpty() ? $household : collect();
+    
+        return view('Form.household', compact(
+            'listOfRelation', 
+            'household',
+            'listOfComposition',
+        ));
     }
 
     public function store(StoreUser_household_compositionRequest $request)
@@ -35,8 +40,6 @@ class HouseholdController extends Controller
                     'work' => $validated['work'][$index],
                     'monthly_income' => $validated['monthly_income'][$index],
                     'voters' => $validated['voters'][$index],
-                    'created_by' => auth()->id(),
-                    'updated_by' => auth()->id(),
                 ]);
             }
 
@@ -52,34 +55,21 @@ class HouseholdController extends Controller
         }
     }
 
-    public function update(UpdateUser_household_compositionRequest $request)
+    public function update(UpdateUser_household_compositionRequest $request, User_household_composition $household)
     {
         $validated = $request->validated();
-
         DB::beginTransaction();
         try {
-            foreach ($validated['id'] as $index => $id) {
-                $household = User_household_composition::findOrFail($id);
-                $household->update([
-                    'full_name' => $validated['full_name'][$index],
-                    'relation_id' => $validated['relation_id'][$index],
-                    'birthdate' => $validated['birthdate'][$index],
-                    'age' => $validated['age'][$index],
-                    'work' => $validated['work'][$index],
-                    'monthly_income' => $validated['monthly_income'][$index],
-                    'voters' => $validated['voters'][$index],
-                    'updated_by' => auth()->id(),
-                ]);
-            }
-
+            $household->update($validated);
+    
             DB::commit();
-
+    
             return redirect()->route('admin.household.create')->with('success', 'Household composition updated successfully.');
         } catch (\Exception $e) {
             DB::rollBack();
-
+    
             Log::error('Failed to update household composition', ['error' => $e->getMessage()]);
-
+    
             return redirect()->route('admin.household.create')->with('error', 'Failed to update household composition. Please try again.');
         }
     }

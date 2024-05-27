@@ -10,19 +10,19 @@ class UpdateUser_household_compositionRequest extends FormRequest
     {
         return true;
     }
-    
+
     public function rules(): array
     {
         return [
             'user_id'           => 'integer|exists:users,id',
-            'full_name'         => 'required|string|max:255',
+            'full_name'         => 'string|max:255',
+            'age'               => 'integer|max:255',
             'relation_id'       => 'integer|exists:type_relations,id',
-            'birthdate'         => 'required|date',
-            'age'               => 'required|integer',
-            'work'              => 'required|string|max:255',
-            'monthly_income'    => 'required|integer',
-            'voters'            => 'required|string|enum:yes,no',
-            'updated_by'        => 'integer|exists:users,id',
+            'birthdate'         => 'date',
+            'work'              => 'string|max:255',
+            'monthly_income'    => 'integer',
+            'voters'            => 'string|in:yes,no',
         ];
     }
 }
+

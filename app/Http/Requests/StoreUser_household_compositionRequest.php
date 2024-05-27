@@ -22,8 +22,6 @@ class StoreUser_household_compositionRequest extends FormRequest
             'work'              => 'required|max:255',
             'monthly_income'    => 'required',
             'voters'            => 'required',
-            'created_by'        => 'exists:users,id',
-            'updated_by'        => 'exists:users,id',
         ];
     }
 }

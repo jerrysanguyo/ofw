@@ -52,7 +52,7 @@ class PersonalController extends Controller
 
         DB::beginTransaction();
         try {
-            UserAddress::create([
+            User_address::create([
                 'user_id' => auth()->id(),
                 'house_number' => $validated['house_number'],
                 'barangay_id' => $validated['barangay_id'],
@@ -62,7 +62,7 @@ class PersonalController extends Controller
                 'residence_id' => $validated['residence_id'],
             ]);
 
-            UserInfo::create([
+            User_info::create([
                 'user_id' => auth()->id(),
                 'birthdate' => $validated['birthdate'],
                 'age' => $validated['age'],
