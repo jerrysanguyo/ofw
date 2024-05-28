@@ -8,7 +8,7 @@
                 <a class="nav-link" href="{{ route('admin.personal.create') }}">PERSONAL NA INPORMASIYON</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">IMPORMASIYON NOONG HULING NAG TRABAHO SA ABROAD</a>
+                <a class="nav-link" href="{{ route('admin.previous.create') }}">IMPORMASIYON NOONG HULING NAG TRABAHO SA ABROAD</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link active" href="{{ route('admin.household.create') }}">MGA KASAMA SA BAHAY</a>

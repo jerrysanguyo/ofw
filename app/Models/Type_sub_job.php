@@ -21,6 +21,10 @@ class Type_sub_job extends Model
         return self::all();
     }
 
+    public static function getSubJobsByJobId($jobId) {
+        return self::where('job_id', $jobId)->get();
+    }
+
     public function createdBy() {
         return $this->belongsTo(User::class, 'created_by');
     }

@@ -21,6 +21,10 @@ class Type_country extends Model
         return self::all();
     }
 
+    public static function getCountriesByContinentId($continentId) {
+        return self::where('continent_id', $continentId)->get();
+    }
+
     public function createdBy() {
         return $this->belongsTo(User::class, 'created_by');
     }

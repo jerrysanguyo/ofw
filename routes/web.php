@@ -21,6 +21,7 @@ use App\Http\Controllers\ReligionController;
 use App\Http\Controllers\ResidenceController;
 use App\Http\Controllers\HouseholdController;
 use App\Http\Controllers\PersonalController;
+use App\Http\Controllers\PreviousController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +49,9 @@ Route::middleware(['auth', User_role::class])->group(function() {
     });
 });
 
+Route::get('/get-sub-jobs/{jobId}', [PreviousController::class, 'getSubJobs'])->name('getSubJobs');
+Route::get('/get-countries/{continentId}', [PreviousController::class, 'getCountries'])->name('getCountries');
+
 Route::middleware(['auth', Admin_role::class])->group(function() {
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -66,9 +70,9 @@ Route::middleware(['auth', Admin_role::class])->group(function() {
         Route::resource('/relation', RelationController::class);
         Route::resource('/religion', ReligionController::class);
         Route::resource('/residence', ResidenceController::class);
-        // to be delete
         Route::resource('/household', HouseholdController::class);
         Route::resource('/personal', PersonalController::class);
+        Route::resource('/previous', PreviousController::class);
     });
 });
 

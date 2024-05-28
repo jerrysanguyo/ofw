@@ -1,96 +1,190 @@
-<form action="{{ route('admin.household.store') }}" method="POST">
-    @csrf
-    <div id="household-container" class="mt-3">
-        <div class="row household-row">
-            <div class="col-lg-3">
-                <label for="full_name" class="form-label">Full name</label>
-                <input type="text" name="full_name[]" class="form-control">
-            </div>
-            <div class="col-lg-1">
-                <label for="relation_id" class="form-label">Relationship</label>
-                <select name="relation_id[]" class="form-select">
-                    @foreach($listOfRelation as $relation)
-                        <option value="{{ $relation->id }}">{{ $relation->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col-lg-1">
-                <label for="birthdate" class="form-label">Birthdate</label>
-                <input type="date" name="birthdate[]" class="form-control birthdate-input">
-            </div>
-            <div class="col-lg-1">
-                <label for="age" class="form-label">Age</label>
-                <input type="number" name="age[]" class="form-control age-input" readonly>
-            </div>
-            <div class="col-lg-3">
-                <label for="work" class="form-label">Work</label>
-                <input type="text" name="work[]" class="form-control">
-            </div>
-            <div class="col-lg-2">
-                <label for="monthly_income" class="form-label">Monthly income</label>
-                <input type="text" name="monthly_income[]" class="form-control">
-            </div>
-            <div class="col-lg-1">
-                <label for="voters" class="form-label">Taguig voters?</label>
-                <select name="voters[]" class="form-select">
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
-                </select>
+@extends('layouts.app')
+
+@section('content')
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <ul class="nav nav-pills nav-fill">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.personal.create') }}">PERSONAL NA INPORMASIYON</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="{{ route('admin.previous.create') }}">IMPORMASIYON NOONG HULING NAG TRABAHO SA ABROAD</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.household.create') }}">MGA KASAMA SA BAHAY</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">MGA KAILANGAN NG PAMILYA</a>
+            </li>
+        </ul>
+        <div class="col-md-12 mt-3">
+            <div class="card shadow border">
+                <div class="card-body">
+                    @if(session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    <form action="{{ isset($previousJob) ? route('admin.previous.update', $previousJob->id) : route('admin.previous.store') }}" method="post">
+                        @csrf
+                        @if(isset($previousJob))
+                            @method('PUT')
+                        @endif
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="job_type" class="form-label">Job type:</label>
+                                <select name="job_type" id="job_type" class="form-select">
+                                    <option value="landbase" {{ isset($previousJob) && $previousJob->job_type == 'landbase' ? 'selected' : '' }}>Landbased</option>
+                                    <option value="seabase" {{ isset($previousJob) && $previousJob->job_type == 'seabase' ? 'selected' : '' }}>Seabased</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="job_id" class="form-label">Job type:</label>
+                                <select name="job_id" id="job_id" class="form-select">
+                                    <option value="">choose..</option>
+                                    @foreach($listOfJob as $job)
+                                        <option value="{{ $job->id }}" {{ isset($previousJob) && $previousJob->job_id == $job->id ? 'selected' : '' }}>{{ $job->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="sub_job_id" class="form-label">Sub Job type:</label>
+                                <select name="sub_job_id" id="sub_job_id" class="form-select">
+                                    <!-- Sub-job options will be populated via JavaScript -->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="continent_id" class="form-label">Continent:</label>
+                                <select name="continent_id" id="continent_id" class="form-select">
+                                    <option value="">choose..</option>
+                                    @foreach($listOfContinent as $continent)
+                                        <option value="{{ $continent->id }}" {{ isset($previousJob) && $previousJob->continent_id == $continent->id ? 'selected' : '' }}>{{ $continent->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="country_id" class="form-label">Country:</label>
+                                <select name="country_id" id="country_id" class="form-select">
+                                    <!-- Country options will be populated via JavaScript -->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label for="years_abbroad" class="form-label">Years in abroad:</label>
+                                <input type="number" name="years_abbroad" id="years_abbroad" class="form-control" value="{{ isset($previousJob) ? $previousJob->years_abbroad : '' }}">
+                            </div>
+                            <div class="col-md-2">
+                                <label for="contract_id" class="form-label">Status of last Contract:</label>
+                                <select name="contract_id" id="contract_id" class="form-select">
+                                    @foreach($listOfContract as $contract)
+                                        <option value="{{ $contract->id }}" {{ isset($previousJob) && $previousJob->contract_id == $contract->id ? 'selected' : '' }}>{{ $contract->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="last_departure" class="form-label">Date of last departure:</label>
+                                <input type="date" name="last_departure" id="last_departure" class="form-control" value="{{ isset($previousJob) ? $previousJob->last_departure : '' }}">
+                            </div>
+                            <div class="col-md-2">
+                                <label for="last_arrival" class="form-label">Date of last arrival:</label>
+                                <input type="date" name="last_arrival" id="last_arrival" class="form-control" value="{{ isset($previousJob) ? $previousJob->last_arrival : '' }}">
+                            </div>
+                            <div class="col-md-2">
+                                <label for="owwa_id" class="form-label">Owwa membership:</label>
+                                <select name="owwa_id" id="owwa_id" class="form-select">
+                                    @foreach($listOfOwwa as $owwa)
+                                        <option value="{{ $owwa->id }}" {{ isset($previousJob) && $previousJob->owwa_id == $owwa->id ? 'selected' : '' }}>{{ $owwa->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="intent_return" class="form-label">Intent to return abroad?:</label>
+                                <select name="intent_return" id="intent_return" class="form-select">
+                                    <option value="yes" {{ isset($previousJob) && $previousJob->intent_return == 'yes' ? 'selected' : '' }}>Yes</option>
+                                    <option value="no" {{ isset($previousJob) && $previousJob->intent_return == 'no' ? 'selected' : '' }}>No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-row-reverse mt-3">
+                            <button type="submit" class="btn btn-primary">{{ isset($previousJob) ? 'Update' : 'Submit' }}</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-    <!-- Buttons for add and remove row -->
-    <div class="d-flex flex-row-reverse mt-3">
-        <button type="button" id="add-row" class="btn btn-primary ms-2">Add Row</button>
-        <button type="button" id="remove-row" class="btn btn-danger">Remove Last Row</button>
-    </div>
-    <div class="d-flex flex-row-reverse mt-3">
-        <button type="submit" class="btn btn-success">Submit</button>
-    </div>
-</form>
-                    
+</div>
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    const householdContainer = document.getElementById('household-container');
-    const addRowButton = document.getElementById('add-row');
-    const removeRowButton = document.getElementById('remove-row');
+    document.addEventListener('DOMContentLoaded', function () {
+        const jobSelect = document.getElementById('job_id');
+        const subJobSelect = document.getElementById('sub_job_id');
 
-    function calculateAge(birthdate) {
-        const today = new Date();
-        let age = today.getFullYear() - birthdate.getFullYear();
-        const m = today.getMonth() - birthdate.getMonth();
-        if (m < 0 || (m === 0 && today.getDate() < birthdate.getDate())) {
-            age--;
+        function fetchSubJobs(jobId, selectedSubJobId = null) {
+            fetch(`/get-sub-jobs/${jobId}`)
+                .then(response => response.json())
+                .then(data => {
+                    subJobSelect.innerHTML = '';
+                    data.forEach(subJob => {
+                        const option = document.createElement('option');
+                        option.value = subJob.id;
+                        option.textContent = subJob.name;
+                        if (selectedSubJobId && subJob.id == selectedSubJobId) {
+                            option.selected = true;
+                        }
+                        subJobSelect.appendChild(option);
+                    });
+                });
         }
-        return age;
-    }
 
-    function addEventListenersToRow(row) {
-        const birthdateInput = row.querySelector('.birthdate-input');
-        const ageInput = row.querySelector('.age-input');
-
-        birthdateInput.addEventListener('change', function() {
-            const birthdate = new Date(this.value);
-            const age = calculateAge(birthdate);
-            ageInput.value = age;
+        jobSelect.addEventListener('change', function () {
+            fetchSubJobs(this.value);
         });
-    }
 
-    addRowButton.addEventListener('click', function() {
-        const newRow = document.querySelector('.household-row').cloneNode(true);
-        newRow.querySelectorAll('input').forEach(input => input.value = '');
-        addEventListenersToRow(newRow);
-        householdContainer.appendChild(newRow);
+        @if(isset($previousJob) && $previousJob->job_id)
+            fetchSubJobs({{ $previousJob->job_id }}, {{ $previousJob->sub_job_id }});
+        @endif
     });
+    document.addEventListener('DOMContentLoaded', function () {
+        const continentSelect = document.getElementById('continent_id');
+        const countrySelect = document.getElementById('country_id');
 
-    removeRowButton.addEventListener('click', function() {
-        const rows = householdContainer.querySelectorAll('.household-row');
-        if (rows.length > 1) {
-            householdContainer.removeChild(rows[rows.length - 1]);
+        function fetchCountries(continentId, selectedCountryId = null) {
+            fetch(`/get-countries/${continentId}`)
+                .then(response => response.json())
+                .then(data => {
+                    countrySelect.innerHTML = '';
+                    data.forEach(country => {
+                        const option = document.createElement('option');
+                        option.value = country.id;
+                        option.textContent = country.name;
+                        if (selectedCountryId && country.id == selectedCountryId) {
+                            option.selected = true;
+                        }
+                        countrySelect.appendChild(option);
+                    });
+                });
         }
-    });
 
-    // Add event listeners to the initial row
-    document.querySelectorAll('.household-row').forEach(addEventListenersToRow);
-});
+        continentSelect.addEventListener('change', function () {
+            fetchCountries(this.value);
+        });
+
+        @if(isset($previousJob) && $previousJob->continent_id)
+            fetchCountries({{ $previousJob->continent_id }}, {{ $previousJob->country_id }});
+        @endif
+    });
 </script>
+@endsection
