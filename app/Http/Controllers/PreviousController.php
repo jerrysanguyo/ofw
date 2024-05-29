@@ -57,7 +57,7 @@ class PreviousController extends Controller
     
             DB::commit();
     
-            return redirect()->route('admin.previous.create')->with('success', 'Previous job created successfully.');
+            return redirect()->route('admin.household.create')->with('success', 'Previous job created successfully.');
         } catch (\Exception $e) {
             DB::rollBack();
     

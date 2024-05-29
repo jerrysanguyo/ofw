@@ -34,6 +34,7 @@
                             </ul>
                         </div>
                     @endif
+                    <span class="fs-6 text-danger">*Kindly put N/A if not applicable</span>
                     @if(!$user_need)
                     <form action="{{ route('admin.needs.store') }}" method="post">
                         @csrf

@@ -77,7 +77,7 @@ class PersonalController extends Controller
 
             DB::commit();
 
-            return redirect()->route('admin.personal.create')
+            return redirect()->route('admin.previous.create')
                             ->with('success', 'User information has been stored successfully');
         } catch (\Exception $e) {
             DB::rollBack();

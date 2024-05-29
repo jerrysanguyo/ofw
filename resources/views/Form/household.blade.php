@@ -34,7 +34,7 @@
                             </ul>
                         </div>
                     @endif
-
+                    <span class="fs-6 text-danger">*Kindly put N/A if not applicable</span>
                     @if($listOfComposition->isEmpty())
                     <form action="{{ route('admin.household.store') }}" method="POST">
                         @csrf
@@ -66,7 +66,7 @@
                                 </div>
                                 <div class="col-lg-2">
                                     <label for="monthly_income" class="form-label">Monthly income</label>
-                                    <input type="text" name="monthly_income[]" class="form-control">
+                                    <input type="text" name="monthly_income[]" class="form-control" value="0">
                                 </div>
                                 <div class="col-lg-1">
                                     <label for="voters" class="form-label">Taguig voters?</label>

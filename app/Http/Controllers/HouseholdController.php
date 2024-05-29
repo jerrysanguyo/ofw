@@ -45,7 +45,7 @@ class HouseholdController extends Controller
 
             DB::commit();
 
-            return redirect()->route('admin.household.create')->with('success', 'Household composition added successfully.');
+            return redirect()->route('admin.needs.create')->with('success', 'Household composition added successfully.');
         } catch (\Exception $e) {
             DB::rollBack();
 
