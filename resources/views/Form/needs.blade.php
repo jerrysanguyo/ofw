@@ -1,96 +1,102 @@
-<form action="{{ route('admin.household.store') }}" method="POST">
-    @csrf
-    <div id="household-container" class="mt-3">
-        <div class="row household-row">
-            <div class="col-lg-3">
-                <label for="full_name" class="form-label">Full name</label>
-                <input type="text" name="full_name[]" class="form-control">
-            </div>
-            <div class="col-lg-1">
-                <label for="relation_id" class="form-label">Relationship</label>
-                <select name="relation_id[]" class="form-select">
-                    @foreach($listOfRelation as $relation)
-                        <option value="{{ $relation->id }}">{{ $relation->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col-lg-1">
-                <label for="birthdate" class="form-label">Birthdate</label>
-                <input type="date" name="birthdate[]" class="form-control birthdate-input">
-            </div>
-            <div class="col-lg-1">
-                <label for="age" class="form-label">Age</label>
-                <input type="number" name="age[]" class="form-control age-input" readonly>
-            </div>
-            <div class="col-lg-3">
-                <label for="work" class="form-label">Work</label>
-                <input type="text" name="work[]" class="form-control">
-            </div>
-            <div class="col-lg-2">
-                <label for="monthly_income" class="form-label">Monthly income</label>
-                <input type="text" name="monthly_income[]" class="form-control">
-            </div>
-            <div class="col-lg-1">
-                <label for="voters" class="form-label">Taguig voters?</label>
-                <select name="voters[]" class="form-select">
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
-                </select>
+@extends('layouts.app')
+
+@section('content')
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <ul class="nav nav-pills nav-fill">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.personal.create') }}">PERSONAL NA INPORMASIYON</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.previous.create') }}">IMPORMASIYON NOONG HULING NAG TRABAHO SA ABROAD</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.household.create') }}">MGA KASAMA SA BAHAY</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="{{ route('admin.needs.create') }}">MGA KAILANGAN NG PAMILYA</a>
+            </li>
+        </ul>
+        <div class="col-md-12 mt-3">
+            <div class="card shadow border">
+                <div class="card-body">
+                    @if(session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    @if(!$user_need)
+                    <form action="{{ route('admin.needs.store') }}" method="post">
+                        @csrf
+                        <div id="needs-container">
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <label for="needs" class="form-label">Need:</label>
+                                    <input type="text" name="needs[]" id="needs" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Buttons for add and remove row -->
+                        <div class="d-flex flex-row-reverse mt-3">
+                            <button type="button" id="add-row" class="btn btn-success ms-2">Add Row</button>
+                            <button type="button" id="remove-row" class="btn btn-danger">Remove Last Row</button>
+                        </div>
+                        <div class="d-flex flex-row-reverse mt-3">
+                            <button type="submit" class="btn btn-primary"> Submit </button>
+                        </div>
+                    </form>
+                    @else
+                        @foreach($listOfNeeds as $need)
+                            <form action="{{ route('admin.needs.update', $need->id) }}" method="post">
+                                @csrf
+                                @method('PUT')
+                                <div class="row mb-3 align-items-end">
+                                    <div class="col-md-11">
+                                        <label for="needs" class="form-label">Need:</label>
+                                        <input type="text" name="needs" id="needs" class="form-control" value="{{ $need->needs }}">
+                                    </div>
+                                    <div class="col-md-1 d-flex justify-content-md-start">
+                                        <button type="submit" class="btn btn-primary">Update</button>
+                                    </div>
+                                </div>
+                            </form>
+                        @endforeach
+                    @endif
+                </div>
             </div>
         </div>
     </div>
-    <!-- Buttons for add and remove row -->
-    <div class="d-flex flex-row-reverse mt-3">
-        <button type="button" id="add-row" class="btn btn-primary ms-2">Add Row</button>
-        <button type="button" id="remove-row" class="btn btn-danger">Remove Last Row</button>
-    </div>
-    <div class="d-flex flex-row-reverse mt-3">
-        <button type="submit" class="btn btn-success">Submit</button>
-    </div>
-</form>
-                    
+</div>
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    const householdContainer = document.getElementById('household-container');
-    const addRowButton = document.getElementById('add-row');
-    const removeRowButton = document.getElementById('remove-row');
-
-    function calculateAge(birthdate) {
-        const today = new Date();
-        let age = today.getFullYear() - birthdate.getFullYear();
-        const m = today.getMonth() - birthdate.getMonth();
-        if (m < 0 || (m === 0 && today.getDate() < birthdate.getDate())) {
-            age--;
-        }
-        return age;
-    }
-
-    function addEventListenersToRow(row) {
-        const birthdateInput = row.querySelector('.birthdate-input');
-        const ageInput = row.querySelector('.age-input');
-
-        birthdateInput.addEventListener('change', function() {
-            const birthdate = new Date(this.value);
-            const age = calculateAge(birthdate);
-            ageInput.value = age;
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('add-row').addEventListener('click', function () {
+            var container = document.getElementById('needs-container');
+            var newRow = document.createElement('div');
+            newRow.classList.add('row', 'mb-3');
+            newRow.innerHTML = `
+                <div class="col-md-12">
+                    <label for="needs" class="form-label">Need:</label>
+                    <input type="text" name="needs[]" id="needs" class="form-control">
+                </div>
+            `;
+            container.appendChild(newRow);
         });
-    }
 
-    addRowButton.addEventListener('click', function() {
-        const newRow = document.querySelector('.household-row').cloneNode(true);
-        newRow.querySelectorAll('input').forEach(input => input.value = '');
-        addEventListenersToRow(newRow);
-        householdContainer.appendChild(newRow);
+        document.getElementById('remove-row').addEventListener('click', function () {
+            var container = document.getElementById('needs-container');
+            if (container.children.length > 1) {
+                container.removeChild(container.lastElementChild);
+            }
+        });
     });
-
-    removeRowButton.addEventListener('click', function() {
-        const rows = householdContainer.querySelectorAll('.household-row');
-        if (rows.length > 1) {
-            householdContainer.removeChild(rows[rows.length - 1]);
-        }
-    });
-
-    // Add event listeners to the initial row
-    document.querySelectorAll('.household-row').forEach(addEventListenersToRow);
-});
 </script>
+@endsection

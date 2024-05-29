@@ -14,7 +14,7 @@
                 <a class="nav-link" href="{{ route('admin.household.create') }}">MGA KASAMA SA BAHAY</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">MGA KAILANGAN NG PAMILYA</a>
+                <a class="nav-link" href="{{ route('admin.needs.create') }}">MGA KAILANGAN NG PAMILYA</a>
             </li>
         </ul>
         <div class="col-md-12 mt-3">

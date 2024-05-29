@@ -14,7 +14,7 @@
                 <a class="nav-link active" href="{{ route('admin.household.create') }}">MGA KASAMA SA BAHAY</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">MGA KAILANGAN NG PAMILYA</a>
+                <a class="nav-link" href="{{ route('admin.needs.create') }}">MGA KAILANGAN NG PAMILYA</a>
             </li>
         </ul>
         <div class="col-md-12 mt-3">
@@ -92,15 +92,15 @@
                             <form action="{{ route('admin.household.update', $household->id) }}" method="post">
                                 @csrf
                                 @method('PUT')
-                                <div class="row household-row">
-                                    <div class="col-lg-3">
+                                <div class="row align-items-end mt-2">
+                                    <div class="col-md-3">
                                         <label for="full_name" class="form-label">Full name</label>
                                         <input type="text" name="full_name" id="full_name" class="form-control" value="{{ $household->full_name }}">
                                         @error('full_name')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <div class="col-lg-1">
+                                    <div class="col-md-1">
                                         <label for="relation_id" class="form-label">Relationship</label>
                                         <select name="relation_id" class="form-select" id="relation_id">
                                             @foreach($listOfRelation as $relation)
@@ -111,32 +111,32 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <div class="col-lg-1">
+                                    <div class="col-md-1">
                                         <label for="birthdate" class="form-label">Birthdate</label>
                                         <input type="date" id="birthdate" name="birthdate" class="form-control birthdate-input" value="{{ $household->birthdate }}">
                                         @error('birthdate')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <div class="col-lg-1">
+                                    <div class="col-md-1">
                                         <label for="age" class="form-label">Age</label>
                                         <input type="number" id="age" name="age" class="form-control age-input" value="{{ $household->age }}">
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-md-2">
                                         <label for="work" class="form-label">Work</label>
                                         <input type="text" id="work" name="work" class="form-control" value="{{ $household->work }}">
                                         @error('work')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <div class="col-lg-2">
+                                    <div class="col-md-2">
                                         <label for="monthly_income" class="form-label">Monthly income</label>
                                         <input type="text" id="monthly_income" name="monthly_income" class="form-control" value="{{ $household->monthly_income }}">
                                         @error('monthly_income')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <div class="col-lg-1">
+                                    <div class="col-md-1">
                                         <label for="voters" class="form-label">Taguig voters?</label>
                                         <select name="voters" id="voters" class="form-select">
                                             <option value="yes" {{ $household->voters == 'yes' ? 'selected' : '' }}>Yes</option>
@@ -146,7 +146,7 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <div class="d-flex flex-row-reverse p-3">
+                                    <div class="col-md-1 d-flex justify-content-md-start">
                                         <input type="submit" value="Update" class="btn btn-primary">
                                     </div>
                                 </div>

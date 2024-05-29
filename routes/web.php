@@ -22,6 +22,7 @@ use App\Http\Controllers\ResidenceController;
 use App\Http\Controllers\HouseholdController;
 use App\Http\Controllers\PersonalController;
 use App\Http\Controllers\PreviousController;
+use App\Http\Controllers\NeedContoller;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,6 +74,7 @@ Route::middleware(['auth', Admin_role::class])->group(function() {
         Route::resource('/household', HouseholdController::class);
         Route::resource('/personal', PersonalController::class);
         Route::resource('/previous', PreviousController::class);
+        Route::resource('/needs', NeedContoller::class);
     });
 });
 
