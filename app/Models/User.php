@@ -21,6 +21,11 @@ class User extends Authenticatable
         'role',
     ];
 
+    public static function getAllUser()
+    {
+        return self::all();
+    }
+
     protected $hidden = [
         'password',
         'remember_token',
@@ -29,4 +34,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function userInfo()
+    {
+        return $this->hasOne(User_info::class, 'user_id', 'id');
+    }
+
+    public function userAddress()
+    {
+        return $this->hasOne(User_address::class, 'user_id', 'id');
+    } 
 }
