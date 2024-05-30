@@ -20,7 +20,10 @@ class ApplicantController extends Controller
 
     public function show(string $id)
     {
-        //
+        $details = User::findOrFail($id);
+        return view('Applicant.details', compact(
+            'details'
+        ));
     }
     
     public function destroy(string $id)

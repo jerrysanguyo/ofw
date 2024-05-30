@@ -60,7 +60,7 @@
                                             Action
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="{{ route('admin.applicant.edit', ['applicant' => $applicant->id]) }}">Update</a></li>
+                                            <li><a class="dropdown-item" href="{{ route('admin.applicant.show', ['applicant' => $applicant->id]) }}">Details</a></li>
                                         </ul>
                                     </div>
                                 </td>

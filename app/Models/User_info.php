@@ -22,4 +22,16 @@ class User_info extends Model
         'education_id',
         'voters',
     ];
+
+    public function religion() {
+        return $this->belongsTo(Type_religion::class, 'religion_id');
+    }
+
+    public function civil() {
+        return $this->belongsTo(Type_civil_status::class, 'civil_id');
+    }
+
+    public function education() {
+        return $this->belongsTo(Type_educational_attainment::class, 'education_id');
+    }
 }
