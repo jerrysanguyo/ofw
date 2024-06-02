@@ -4,17 +4,20 @@
 <div class="container-fluid">
     <div class="row justify-content-center">
         <ul class="nav nav-pills nav-fill">
+            @php
+                $baseRoute = Auth::user()->role === 'admin' ? 'admin' : 'user';
+            @endphp
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.personal.create') }}">PERSONAL NA INPORMASIYON</a>
+                <a class="nav-link" href="{{ route($baseRoute . '.personal.create') }}">PERSONAL NA INPORMASIYON</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.previous.create') }}">IMPORMASIYON NOONG HULING NAG TRABAHO SA ABROAD</a>
+                <a class="nav-link" href="{{ route($baseRoute . '.previous.create') }}">IMPORMASIYON NOONG HULING NAG TRABAHO SA ABROAD</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" href="{{ route('admin.household.create') }}">MGA KASAMA SA BAHAY</a>
+                <a class="nav-link active" href="{{ route($baseRoute . '.household.create') }}">MGA KASAMA SA BAHAY</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.needs.create') }}">MGA KAILANGAN NG PAMILYA</a>
+                <a class="nav-link" href="{{ route($baseRoute . '.needs.create') }}">MGA KAILANGAN NG PAMILYA</a>
             </li>
         </ul>
         <div class="col-md-12 mt-3">
@@ -36,7 +39,11 @@
                     @endif
                     <span class="fs-6 text-danger">*Kindly put N/A if not applicable</span>
                     @if($listOfComposition->isEmpty())
-                    <form action="{{ route('admin.household.store') }}" method="POST">
+
+                    @php
+                        $baseRoute = Auth::user()->role === 'admin' ? 'admin' : 'user';
+                    @endphp
+                    <form action="{{ route($baseRoute . '.household.store') }}" method="POST">
                         @csrf
                         <div id="household-container">
                             <div class="row household-row">
@@ -89,7 +96,10 @@
                     @else
                         @foreach($listOfComposition as $household)
                             <!-- Display existing household compositions -->
-                            <form action="{{ route('admin.household.update', $household->id) }}" method="post">
+                            @php
+                                $baseRoute = Auth::user()->role === 'admin' ? 'admin' : 'user';
+                            @endphp
+                            <form action="{{ route($baseRoute . '.household.update', $household->id) }}" method="post">
                                 @csrf
                                 @method('PUT')
                                 <div class="row align-items-end mt-2">

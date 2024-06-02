@@ -4,17 +4,20 @@
 <div class="container-fluid">
     <div class="row justify-content-center">
         <ul class="nav nav-pills nav-fill">
+            @php
+                $baseRoute = Auth::user()->role === 'admin' ? 'admin' : 'user';
+            @endphp
             <li class="nav-item">
-                <a class="nav-link active" href="{{ route('admin.personal.create') }}">PERSONAL NA INPORMASIYON</a>
+                <a class="nav-link active" href="{{ route($baseRoute . '.personal.create') }}">PERSONAL NA INPORMASIYON</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.previous.create') }}">IMPORMASIYON NOONG HULING NAG TRABAHO SA ABROAD</a>
+                <a class="nav-link" href="{{ route($baseRoute . '.previous.create') }}">IMPORMASIYON NOONG HULING NAG TRABAHO SA ABROAD</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.household.create') }}">MGA KASAMA SA BAHAY</a>
+                <a class="nav-link" href="{{ route($baseRoute . '.household.create') }}">MGA KASAMA SA BAHAY</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.needs.create') }}">MGA KAILANGAN NG PAMILYA</a>
+                <a class="nav-link" href="{{ route($baseRoute . '.needs.create') }}">MGA KAILANGAN NG PAMILYA</a>
             </li>
         </ul>
         <div class="col-md-12 mt-3">
@@ -36,7 +39,8 @@
                     @endif
 
                     @php
-                        $formAction = isset($userInfo) ? route('admin.personal.update', $userInfo->id) : route('admin.personal.store');
+                        $baseRoute = Auth::user()->role === 'admin' ? 'admin' : 'user';
+                        $formAction = isset($userInfo) ? route("$baseRoute.personal.update", $userInfo->id) : route("$baseRoute.personal.store");
                         $formMethod = isset($userInfo) ? 'PUT' : 'POST';
                     @endphp
 

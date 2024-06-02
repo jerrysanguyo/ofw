@@ -137,14 +137,19 @@
                     </div>
                     <hr>
                     <div class="offcanvas-body">
-                            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                                <li class="side-nav-title mb-3">Navigation</li>
-                                <li class="nav-item fs-7 {{ Request::is('admin.personal.create') ? 'active' : '' }}">
-                                    <a href="{{ route('admin.personal.create') }}" class="nav-link">
-                                        <i class="fa-solid fa-chart-line mx-3"></i> Personal
+                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                            <li class="side-nav-title mb-3">Navigation</li>
+                            @if (Auth::user()->role === 'admin')
+                                <li class="nav-item fs-7 {{ Request::is('admin.home') ? 'active' : '' }}">
+                                    <a href="{{ route('admin.home') }}" class="nav-link">
+                                        <i class="fa-solid fa-chart-line mx-3"></i> Home
                                     </a>
                                 </li>
-                        @if (Auth::user()->role === 'admin')
+                                <li class="nav-item fs-7 {{ Request::is('admin.personal.create') ? 'active' : '' }}">
+                                    <a href="{{ route('admin.personal.create') }}" class="nav-link">
+                                        <i class="fa-solid fa-chart-line mx-3"></i> Form
+                                    </a>
+                                </li>
                                 <li class="nav-item fs-7 {{ Request::is('admin.applicant.index') ? 'active' : '' }}">
                                     <a href="{{ route('admin.applicant.index') }}" class="nav-link">
                                         <i class="fa-solid fa-chart-line mx-3"></i> List of Applicant
@@ -227,8 +232,19 @@
                                     </a>
                                 </li>
                                 <hr>
-                            </ul>
-                        @endif
+                                @else
+                                    <li class="nav-item fs-7 {{ Request::is('user.home') ? 'active' : '' }}">
+                                        <a href="{{ route('user.home') }}" class="nav-link">
+                                            <i class="fa-solid fa-chart-line mx-3"></i> Home
+                                        </a>
+                                    </li>
+                                    <li class="nav-item fs-7 {{ Request::is('user.personal.create') ? 'active' : '' }}">
+                                        <a href="{{ route('user.personal.create') }}" class="nav-link">
+                                            <i class="fa-solid fa-chart-line mx-3"></i> Form
+                                        </a>
+                                    </li>
+                            @endif
+                        </ul>
                     </div>
                 </div>
                 @endguest

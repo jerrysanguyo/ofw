@@ -4,17 +4,20 @@
 <div class="container-fluid">
     <div class="row justify-content-center">
         <ul class="nav nav-pills nav-fill">
+            @php
+                $baseRoute = Auth::user()->role === 'admin' ? 'admin' : 'user';
+            @endphp
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.personal.create') }}">PERSONAL NA INPORMASIYON</a>
+                <a class="nav-link" href="{{ route($baseRoute . '.personal.create') }}">PERSONAL NA INPORMASIYON</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" href="{{ route('admin.previous.create') }}">IMPORMASIYON NOONG HULING NAG TRABAHO SA ABROAD</a>
+                <a class="nav-link active" href="{{ route($baseRoute . '.previous.create') }}">IMPORMASIYON NOONG HULING NAG TRABAHO SA ABROAD</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.household.create') }}">MGA KASAMA SA BAHAY</a>
+                <a class="nav-link" href="{{ route($baseRoute . '.household.create') }}">MGA KASAMA SA BAHAY</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.needs.create') }}">MGA KAILANGAN NG PAMILYA</a>
+                <a class="nav-link" href="{{ route($baseRoute . '.needs.create') }}">MGA KAILANGAN NG PAMILYA</a>
             </li>
         </ul>
         <div class="col-md-12 mt-3">
@@ -34,7 +37,14 @@
                             </ul>
                         </div>
                     @endif
-                    <form action="{{ isset($previousJob) ? route('admin.previous.update', $previousJob->id) : route('admin.previous.store') }}" method="post">
+
+                    @php
+                        $baseRoute = Auth::user()->role === 'admin' ? 'admin' : 'user';
+                        $formAction = isset($previousJob) ? route("$baseRoute.previous.update", $previousJob->id) : route("$baseRoute.previous.store");
+                        $formMethod = isset($previousJob) ? 'PUT' : 'POST';
+                    @endphp
+
+                    <form action="{{ $formAction }}" method="post">
                         @csrf
                         @if(isset($previousJob))
                             @method('PUT')

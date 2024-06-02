@@ -47,7 +47,11 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::middleware(['auth', User_role::class])->group(function() {
     Route::prefix('user')->name('user.')->group(function () {
-
+        Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+        Route::resource('/household', HouseholdController::class);
+        Route::resource('/personal', PersonalController::class);
+        Route::resource('/previous', PreviousController::class);
+        Route::resource('/needs', NeedContoller::class);
     });
 });
 

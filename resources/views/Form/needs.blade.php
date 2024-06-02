@@ -4,17 +4,20 @@
 <div class="container-fluid">
     <div class="row justify-content-center">
         <ul class="nav nav-pills nav-fill">
+            @php
+                $baseRoute = Auth::user()->role === 'admin' ? 'admin' : 'user';
+            @endphp
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.personal.create') }}">PERSONAL NA INPORMASIYON</a>
+                <a class="nav-link" href="{{ route($baseRoute . '.personal.create') }}">PERSONAL NA INPORMASIYON</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.previous.create') }}">IMPORMASIYON NOONG HULING NAG TRABAHO SA ABROAD</a>
+                <a class="nav-link" href="{{ route($baseRoute . '.previous.create') }}">IMPORMASIYON NOONG HULING NAG TRABAHO SA ABROAD</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.household.create') }}">MGA KASAMA SA BAHAY</a>
+                <a class="nav-link" href="{{ route($baseRoute . '.household.create') }}">MGA KASAMA SA BAHAY</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" href="{{ route('admin.needs.create') }}">MGA KAILANGAN NG PAMILYA</a>
+                <a class="nav-link active" href="{{ route($baseRoute . '.needs.create') }}">MGA KAILANGAN NG PAMILYA</a>
             </li>
         </ul>
         <div class="col-md-12 mt-3">
@@ -35,8 +38,11 @@
                         </div>
                     @endif
                     <span class="fs-6 text-danger">*Kindly put N/A if not applicable</span>
-                    @if(!$user_need)
-                    <form action="{{ route('admin.needs.store') }}" method="post">
+                    @if(!$user_need)                    
+                    @php
+                        $baseRoute = Auth::user()->role === 'admin' ? 'admin' : 'user';
+                    @endphp
+                    <form action="{{ route($baseRoute . '.needs.store') }}" method="post">
                         @csrf
                         <div id="needs-container">
                             <div class="row mb-3">
@@ -57,7 +63,10 @@
                     </form>
                     @else
                         @foreach($listOfNeeds as $need)
-                            <form action="{{ route('admin.needs.update', $need->id) }}" method="post">
+                            @php
+                                $baseRoute = Auth::user()->role === 'admin' ? 'admin' : 'user';
+                            @endphp
+                            <form action="{{ route($baseRoute . '.needs.update', $need->id) }}" method="post">
                                 @csrf
                                 @method('PUT')
                                 <div class="row mb-3 align-items-end">
