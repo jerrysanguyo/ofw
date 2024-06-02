@@ -16,6 +16,7 @@ use App\Http\Requests\StoreUser_infoRequest;
 use App\Http\Requests\UpdateUser_infoRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class PersonalController extends Controller
 {
@@ -76,15 +77,15 @@ class PersonalController extends Controller
             ]);
 
             DB::commit();
-
-            return redirect()->route('admin.previous.create')
+            $baseRoute = Auth::user()->role === 'admin' ? 'admin' : 'user';
+            return redirect()->route($baseRoute . '.previous.create')
                             ->with('success', 'User information has been stored successfully');
         } catch (\Exception $e) {
             DB::rollBack();
 
             Log::error('Failed to store user information', ['error' => $e->getMessage()]);
-
-            return redirect()->route('admin.personal.create')
+            $baseRoute = Auth::user()->role === 'admin' ? 'admin' : 'user';
+            return redirect()->route($baseRoute . '.personal.create')
                             ->with('error', 'Failed to store user information. Please try again.');
         }
     }
@@ -120,14 +121,14 @@ class PersonalController extends Controller
             ]);
 
             DB::commit();
-
-            return redirect()->route('admin.personal.create')->with('success', 'User information has been updated successfully');
+            $baseRoute = Auth::user()->role === 'admin' ? 'admin' : 'user';
+            return redirect()->route($baseRoute . '.personal.create')->with('success', 'User information has been updated successfully');
         } catch (\Exception $e) {
             DB::rollBack();
 
             Log::error('Failed to update user information', ['error' => $e->getMessage()]);
-
-            return redirect()->route('admin.personal.create')->with('error', 'Failed to update user information. Please try again.');
+            $baseRoute = Auth::user()->role === 'admin' ? 'admin' : 'user';
+            return redirect()->route($baseRoute . '.personal.create')->with('error', 'Failed to update user information. Please try again.');
         }
     }
 }

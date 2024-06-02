@@ -48,5 +48,5 @@ class User extends Authenticatable
     public function userPrevious()
     {
         return $this->hasOne(User_previous_job::class, 'user_id', 'id');
-    } 
+    }
 }

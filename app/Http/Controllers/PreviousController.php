@@ -13,6 +13,7 @@ use App\Http\Requests\Storeuser_previous_jobRequest;
 use App\Http\Requests\Updateuser_previous_jobRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class PreviousController extends Controller
 {
@@ -57,13 +58,14 @@ class PreviousController extends Controller
     
             DB::commit();
     
-            return redirect()->route('admin.household.create')->with('success', 'Previous job created successfully.');
+            $baseRoute = Auth::user()->role === 'admin' ? 'admin' : 'user';
+            return redirect()->route($baseRoute . '.household.create')->with('success', 'Previous job created successfully.');
         } catch (\Exception $e) {
             DB::rollBack();
     
             Log::error('Failed to create Previous job', ['error' => $e->getMessage()]);
-    
-            return redirect()->route('admin.previous.create')->with('error', 'Failed to create Previous job. Please try again.');
+            $baseRoute = Auth::user()->role === 'admin' ? 'admin' : 'user';
+            return redirect()->route($baseRoute . '.previous.create')->with('error', 'Failed to create Previous job. Please try again.');
         }
     }
     
@@ -77,11 +79,14 @@ class PreviousController extends Controller
             $previousJob->update($validated);
             
             DB::commit();
-            return redirect()->route('admin.previous.create')->with('success', 'Previous job updated successfully.');
+    
+            $baseRoute = Auth::user()->role === 'admin' ? 'admin' : 'user';
+            return redirect()->route($baseRoute . '.previous.create')->with('success', 'Previous job updated successfully.');
         } catch (\Exception $e) {
             DB::rollBack();
+            $baseRoute = Auth::user()->role === 'admin' ? 'admin' : 'user';
             Log::error('Failed to update Previous job', ['error' => $e->getMessage()]);
-            return redirect()->route('admin.previous.create')->with('error', 'Failed to update Previous job. Please try again.');
+            return redirect()->route($baseRoute . '.previous.create')->with('error', 'Failed to update Previous job. Please try again.');
         }
     }
 }

@@ -7,6 +7,7 @@ use App\Http\Requests\StoreUser_needRequest;
 use App\Http\Requests\UpdateUser_needRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class NeedContoller extends Controller
 {
@@ -14,7 +15,7 @@ class NeedContoller extends Controller
     {
         $userId = auth()->id();
         $user_need = User_need::where('user_id', $userId)->first();
-        $listOfNeeds = User_need::getAllNeeds();
+        $listOfNeeds = User_need::where('user_id', $userId)->get();
 
         return view('Form.needs', compact(
             'user_need',
@@ -36,14 +37,14 @@ class NeedContoller extends Controller
                 ]);
             }
             DB::commit();
-    
-            return redirect()->route('admin.needs.create')->with('success', 'Needs created successfully.');
+            $baseRoute = Auth::user()->role === 'admin' ? 'admin' : 'user';
+            return redirect()->route($baseRoute . '.home')->with('success', 'Needs created successfully.');
         } catch (\Exception $e) {
             DB::rollBack();
     
             Log::error('Failed to create needs', ['error' => $e->getMessage()]);
-    
-            return redirect()->route('admin.needs.create')->with('error', 'Failed to create needs. Please try again.');
+            $baseRoute = Auth::user()->role === 'admin' ? 'admin' : 'user';
+            return redirect()->route($baseRoute . '.needs.create')->with('error', 'Failed to create needs. Please try again.');
         }
     }
 
@@ -57,11 +58,13 @@ class NeedContoller extends Controller
             $user_need->update($validated);
             
             DB::commit();
-            return redirect()->route('admin.needs.create')->with('success', 'Need/s updated successfully.');
+            $baseRoute = Auth::user()->role === 'admin' ? 'admin' : 'user';
+            return redirect()->route($baseRoute . '.needs.create')->with('success', 'Need/s updated successfully.');
         } catch (\Exception $e) {
             DB::rollBack();
+            $baseRoute = Auth::user()->role === 'admin' ? 'admin' : 'user';
             Log::error('Failed to update Need/s', ['error' => $e->getMessage()]);
-            return redirect()->route('admin.needs.create')->with('error', 'Failed to update Need/s. Please try again.');
+            return redirect()->route($baseRoute . '.needs.create')->with('error', 'Failed to update Need/s. Please try again.');
         }
     }
 }

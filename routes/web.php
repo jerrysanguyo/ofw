@@ -86,6 +86,6 @@ Route::middleware(['auth', Admin_role::class])->group(function() {
 
 Route::middleware(['auth', Super_admin_role::class])->group(function() {
     Route::prefix('superadmin')->name('superadmin.')->group(function () {
-
+        Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     });
 });
