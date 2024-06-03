@@ -73,7 +73,9 @@
                 <div class="card border shadow">
                     <div class="card-body">
                         <div class="d-flex align-items-end flex-column mb-3">
-                            <button class="btn btn-primary">View more records</button>
+                            <a href="{{ route('admin.applicant.index') }}">
+                                <button class="btn btn-primary">View more records</button>
+                            </a>
                         </div>
                         <table class="table table-striped">
                             <thead>
