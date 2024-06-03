@@ -12,7 +12,36 @@
         @endif
     </div>
 </div>
+
 <script>
+    document.getElementById('countroCountBtn').addEventListener('click', function() {
+        const countryId = document.getElementById('country').value;
+        if (countryId) {
+            fetch('{{ route("admin.home.getOFWCount") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({ country: countryId })
+            })
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return res.json();
+            })
+            .then(data => {
+                if (data.error) {
+                    console.error('Error:', data.error);
+                } else {
+                    document.getElementById('countroCount').textContent = data.count;
+                }
+            })
+            .catch(err => console.error('Error:', err));
+        }
+    });
+
     function fetchData(buttonId, route, startDateId, endDateId, countClass) {
         const button = document.getElementById(buttonId);
         button.onclick = () => {

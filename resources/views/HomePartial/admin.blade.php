@@ -20,7 +20,7 @@
                         </div>
                         <hr>
                         <div class="row text-center m-3"> 
-                            <span id="applicantCount" class="fs-1">{{ $totalCountApplicant }}</span>
+                            <span id="applicantCount" class="fs-1"></span>
                         </div>
                         <div class="d-grid gap-2 text-center">
                             <a href="#">
@@ -39,25 +39,21 @@
                             </div>
                         </div>
                         <div class="row align-items-end mt-4">
-                            <div class="col-md-4">
-                                <label for="continent" class="form-label">Continent:</label>
-                                <select name="continent" id="continent" class="form-select">
-                                    <option value="">Asia</option>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
+                            <div class="col-md-8">
                                 <label for="country" class="form-label">Country:</label>
                                 <select name="country" id="country" class="form-select">
-                                    <option value="">Japan</option>
+                                    @foreach($listOfCountry as $country)
+                                    <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="col-md-4 d-flex justify-content-md-start">
-                                <button id="generateButtonBorrowed" class="btn btn-primary mt-4 mt-md-0">Generate</button>
+                                <button id="countroCountBtn" class="btn btn-primary mt-4 mt-md-0">Generate</button>
                             </div>
                         </div>
                         <hr>
                         <div class="row text-center m-3"> 
-                            <span id="borrowCount" class="fs-1">300</span>
+                            <span id="countroCount" class="fs-1"></span>
                         </div>
                         <div class="d-grid gap-2 text-center">
                             <a href="#">
@@ -117,7 +113,7 @@
     </div>
 </div>
 @push('scripts')
-    <script>
+<script>
     $(document).ready(function() {
         $('#applicant-table').DataTable({
             "processing": true,
@@ -126,13 +122,7 @@
             "order": [[0, "desc"]],
         });
     });
-
-    function confirmDelete(id) {
-        if (confirm('Are you sure you want to delete this Barangay?')) {
-            document.getElementById('delete-form-' + id).submit();
-        }
-    }
-    </script>
+</script>
 @endpush
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
@@ -140,22 +130,21 @@
     google.charts.setOnLoadCallback(drawChart);
 
     function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ['Name', 'Count'],
+            ['Food', 11],
+            ['Water', 2],
+            ['Cash', 2],
+            ['Clothes', 2],
+            ['Grocery', 7]
+        ]);
 
-    var data = google.visualization.arrayToDataTable([
-        ['Name', 'Count'],
-        ['Food',     11],
-        ['Water',      2],
-        ['Cash',  2],
-        ['Clothes', 2],
-        ['Grocery',    7]
-    ]);
+        var options = {
+            title: 'OFW family Needs'
+        };
 
-    var options = {
-        title: 'OFW family Needs'
-    };
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 
-    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
-    chart.draw(data, options);
+        chart.draw(data, options);
     }
 </script>

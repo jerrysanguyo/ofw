@@ -66,6 +66,10 @@ Route::middleware(['auth', Admin_role::class])->group(function() {
             ->name('home');
         Route::post('/home/applicantCount', [HomeController::class, 'getApplicantCount'])
             ->name('home.applicantCount');
+        Route::post('/ofw-count', [HomeController::class, 'getOFWCount'])
+            ->name('home.getOFWCount');
+
+
         Route::resource('/barangay', BarangayController::class);
         Route::resource('/city', CityController::class);
         Route::resource('/civil', CivilStatusController::class);
