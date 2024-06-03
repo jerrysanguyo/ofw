@@ -18,6 +18,7 @@ class HomeController extends Controller
     {
         $id = Auth()->id();
         $totalCountApplicant = User_info::count();
+        $listOfApplicant = User::getAllUser();
         $applicant = User::where('id', $id)
                             ->whereHas('userInfo')
                             ->whereHas('userAddress')
@@ -28,6 +29,7 @@ class HomeController extends Controller
             'details',
             'applicant',
             'totalCountApplicant',
+            'listOfApplicant',
         ));
     }
 

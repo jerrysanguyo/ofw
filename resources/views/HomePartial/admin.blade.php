@@ -77,7 +77,7 @@
                                 <button class="btn btn-primary">View more records</button>
                             </a>
                         </div>
-                        <table class="table table-striped">
+                        <table class="table table-striped" id="applicant-table">
                             <thead>
                                 <tr>
                                     <th>Name</th>
@@ -87,36 +87,20 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach($listOfApplicant as $applicant)
                                 <tr>
-                                    <td>Calunsod, Pedro</td>
-                                    <td>09999999999</td>
-                                    <td>Pedro@gmail.com</td>
-                                    <td>Pakistan</td>
+                                    <td>
+                                        {{ 
+                                            ($applicant->last_name ?? 'N/A') . ', ' .
+                                            ($applicant->first_name ?? 'N/A') . ' ' . 
+                                            ($applicant->middle_name ?? 'N/A')
+                                        }}
+                                    </td>
+                                    <td>{{ $applicant->contact_number ?? 'N/A' }}</td>
+                                    <td>{{ $applicant->email ?? 'N/A' }}</td>
+                                    <td>{{ $applicant->userPrevious->country->name }}</td>
                                 </tr>
-                                <tr>
-                                    <td>Doe, John</td>
-                                    <td>09999999991</td>
-                                    <td>Doe@gmail.com</td>
-                                    <td>Canada</td>
-                                </tr>
-                                <tr>
-                                    <td>Ipsum, Lorem</td>
-                                    <td>09999999992</td>
-                                    <td>Ipsum@gmail.com</td>
-                                    <td>Korea</td>
-                                </tr>
-                                <tr>
-                                    <td>Esto, Renato</td>
-                                    <td>09999999993</td>
-                                    <td>Esto@gmail.com</td>
-                                    <td>Russia</td>
-                                </tr>
-                                <tr>
-                                    <td>Dela, Oscar</td>
-                                    <td>09999999994</td>
-                                    <td>Dela@gmail.com</td>
-                                    <td>Africa</td>
-                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -132,6 +116,24 @@
         </div>
     </div>
 </div>
+@push('scripts')
+    <script>
+    $(document).ready(function() {
+        $('#applicant-table').DataTable({
+            "processing": true,
+            "serverSide": false,
+            "pageLength": 5,
+            "order": [[0, "desc"]],
+        });
+    });
+
+    function confirmDelete(id) {
+        if (confirm('Are you sure you want to delete this Barangay?')) {
+            document.getElementById('delete-form-' + id).submit();
+        }
+    }
+    </script>
+@endpush
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
     google.charts.load('current', {'packages':['corechart']});
