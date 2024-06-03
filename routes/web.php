@@ -24,6 +24,7 @@ use App\Http\Controllers\PersonalController;
 use App\Http\Controllers\PreviousController;
 use App\Http\Controllers\NeedContoller;
 use App\Http\Controllers\ApplicantController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,7 +48,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::middleware(['auth', User_role::class])->group(function() {
     Route::prefix('user')->name('user.')->group(function () {
-        Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+        Route::get('/home', [HomeController::class, 'index'])
+            ->name('home');
         Route::resource('/household', HouseholdController::class);
         Route::resource('/personal', PersonalController::class);
         Route::resource('/previous', PreviousController::class);
@@ -60,7 +62,10 @@ Route::get('/get-countries/{continentId}', [PreviousController::class, 'getCount
 
 Route::middleware(['auth', Admin_role::class])->group(function() {
     Route::prefix('admin')->name('admin.')->group(function () {
-        Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+        Route::get('/home', [HomeController::class, 'index'])
+            ->name('home');
+        Route::post('/home/applicantCount', [HomeController::class, 'getApplicantCount'])
+            ->name('home.applicantCount');
         Route::resource('/barangay', BarangayController::class);
         Route::resource('/city', CityController::class);
         Route::resource('/civil', CivilStatusController::class);
@@ -86,6 +91,7 @@ Route::middleware(['auth', Admin_role::class])->group(function() {
 
 Route::middleware(['auth', Super_admin_role::class])->group(function() {
     Route::prefix('superadmin')->name('superadmin.')->group(function () {
-        Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+        Route::get('/home', [HomeController::class, 'index'])
+            ->name('home');
     });
 });

@@ -7,20 +7,20 @@
                         <span class="fs-4"><i class="fa-solid fa-handshake m-3"></i>Total Applicant</span>
                         <div class="row align-items-end mt-4">
                             <div class="col-md-4">
-                                <label for="startDateBor" class="form-label">Start date:</label>
-                                <input type="date" id="startDateBor" class="form-control"> 
+                                <label for="startDate" class="form-label">Start date:</label>
+                                <input type="date" id="startDate" class="form-control"> 
                             </div>
                             <div class="col-md-4">
-                                <label for="endDateBor" class="form-label">End date:</label>
-                                <input type="date" id="endDateBor" class="form-control">
+                                <label for="endDate" class="form-label">End date:</label>
+                                <input type="date" id="endDate" class="form-control">
                             </div>
                             <div class="col-md-4 d-flex justify-content-md-start">
-                                <button id="generateButtonBorrowed" class="btn btn-primary mt-4 mt-md-0">Generate</button>
+                                <button id="applicantCountBtn" class="btn btn-primary mt-4 mt-md-0">Generate</button>
                             </div>
                         </div>
                         <hr>
                         <div class="row text-center m-3"> 
-                            <span id="borrowCount" class="fs-1">1800</span>
+                            <span id="applicantCount" class="fs-1">{{ $totalCountApplicant }}</span>
                         </div>
                         <div class="d-grid gap-2 text-center">
                             <a href="#">
@@ -40,14 +40,14 @@
                         </div>
                         <div class="row align-items-end mt-4">
                             <div class="col-md-4">
-                                <label for="" class="form-label">Continent:</label>
-                                <select name="" id="" class="form-select">
+                                <label for="continent" class="form-label">Continent:</label>
+                                <select name="continent" id="continent" class="form-select">
                                     <option value="">Asia</option>
                                 </select>
                             </div>
                             <div class="col-md-4">
-                                <label for="" class="form-label">Country:</label>
-                                <select name="" id="" class="form-select">
+                                <label for="country" class="form-label">Country:</label>
+                                <select name="country" id="country" class="form-select">
                                     <option value="">Japan</option>
                                 </select>
                             </div>
