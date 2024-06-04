@@ -107,7 +107,7 @@
     <div class="col-md-6">
         <div class="card border shadow">
             <div class="card-body">
-                <div id="piechart" style="width: 100%; height: 630px;"></div>
+                <!-- graph -->
             </div>
         </div>
     </div>
@@ -122,29 +122,55 @@
             "order": [[0, "desc"]],
         });
     });
+
+    document.getElementById('countroCountBtn').addEventListener('click', function() {
+        const countryId = document.getElementById('country').value;
+        if (countryId) {
+            fetch('{{ route("admin.home.getOFWCount") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({ country: countryId })
+            })
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return res.json();
+            })
+            .then(data => {
+                if (data.error) {
+                    console.error('Error:', data.error);
+                } else {
+                    document.getElementById('countroCount').textContent = data.count;
+                }
+            })
+            .catch(err => console.error('Error:', err));
+        }
+    });
+
+    function fetchData(buttonId, route, startDateId, endDateId, countClass) {
+        const button = document.getElementById(buttonId);
+        button.onclick = () => {
+            fetch(route, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({
+                    startDate: document.getElementById(startDateId).value || null,
+                    endDate: document.getElementById(endDateId).value || null
+                })
+            })
+            .then(res => res.json())
+            .then(data => document.querySelector(countClass).textContent = `${data.count}`)
+            .catch(err => console.error('Error:', err));
+        };
+    }
+    
+    fetchData('applicantCountBtn', '{{ route("admin.home.applicantCount") }}', 'startDate', 'endDate', '#applicantCount');
 </script>
 @endpush
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-    google.charts.load('current', {'packages':['corechart']});
-    google.charts.setOnLoadCallback(drawChart);
-
-    function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-            ['Name', 'Count'],
-            ['Food', 11],
-            ['Water', 2],
-            ['Cash', 2],
-            ['Clothes', 2],
-            ['Grocery', 7]
-        ]);
-
-        var options = {
-            title: 'OFW family Needs'
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
-        chart.draw(data, options);
-    }
-</script>
