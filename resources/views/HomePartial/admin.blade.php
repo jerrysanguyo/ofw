@@ -94,7 +94,7 @@
                                     </td>
                                     <td>{{ $applicant->contact_number ?? 'N/A' }}</td>
                                     <td>{{ $applicant->email ?? 'N/A' }}</td>
-                                    <td>{{ $applicant->userPrevious->country->name }}</td>
+                                    <td>{{ $applicant->userPrevious->country->name ?? 'N/A' }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -107,14 +107,42 @@
     <div class="col-md-6">
         <div class="card border shadow">
             <div class="card-body">
-                <!-- graph -->
-                @include('HomePartial.geo', ['chartDataJson' => $chartDataJson])
+                <span class="fs-4">Geo graph</span>
+                @include('HomePartial.graph.geo', ['chartDataJson' => $chartDataJson])
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-lg-4">
+        <div class="card shadow border">
+            <div class="card-body">
+                <span class="fs-4">Beneficiaries graph</span>
+                <canvas id="beneficiaryChart" style="width:100%; height: 530px"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card shadow border">
+            <div class="card-body">
+                <span class="fs-4">Needs graph</span>
+                <canvas id="needsChart" style="width:100%; height: 530px"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card shadow border">
+            <div class="card-body">
+                <span class="fs-4">Job type graph</span>
+                <canvas id="job_type_chart" style="width:100%; height: 530px"></canvas>
             </div>
         </div>
     </div>
 </div>
 @push('scripts')
 <script>
+    // datatable
     $(document).ready(function() {
         $('#applicant-table').DataTable({
             "processing": true,
@@ -124,6 +152,7 @@
         });
     });
 
+    // counts
     document.getElementById('countroCountBtn').addEventListener('click', function() {
         const countryId = document.getElementById('country').value;
         if (countryId) {
@@ -173,5 +202,47 @@
     }
     
     fetchData('applicantCountBtn', '{{ route("admin.home.applicantCount") }}', 'startDate', 'endDate', '#applicantCount');
+
+    // charts
+    document.addEventListener('DOMContentLoaded', function () {
+        function createChart(elementId, labels, data, chartType) {
+            var ctx = document.getElementById(elementId).getContext('2d');
+
+            var colors = window.chartConfig.chartColors.slice();
+            var borderColors = window.chartConfig.chartBorderColors.slice();
+
+            if (labels.length > colors.length) {
+                var additionalColors = window.chartConfig.generateAdditionalColors(labels.length - colors.length);
+                colors = colors.concat(additionalColors.additionalColors);
+                borderColors = borderColors.concat(additionalColors.additionalBorderColors);
+           }
+
+           return new Chart(ctx, {
+               type: chartType,
+               data: {
+                   labels: labels,
+                   datasets: [{
+                       label: '',
+                       data: data,
+                       backgroundColor: colors,
+                       borderColor: borderColors,
+                       borderWidth: 1
+                   }]
+               }
+           });
+       }
+
+        var beneficiaryLabels = @json($distinctBeneficiary->pluck('age'));
+        var beneficiaryData = @json($distinctBeneficiary->pluck('beneficiaryCount'));
+        createChart('beneficiaryChart', beneficiaryLabels, beneficiaryData, 'polarArea');
+
+       var needsLabels = @json($distinctNeeds->pluck('needs'));
+       var needsData = @json($distinctNeeds->pluck('needsCount'));
+       createChart('needsChart', needsLabels, needsData, 'doughnut');
+
+       var jobTypesLabels = @json($distinctJobTypes->pluck('job_type'));
+       var jobTypesData = @json($distinctJobTypes->pluck('count'));
+       createChart('job_type_chart', jobTypesLabels, jobTypesData, 'bar');
+    });
 </script>
 @endpush

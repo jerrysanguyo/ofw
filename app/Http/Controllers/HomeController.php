@@ -7,6 +7,8 @@ use App\Models\User_info;
 use App\Models\User_previous_job;
 use App\Models\type_continent;
 use App\Models\type_country;
+use App\Models\User_need;
+use App\Models\User_household_composition;
 use App\DataTables\GlobalDataTable;
 use Illuminate\Support\Facades\DB;
 
@@ -25,6 +27,15 @@ class HomeController extends Controller
         $listOfApplicant = User::getAllUser();
         $listOfContinent = type_continent::getAllContinent();
         $listOfCountry = type_country::getAllCountry();
+        $distinctNeeds = User_need::select('needs', DB::raw('count(*) as needsCount'))
+                            ->groupBy('needs')
+                            ->get();
+        $distinctJobTypes = User_previous_job::select('job_type', DB::raw('count(*) as count'))
+                            ->groupBy('job_type')
+                            ->get();
+        $distinctBeneficiary = User_household_composition::select('age', DB::raw('count(*) as beneficiaryCount'))
+                            ->groupBy('age')
+                            ->get();
         $applicant = User::where('id', $id)
                             ->whereHas('userInfo')
                             ->whereHas('userAddress')
@@ -42,6 +53,9 @@ class HomeController extends Controller
             'listOfContinent',
             'listOfCountry',
             'chartDataJson',
+            'distinctNeeds',
+            'distinctJobTypes',
+            'distinctBeneficiary',
         ));
     }
 

@@ -11,6 +11,8 @@
     <link href="https://cdn.datatables.net/2.0.2/css/dataTables.dataTables.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.datatables.net/2.0.2/js/dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ asset('js/chart-config.js') }}"></script>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <style>
         .navbar, #offcanvasNavbar {
