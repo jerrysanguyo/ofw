@@ -234,7 +234,7 @@
 
         var beneficiaryLabels = @json($distinctBeneficiary->pluck('age'));
         var beneficiaryData = @json($distinctBeneficiary->pluck('beneficiaryCount'));
-        createChart('beneficiaryChart', beneficiaryLabels, beneficiaryData, 'polarArea');
+        createChart('beneficiaryChart', beneficiaryLabels, beneficiaryData, 'pie');
 
        var needsLabels = @json($distinctNeeds->pluck('needs'));
        var needsData = @json($distinctNeeds->pluck('needsCount'));
