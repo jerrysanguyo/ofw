@@ -108,6 +108,7 @@
         <div class="card border shadow">
             <div class="card-body">
                 <!-- graph -->
+                @include('HomePartial.geo', ['chartDataJson' => $chartDataJson])
             </div>
         </div>
     </div>

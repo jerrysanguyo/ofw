@@ -68,8 +68,8 @@ Route::middleware(['auth', Admin_role::class])->group(function() {
             ->name('home.applicantCount');
         Route::post('/ofw-count', [HomeController::class, 'getOFWCount'])
             ->name('home.getOFWCount');
-
-
+        Route::get('/geochart', [HomeController::class, 'showGeoChart']);
+        
         Route::resource('/barangay', BarangayController::class);
         Route::resource('/city', CityController::class);
         Route::resource('/civil', CivilStatusController::class);
