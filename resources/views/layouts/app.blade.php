@@ -157,6 +157,11 @@
                                         <i class="fa-solid fa-chart-line mx-3"></i> List of Applicant
                                     </a>
                                 </li>
+                                <li class="nav-item fs-7 {{ Request::is('admin.report.index') ? 'active' : '' }}">
+                                    <a href="{{ route('admin.report.index') }}" class="nav-link">
+                                        <i class="fa-solid fa-chart-line mx-3"></i> Report
+                                    </a>
+                                </li>
                                 <li class="side-nav-title mb-3">CMS</li>
                                 <li class="nav-item fs-7 {{ Request::is('admin.barangay.index') ? 'active' : '' }}">
                                     <a href="{{ route('admin.barangay.index') }}" class="nav-link">

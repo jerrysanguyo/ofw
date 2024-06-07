@@ -25,6 +25,7 @@ use App\Http\Controllers\PreviousController;
 use App\Http\Controllers\NeedContoller;
 use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,6 +63,7 @@ Route::get('/get-countries/{continentId}', [PreviousController::class, 'getCount
 
 Route::middleware(['auth', Admin_role::class])->group(function() {
     Route::prefix('admin')->name('admin.')->group(function () {
+        // home
         Route::get('/home', [HomeController::class, 'index'])
             ->name('home');
         Route::post('/home/applicantCount', [HomeController::class, 'getApplicantCount'])
@@ -69,7 +71,7 @@ Route::middleware(['auth', Admin_role::class])->group(function() {
         Route::post('/ofw-count', [HomeController::class, 'getOFWCount'])
             ->name('home.getOFWCount');
         Route::get('/geochart', [HomeController::class, 'showGeoChart']);
-        
+        // resource
         Route::resource('/barangay', BarangayController::class);
         Route::resource('/city', CityController::class);
         Route::resource('/civil', CivilStatusController::class);
@@ -90,6 +92,10 @@ Route::middleware(['auth', Admin_role::class])->group(function() {
         Route::resource('/previous', PreviousController::class);
         Route::resource('/needs', NeedContoller::class);
         Route::resource('/applicant', ApplicantController::class);
+        // report
+        Route::resource('/report', ReportController::class);
+        Route::post('/home/ageCount', [ReportController::class, 'getAgeCount'])
+            ->name('home.ageCount');
     });
 });
 
