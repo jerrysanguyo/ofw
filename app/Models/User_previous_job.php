@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class User_previous_job extends Model
 {
@@ -27,6 +28,13 @@ class User_previous_job extends Model
 
     public static function getAllPreviousJob() {
         return self::all();
+    }
+
+    public static function distinctJobTypesCount()
+    {
+        return self::select('job_type', DB::raw('count(*) as count'))
+                   ->groupBy('job_type')
+                   ->get();
     }
 
     public function job() {

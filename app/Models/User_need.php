@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class User_need extends Model
 {
@@ -17,5 +18,12 @@ class User_need extends Model
 
     public static function getAllNeeds() {
         return self::all();
+    }    
+    
+    public static function distinctNeedsCount()
+    {
+        return self::select('needs', DB::raw('count(*) as needsCount'))
+                   ->groupBy('needs')
+                   ->get();
     }
 }

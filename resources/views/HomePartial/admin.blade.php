@@ -4,7 +4,7 @@
             <div class="col-md-6">
                 <div class="card border shadow">
                     <div class="card-body">
-                        <span class="fs-4"><i class="fa-solid fa-handshake m-3"></i>Total Applicant</span>
+                        <span class="fs-4"><i class="fa-solid fa-suitcase m-3" style="color: #74C0FC;"></i></i>Total Applicant</span>
                         <div class="row align-items-end mt-4">
                             <div class="col-md-4">
                                 <label for="startDate" class="form-label">Start date:</label>
@@ -33,17 +33,16 @@
             <div class="col-md-6">
                 <div class="card border shadow">
                     <div class="card-body">
-                        <span class="fs-4"><i class="fa-solid fa-handshake m-3"></i>OFW per country</span>
+                        <span class="fs-4"><i class="fa-solid fa-globe m-3" style="color: #B197FC;"></i></i>OFW per Continent</span>
                         <div class="row">
-                            <div class="col-md-12">
-                            </div>
+                            <div class="col-md-12"></div>
                         </div>
                         <div class="row align-items-end mt-4">
                             <div class="col-md-8">
-                                <label for="country" class="form-label">Country:</label>
-                                <select name="country" id="country" class="form-select">
-                                    @foreach($listOfCountry as $country)
-                                    <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                <label for="continent" class="form-label">Continent:</label>
+                                <select name="continent" id="continent" class="form-select">
+                                    @foreach($listOfContinent as $continent)
+                                    <option value="{{ $continent->id }}">{{ $continent->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -52,8 +51,11 @@
                             </div>
                         </div>
                         <hr>
-                        <div class="row text-center m-3"> 
+                        <div class="row text-center m-3">
                             <span id="countroCount" class="fs-1"></span>
+                        </div>
+                        <div class="row text-center m-3">
+                            <ul id="countryList" class="list-unstyled"></ul>
                         </div>
                         <div class="d-grid gap-2 text-center">
                             <a href="#">
@@ -107,7 +109,7 @@
     <div class="col-md-6">
         <div class="card border shadow">
             <div class="card-body">
-                <span class="fs-4">Geo graph</span>
+                <span class="fs-4"><i class="fa-solid fa-map m-3" style="color: #63E6BE;"></i>Geo graph</span>
                 @include('HomePartial.graph.geo', ['chartDataJson' => $chartDataJson])
             </div>
         </div>
@@ -118,7 +120,7 @@
     <div class="col-lg-4">
         <div class="card shadow border">
             <div class="card-body">
-                <span class="fs-4">Beneficiaries graph</span>
+                <span class="fs-4"><i class="fa-solid fa-house m-3" style="color: #FFD43B;"></i>Beneficiaries graph</span>
                 <canvas id="beneficiaryChart" style="width:100%; height: 530px"></canvas>
             </div>
         </div>
@@ -126,7 +128,7 @@
     <div class="col-lg-4">
         <div class="card shadow border">
             <div class="card-body">
-                <span class="fs-4">Needs graph</span>
+                <span class="fs-4"><i class="fa-solid fa-cart-shopping m-3" style="color: #a040ba;"></i>Needs graph</span>
                 <canvas id="needsChart" style="width:100%; height: 530px"></canvas>
             </div>
         </div>
@@ -134,7 +136,7 @@
     <div class="col-lg-4">
         <div class="card shadow border">
             <div class="card-body">
-                <span class="fs-4">Job type graph</span>
+                <span class="fs-4"><i class="fa-solid fa-briefcase m-3" style="color: #d57e1a;"></i>Job type graph</span>
                 <canvas id="job_type_chart" style="width:100%; height: 530px"></canvas>
             </div>
         </div>
@@ -154,31 +156,39 @@
 
     // counts
     document.getElementById('countroCountBtn').addEventListener('click', function() {
-        const countryId = document.getElementById('country').value;
-        if (countryId) {
-            fetch('{{ route("admin.home.getOFWCount") }}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                },
-                body: JSON.stringify({ country: countryId })
-            })
-            .then(res => {
-                if (!res.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return res.json();
-            })
-            .then(data => {
-                if (data.error) {
-                    console.error('Error:', data.error);
-                } else {
-                    document.getElementById('countroCount').textContent = data.count;
-                }
-            })
-            .catch(err => console.error('Error:', err));
-        }
+        var continentId = document.getElementById('continent').value;
+        var countroCountSpan = document.getElementById('countroCount');
+        var countryList = document.getElementById('countryList');
+
+        countroCountSpan.textContent = 'Loading...';
+
+        fetch('/get-countries-by-continent', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({ continent: continentId })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                countroCountSpan.textContent = 'Error: ' + data.error;
+            } else {
+                countroCountSpan.textContent = '';
+                countryList.innerHTML = '';
+
+                data.forEach(country => {
+                    var listItem = document.createElement('li');
+                    listItem.textContent = `${country.country_name}: ${country.count}`;
+                    countryList.appendChild(listItem);
+                });
+            }
+        })
+        .catch(error => {
+            countroCountSpan.textContent = 'An error occurred';
+            console.error('Error fetching countries:', error);
+        });
     });
 
     function fetchData(buttonId, route, startDateId, endDateId, countClass) {

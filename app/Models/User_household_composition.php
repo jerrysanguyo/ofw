@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class User_household_composition extends Model
 {
@@ -24,6 +25,13 @@ class User_household_composition extends Model
     public static function getAllHousehold()
     {
         self::all();
+    }
+
+    public static function distinctBeneficiaryCount()
+    {
+        return self::select('age', DB::raw('count(*) as beneficiaryCount'))
+                   ->groupBy('age')
+                   ->get();
     }
 
     public function createdBy() {

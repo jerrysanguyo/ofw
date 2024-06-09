@@ -27,19 +27,10 @@ class HomeController extends Controller
         $listOfApplicant = User::getAllUser();
         $listOfContinent = type_continent::getAllContinent();
         $listOfCountry = type_country::getAllCountry();
-        $distinctNeeds = User_need::select('needs', DB::raw('count(*) as needsCount'))
-                            ->groupBy('needs')
-                            ->get();
-        $distinctJobTypes = User_previous_job::select('job_type', DB::raw('count(*) as count'))
-                            ->groupBy('job_type')
-                            ->get();
-        $distinctBeneficiary = User_household_composition::select('age', DB::raw('count(*) as beneficiaryCount'))
-                            ->groupBy('age')
-                            ->get();
-        $applicant = User::where('id', $id)
-                            ->whereHas('userInfo')
-                            ->whereHas('userAddress')
-                            ->get();
+        $distinctNeeds = User_need::distinctNeedsCount();
+        $distinctJobTypes = User_previous_job::distinctJobTypesCount();
+        $distinctBeneficiary = User_household_composition::distinctBeneficiaryCount();
+        $applicant = User::getApplicantById($id);
         $details = User::findOrFail($id);
 
         $chartDataJson = $this->showGeoChart();
@@ -74,29 +65,36 @@ class HomeController extends Controller
         return response()->json(['count' => $count]);
     }
 
-    public function getOFWCount(Request $request)
+    public function getCountriesByContinent(Request $request)
     {
-        $countryId = $request->input('country');
-
-        if (!$countryId) {
-            return response()->json(['error' => 'Country ID is required'], 400);
+        $continentId = $request->input('continent');
+    
+        if (!$continentId) {
+            return response()->json(['error' => 'Continent ID is required'], 400);
         }
-
+    
         try {
-            $count = User_previous_job::where('country_id', $countryId)->count();
-            return response()->json(['count' => $count]);
+            $countries = DB::table('type_countries')
+                        ->leftJoin('user_previous_jobs', 'type_countries.id', '=', 'user_previous_jobs.country_id')
+                        ->where('type_countries.continent_id', $continentId)
+                        ->select('type_countries.name as country_name', 'user_previous_jobs.country_id as country_id', DB::raw('count(country_id) as count'))
+                        ->groupBy('type_countries.name', 'country_id')
+                        ->get();
+    
+            return response()->json($countries);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'An error occurred while fetching the count'], 500);
+            \Log::error('Error fetching countries: ' . $e->getMessage());
+            return response()->json(['error' => 'An error occurred: ' . $e->getMessage()], 500);
         }
     }
     
     public function showGeoChart()
     {
         $jobs = DB::table('user_previous_jobs as jobs')
-            ->join('type_countries as countries', 'jobs.country_id', '=', 'countries.id')
-            ->select('countries.name as country_name', 'countries.id as country_id', DB::raw('count(country_id) as job_count'))
-            ->groupBy('jobs.country_id', 'countries.name', 'countries.id')
-            ->get();
+                    ->join('type_countries as countries', 'jobs.country_id', '=', 'countries.id')
+                    ->select('countries.name as country_name', 'countries.id as country_id', DB::raw('count(country_id) as job_count'))
+                    ->groupBy('jobs.country_id', 'countries.name', 'countries.id')
+                    ->get();
 
         $chartData = [['Country', 'OFW Count']];
         foreach ($jobs as $job) {

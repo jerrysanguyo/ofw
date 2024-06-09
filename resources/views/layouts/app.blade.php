@@ -13,6 +13,7 @@
     <script src="https://cdn.datatables.net/2.0.2/js/dataTables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="{{ asset('js/chart-config.js') }}"></script>
+    <script src="https://kit.fontawesome.com/4f2d7302b1.js" crossorigin="anonymous"></script>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <style>
         .navbar, #offcanvasNavbar {
