@@ -145,110 +145,110 @@
                             @if (Auth::user()->role === 'admin')
                                 <li class="nav-item fs-7 {{ Request::is('admin.home') ? 'active' : '' }}">
                                     <a href="{{ route('admin.home') }}" class="nav-link">
-                                        <i class="fa-solid fa-chart-line mx-3"></i> Home
+                                        <i class="fa-solid fa-house mx-3" style="color: #B197FC;"></i> Home
                                     </a>
                                 </li>
                                 <li class="nav-item fs-7 {{ Request::is('admin.personal.create') ? 'active' : '' }}">
                                     <a href="{{ route('admin.personal.create') }}" class="nav-link">
-                                        <i class="fa-solid fa-chart-line mx-3"></i> Form
+                                        <i class="fa-solid fa-paperclip mx-3" style="color: #B197FC;"></i> Form
                                     </a>
                                 </li>
                                 <li class="nav-item fs-7 {{ Request::is('admin.applicant.index') ? 'active' : '' }}">
                                     <a href="{{ route('admin.applicant.index') }}" class="nav-link">
-                                        <i class="fa-solid fa-chart-line mx-3"></i> List of Applicant
+                                        <i class="fa-solid fa-person mx-3" style="color: #B197FC;"></i> List of Applicant
                                     </a>
                                 </li>
                                 <li class="nav-item fs-7 {{ Request::is('admin.report.index') ? 'active' : '' }}">
                                     <a href="{{ route('admin.report.index') }}" class="nav-link">
-                                        <i class="fa-solid fa-chart-line mx-3"></i> Report
+                                        <i class="fa-solid fa-chart-simple mx-3" style="color: #B197FC;"></i> Report
                                     </a>
                                 </li>
                                 <li class="side-nav-title mb-3">CMS</li>
                                 <li class="nav-item fs-7 {{ Request::is('admin.barangay.index') ? 'active' : '' }}">
                                     <a href="{{ route('admin.barangay.index') }}" class="nav-link">
-                                        <i class="fa-solid fa-chart-line mx-3"></i> Barangay
+                                        <i class="fa-solid fa-building mx-3" style="color: #B197FC;"></i> Barangay
                                     </a>
                                 </li>
                                 <li class="nav-item fs-7 {{ Request::is('admin.city.index') ? 'active' : '' }}">
                                     <a href="{{ route('admin.city.index') }}" class="nav-link">
-                                        <i class="fa-solid fa-chart-line mx-3"></i> City
+                                        <i class="fa-solid fa-building-columns mx-3" style="color: #B197FC;"></i> City
                                     </a>
                                 </li>
                                 <li class="nav-item fs-7 {{ Request::is('admin.civil.index') ? 'active' : '' }}">
                                     <a href="{{ route('admin.civil.index') }}" class="nav-link">
-                                        <i class="fa-solid fa-chart-line mx-3"></i> Civil Status
+                                        <i class="fa-solid fa-ring mx-3" style="color: #B197FC;"></i> Civil Status
                                     </a>
                                 </li>
                                 <li class="nav-item fs-7 {{ Request::is('admin.continent.index') ? 'active' : '' }}">
                                     <a href="{{ route('admin.continent.index') }}" class="nav-link">
-                                        <i class="fa-solid fa-chart-line mx-3"></i> Continent
+                                        <i class="fa-solid fa-earth-americas mx-3" style="color: #B197FC;"></i> Continent
                                     </a>
                                 </li>
                                 <li class="nav-item fs-7 {{ Request::is('admin.country.index') ? 'active' : '' }}">
                                     <a href="{{ route('admin.country.index') }}" class="nav-link">
-                                        <i class="fa-solid fa-chart-line mx-3"></i> Country
+                                        <i class="fa-solid fa-map mx-3" style="color: #B197FC;"></i> Country
                                     </a>
                                 </li>
                                 <li class="nav-item fs-7 {{ Request::is('admin.contract.index') ? 'active' : '' }}">
                                     <a href="{{ route('admin.contract.index') }}" class="nav-link">
-                                        <i class="fa-solid fa-chart-line mx-3"></i> Contract
+                                        <i class="fa-solid fa-file-contract mx-3" style="color: #B197FC;"></i> Contract
                                     </a>
                                 </li>
                                 <li class="nav-item fs-7 {{ Request::is('admin.education.index') ? 'active' : '' }}">
                                     <a href="{{ route('admin.education.index') }}" class="nav-link">
-                                        <i class="fa-solid fa-chart-line mx-3"></i> Educational Attainment
+                                        <i class="fa-solid fa-school mx-3" style="color: #B197FC;"></i> Educational Attainment
                                     </a>
                                 </li>
                                 <li class="nav-item fs-7 {{ Request::is('admin.gender.index') ? 'active' : '' }}">
                                     <a href="{{ route('admin.gender.index') }}" class="nav-link">
-                                        <i class="fa-solid fa-chart-line mx-3"></i> Gender
+                                        <i class="fa-solid fa-venus-mars mx-3" style="color: #B197FC;"></i> Gender
                                     </a>
                                 </li>
                                 <li class="nav-item fs-7 {{ Request::is('admin.identification.index') ? 'active' : '' }}">
                                     <a href="{{ route('admin.identification.index') }}" class="nav-link">
-                                        <i class="fa-solid fa-chart-line mx-3"></i> Identification
+                                        <i class="fa-solid fa-id-card-clip mx-3" style="color: #B197FC;"></i> Identification
                                     </a>
                                 </li>
                                 <li class="nav-item fs-7 {{ Request::is('admin.job.index') ? 'active' : '' }}">
                                     <a href="{{ route('admin.job.index') }}" class="nav-link">
-                                        <i class="fa-solid fa-chart-line mx-3"></i> Job
+                                        <i class="fa-solid fa-user-doctor mx-3" style="color: #B197FC;"></i> Job
                                     </a>
                                 </li>
                                 <li class="nav-item fs-7 {{ Request::is('admin.subjob.index') ? 'active' : '' }}">
                                     <a href="{{ route('admin.subjob.index') }}" class="nav-link">
-                                        <i class="fa-solid fa-chart-line mx-3"></i> Sub job
+                                        <i class="fa-solid fa-suitcase mx-3" style="color: #B197FC;"></i> Sub job
                                     </a>
                                 </li>
                                 <li class="nav-item fs-7 {{ Request::is('admin.owwa.index') ? 'active' : '' }}">
                                     <a href="{{ route('admin.owwa.index') }}" class="nav-link">
-                                        <i class="fa-solid fa-chart-line mx-3"></i> Owwa
+                                        <i class="fa-solid fa-building-shield mx-3" style="color: #B197FC;"></i> Owwa
                                     </a>
                                 </li>
                                 <li class="nav-item fs-7 {{ Request::is('admin.relation.index') ? 'active' : '' }}">
                                     <a href="{{ route('admin.relation.index') }}" class="nav-link">
-                                        <i class="fa-solid fa-chart-line mx-3"></i> Relationship
+                                        <i class="fa-solid fa-heart mx-3" style="color: #B197FC;"></i> Relationship
                                     </a>
                                 </li>
                                 <li class="nav-item fs-7 {{ Request::is('admin.religion.index') ? 'active' : '' }}">
                                     <a href="{{ route('admin.religion.index') }}" class="nav-link">
-                                        <i class="fa-solid fa-chart-line mx-3"></i> Religion
+                                        <i class="fa-solid fa-church mx-3" style="color: #B197FC;"></i> Religion
                                     </a>
                                 </li>
                                 <li class="nav-item fs-7 {{ Request::is('admin.residence.index') ? 'active' : '' }}">
                                     <a href="{{ route('admin.residence.index') }}" class="nav-link">
-                                        <i class="fa-solid fa-chart-line mx-3"></i> Residence
+                                        <i class="fa-solid fa-house-chimney-window mx-3" style="color: #B197FC;"></i> Residence
                                     </a>
                                 </li>
                                 <hr>
                                 @else
                                     <li class="nav-item fs-7 {{ Request::is('user.home') ? 'active' : '' }}">
                                         <a href="{{ route('user.home') }}" class="nav-link">
-                                            <i class="fa-solid fa-chart-line mx-3"></i> Home
+                                            <i class="fa-solid fa-house mx-3" style="color: #B197FC;"></i> Home
                                         </a>
                                     </li>
                                     <li class="nav-item fs-7 {{ Request::is('user.personal.create') ? 'active' : '' }}">
                                         <a href="{{ route('user.personal.create') }}" class="nav-link">
-                                            <i class="fa-solid fa-chart-line mx-3"></i> Form
+                                            <i class="fa-solid fa-paperclip mx-3" style="color: #B197FC;"></i> Form
                                         </a>
                                     </li>
                             @endif
