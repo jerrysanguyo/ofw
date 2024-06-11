@@ -135,7 +135,7 @@ class ReportController extends Controller
                     $main->userPrevious->subjob->name ?? '',
                     $main->userPrevious->continent->name ?? '',
                     $main->userPrevious->country->name ?? '',
-                    $main->userPrevious->years_abroad ?? '',
+                    $main->userPrevious->years_abbroad ?? '',
                     $main->userPrevious->contract->name ?? '',
                     $main->userPrevious->last_departure ?? '',
                     $main->userPrevious->last_arrival ?? '',
