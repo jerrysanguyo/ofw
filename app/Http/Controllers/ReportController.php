@@ -22,7 +22,9 @@ class ReportController extends Controller
         if ($startAge && $endAge) {
             for ($age = $startAge; $age <= $endAge; $age++) {
                 $count = User_household_composition::where('age', $age)->count();
-                $result[$age] = $count;
+                if ($count > 0) {
+                    $result[$age] = $count;
+                }
             }
         }
     
