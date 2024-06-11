@@ -160,7 +160,7 @@
         var countroCountSpan = document.getElementById('countroCount');
         var countryList = document.getElementById('countryList');
 
-        countroCountSpan.textContent = 'Loading...';
+        countroCountSpan.innerHTML = '<div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div>';
 
         fetch('/get-countries-by-continent', {
             method: 'POST',

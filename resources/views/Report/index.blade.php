@@ -43,7 +43,15 @@ document.getElementById('ageCountBtn').addEventListener('click', function() {
     })
     .then(response => response.json())
     .then(data => {
-        document.getElementById('AgeCount').textContent = data.count;
+        const ageCountElement = document.getElementById('AgeCount');
+        ageCountElement.innerHTML = '';
+        
+        Object.keys(data.counts).forEach(age => {
+            const count = data.counts[age];
+            const countText = document.createElement('div');
+            countText.textContent = `${age} - ${count}`;
+            ageCountElement.appendChild(countText);
+        });
     })
     .catch(error => console.error('Error:', error));
 });
