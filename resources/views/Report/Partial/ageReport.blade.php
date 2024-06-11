@@ -26,7 +26,7 @@
 </div>
 <hr>
 <div class="row text-center m-3">
-    <span id="AgeCount" class="fs-4"></span>
+    <span id="AgeCount" class="fs-1"></span>
 </div>
 <div class="d-grid gap-2 text-center">
     <a href="#">

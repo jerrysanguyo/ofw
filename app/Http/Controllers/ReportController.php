@@ -17,17 +17,15 @@ class ReportController extends Controller
         $startAge = $request->input('startAge');
         $endAge = $request->input('endAge');
     
-        $query = User_household_composition::query();
-    
         $result = [];
     
         if ($startAge && $endAge) {
             for ($age = $startAge; $age <= $endAge; $age++) {
-                $count = $query->where('age', $age)->count();
+                $count = User_household_composition::where('age', $age)->count();
                 $result[$age] = $count;
             }
         }
     
         return response()->json(['counts' => $result]);
-    }
+    }    
 }

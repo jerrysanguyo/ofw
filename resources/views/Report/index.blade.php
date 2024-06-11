@@ -44,7 +44,7 @@ document.getElementById('ageCountBtn').addEventListener('click', function() {
     .then(response => response.json())
     .then(data => {
         const ageCountElement = document.getElementById('AgeCount');
-        ageCountElement.innerHTML = '';
+        ageCountElement.innerHTML = ''; // Clear previous content
         
         Object.keys(data.counts).forEach(age => {
             const count = data.counts[age];
