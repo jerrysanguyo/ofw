@@ -9,9 +9,9 @@
         </a>
     </div>
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-4">
             <div class="card shadow border">
-                <div class="card-body">
+                <div class="card-body" style="height:550px;">
                     <span class="fs-5">Personal information:</span>
                     <div class="row">
                         <label for="name" class="col-sm-4 col-form-label">Full name:</label>
@@ -20,14 +20,14 @@
                             value="{{ 
                                 $details->last_name ?? 'N/A' .', '. 
                                 $details->first_name ?? 'N/A' .' '. 
-                                $details->middle_name ?? 'N/A'
+                                $details->middle_name ?? 'N/A' 
                             }}">
                         </div>
                     </div>
                     <div class="row">
                         <label for="Email" class="col-sm-4 col-form-label">Email:</label>
                         <div class="col-sm-8">
-                            <input type="text" readonly class="form-control-plaintext" id="Email" value="{{ $details->email ?? 'N/A'}}">
+                            <input type="text" readonly class="form-control-plaintext" id="Email" value="{{ $details->email ?? 'N/A' }}">
                         </div>
                     </div>
                     <div class="row">
@@ -40,11 +40,11 @@
                         <label for="address" class="col-sm-4 col-form-label">Address:</label>
                         <div class="col-sm-8">
                             <input type="text" readonly class="form-control-plaintext" id="address" 
-                            value="{{
-                                ($details->userAddress->house_number ?? 'N/A') . ' ' .
-                                ($details->userAddress->barangay->name ?? 'N/A') . ' ' .
-                                ($details->userAddress->street ?? 'N/A') . ' ' .
-                                ($details->userAddress->city->name ?? 'N/A')
+                            value="{{ 
+                                $details->userAddress->house_number .' '.
+                                $details->userAddress->barangay->name .' '.
+                                $details->userAddress->street .' '.
+                                $details->userAddress->city->name
                             }}">
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                     <div class="row">
                         <label for="birthdate" class="col-sm-4 col-form-label">birthdate & age:</label>
                         <div class="col-sm-8">
-                            <input type="text" readonly class="form-control-plaintext" id="birthdate" value="{{ ($details->userInfo->birthdate ?? 'N/A') .' - '. ($details->userInfo->age ?? 'N/A') .' years old'}}">
+                            <input type="text" readonly class="form-control-plaintext" id="birthdate" value="{{ $details->userInfo->birthdate ?? 'N/A' .' - '. $details->userInfo->age ?? 'N/A' .' years old'}}">
                         </div>
                     </div>
                     <div class="row">
@@ -105,74 +105,138 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-4">
             <div class="card shadow border">
-                <div class="card-body">
+                <div class="card-body" style="height:550px;">
                     <span class="fs-5">Previous job:</span>
                     <div class="row">
-                        <label for="job_type" class="col-sm-4 col-form-label">Job type:</label>
-                        <div class="col-sm-8">
+                        <label for="job_type" class="col-sm-6 col-form-label">Job type:</label>
+                        <div class="col-sm-6">
                             <input type="text" readonly class="form-control-plaintext" id="job_type" value="{{ $details->userPrevious->job_type ?? 'N/A' }}">
                         </div>
                     </div>
                     <div class="row">
-                        <label for="job" class="col-sm-4 col-form-label">Job:</label>
-                        <div class="col-sm-8">
+                        <label for="job" class="col-sm-6 col-form-label">Job:</label>
+                        <div class="col-sm-6">
                             <input type="text" readonly class="form-control-plaintext" id="job" value="{{ $details->userPrevious->job->name ?? 'N/A' }}">
                         </div>
                     </div>
                     <div class="row">
-                        <label for="subJob" class="col-sm-4 col-form-label">Sub subJob:</label>
-                        <div class="col-sm-8">
+                        <label for="subJob" class="col-sm-6 col-form-label">Sub subJob:</label>
+                        <div class="col-sm-6">
                             <input type="text" readonly class="form-control-plaintext" id="subJob" value="{{ $details->userPrevious->subJob->name ?? 'N/A' }}">
                         </div>
                     </div>
                     <div class="row">
-                        <label for="continent" class="col-sm-4 col-form-label">Continent:</label>
-                        <div class="col-sm-8">
+                        <label for="continent" class="col-sm-6 col-form-label">Continent:</label>
+                        <div class="col-sm-6">
                             <input type="text" readonly class="form-control-plaintext" id="continent" value="{{ $details->userPrevious->continent->name ?? 'N/A' }}">
                         </div>
                     </div>
                     <div class="row">
-                        <label for="country" class="col-sm-4 col-form-label">Country:</label>
-                        <div class="col-sm-8">
+                        <label for="country" class="col-sm-6 col-form-label">Country:</label>
+                        <div class="col-sm-6">
                             <input type="text" readonly class="form-control-plaintext" id="country" value="{{ $details->userPrevious->country->name ?? 'N/A' }}">
                         </div>
                     </div>
                     <div class="row">
-                        <label for="years_abroad" class="col-sm-4 col-form-label">Year/s in abroad:</label>
-                        <div class="col-sm-8">
+                        <label for="years_abroad" class="col-sm-6 col-form-label">Year/s in abroad:</label>
+                        <div class="col-sm-6">
                             <input type="text" readonly class="form-control-plaintext" id="years_abroad" value="{{ $details->userPrevious->years_abbroad ?? 'N/A' }}">
                         </div>
                     </div>
                     <div class="row">
-                        <label for="contract" class="col-sm-4 col-form-label">Contract:</label>
-                        <div class="col-sm-8">
+                        <label for="contract" class="col-sm-6 col-form-label">Contract:</label>
+                        <div class="col-sm-6">
                             <input type="text" readonly class="form-control-plaintext" id="contract" value="{{ $details->userPrevious->contract->name ?? 'N/A' }}">
                         </div>
                     </div>
                     <div class="row">
-                        <label for="last_departure" class="col-sm-4 col-form-label">Last departure:</label>
-                        <div class="col-sm-8">
+                        <label for="last_departure" class="col-sm-6 col-form-label">Last departure:</label>
+                        <div class="col-sm-6">
                             <input type="text" readonly class="form-control-plaintext" id="last_departure" value="{{ $details->userPrevious->last_departure ?? 'N/A' }}">
                         </div>
                     </div>
                     <div class="row">
-                        <label for="last_arrival" class="col-sm-4 col-form-label">Last arrival:</label>
-                        <div class="col-sm-8">
+                        <label for="last_arrival" class="col-sm-6 col-form-label">Last arrival:</label>
+                        <div class="col-sm-6">
                             <input type="text" readonly class="form-control-plaintext" id="last_arrival" value="{{ $details->userPrevious->last_arrival ?? 'N/A' }}">
                         </div>
                     </div>
                     <div class="row">
-                        <label for="owwa" class="col-sm-4 col-form-label">Owwa:</label>
-                        <div class="col-sm-8">
+                        <label for="owwa" class="col-sm-6 col-form-label">Owwa:</label>
+                        <div class="col-sm-6">
                             <input type="text" readonly class="form-control-plaintext" id="owwa" value="{{ $details->userPrevious->owwa->name ?? 'N/A' }}">
                         </div>
                     </div>
                     <div class="row">
-                        <label for="intent_return" class="col-sm-4 col-form-label">Intent to return?:</label>
-                        <div class="col-sm-8">
+                        <label for="intent_return" class="col-sm-6 col-form-label">Intent to return?:</label>
+                        <div class="col-sm-6">
                             <input type="text" readonly class="form-control-plaintext" id="intent_return" value="{{ $details->userPrevious->intent_return ?? 'N/A' }}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card shadow border">
+                        <div class="card-body overflow-auto" style="height:275px">
+                            <span class="fs-5">Household:</span>
+                            @foreach ($details->userHousehold as $household)
+                            <div class="row">
+                                <label for="full_name" class="col-sm-4 col-form-label">Full name:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" readonly class="form-control-plaintext" id="full_name" value="{{ $household->full_name ?? 'N/A' }}">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label for="relation" class="col-sm-4 col-form-label">Relationship:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" readonly class="form-control-plaintext" id="relation" value="{{ $household->relationship->name ?? 'N/A' }}">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label for="birthdate" class="col-sm-4 col-form-label">Birthdate and Age:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" readonly class="form-control-plaintext" id="birthdate" value="{{ $household->birthdate ?? 'N/A' .' - '. $household->age ?? 'N/A' .' years old'}}">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label for="work" class="col-sm-4 col-form-label">work:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" readonly class="form-control-plaintext" id="work" value="{{ $household->work ?? 'N/A' }}">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label for="monthly_income" class="col-sm-4 col-form-label">Monthly income:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" readonly class="form-control-plaintext" id="monthly_income" value="{{ $household->monthly_income ?? 'N/A' }}">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label for="voters" class="col-sm-4 col-form-label">Voter in taguig?:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" readonly class="form-control-plaintext" id="voters" value="{{ $household->voters ?? 'N/A' }}">
+                                </div>
+                            </div>
+                            <hr>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 mt-3">
+                    <div class="card shadow border">
+                        <div class="card-body overflow-auto" style="height:255px">
+                            <span class="fs-5">Needs:</span>
+                            <ol class="list-group list-group-numbered">
+                                @foreach($details->userNeeds as $needs)
+                                    <li class="list-group-item">
+                                        <span class="fs-6">{{ $needs->needs ?? 'N/A' }}</span>
+                                    </li>
+                                @endforeach
+                            </ol>
                         </div>
                     </div>
                 </div>
