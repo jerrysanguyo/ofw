@@ -27,6 +27,10 @@ class User_info extends Model
         return $this->belongsTo(Type_religion::class, 'religion_id');
     }
 
+    public function gender() {
+        return $this->belongsTo(Type_gender::class, 'gender_id');
+    }
+
     public function civil() {
         return $this->belongsTo(Type_civil_status::class, 'civil_id');
     }

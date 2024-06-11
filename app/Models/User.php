@@ -58,4 +58,14 @@ class User extends Authenticatable
     {
         return $this->hasOne(User_previous_job::class, 'user_id', 'id');
     }
+
+    public function userHousehold()
+    {
+        return $this->hasMany(User_household_composition::class, 'user_id', 'id');
+    }
+
+    public function userNeeds()
+    {
+        return $this->hasMany(User_need::class, 'user_id', 'id');
+    }
 }
