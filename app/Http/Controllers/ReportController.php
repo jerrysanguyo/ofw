@@ -77,7 +77,40 @@ class ReportController extends Controller
             'FULL NAME', 'RELATIONSHIP', 'BIRTHDATE', 'AGE', 'WORK', 'MONTHLY INCOME', 'VOTERS?',
             'NEEDS',
         ];
-        $sheet->fromArray($headers, null, 'A1');
+        $sheet->fromArray($headers, null, 'A2');
+        
+        // Merge cells for main headers
+        foreach (range('A', 'Z') as $columnID) {
+            $sheet->mergeCells("{$columnID}1:{$columnID}2");
+            $sheet->setCellValue("{$columnID}1", $headers[ord($columnID) - ord('A')]);
+        }
+
+        // Merge cells for "Beneficiaries" header
+        $sheet->mergeCells('AA1:AH1');
+        $sheet->setCellValue('AA1', 'Beneficiaries');
+        $beneficiariesStyleArray = [
+            'font' => [
+                'bold' => true,
+                'size' => 13,
+                'color' => ['argb' => 'FF000000'],
+            ],
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+            ],
+            'fill' => [
+                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                'startColor' => [
+                    'argb' => 'FFFF00'
+                ]
+            ],
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['argb' => 'FF000000'],
+                ],
+            ]
+        ];
+        $sheet->getStyle('Y1:AG1')->applyFromArray($beneficiariesStyleArray);
         
         // HEADER STYLE
         $headerStyleArray = [
@@ -99,10 +132,10 @@ class ReportController extends Controller
                 ],
             ]
         ];
-        $sheet->getStyle('A1:AH1')->applyFromArray($headerStyleArray);
-        
+        $sheet->getStyle('A1:AH2')->applyFromArray($headerStyleArray);
+    
         // DATA
-        $row = 2;
+        $row = 3;
         foreach ($userMain as $main) {
             $filteredHouseholdData = $main->userHousehold->filter(function($household) use ($startAge, $endAge) {
                 return $household->age >= $startAge && $household->age <= $endAge;
@@ -164,10 +197,24 @@ class ReportController extends Controller
                 ],
             ]
         ];
-        $sheet->getStyle('A1:' . $sheet->getHighestColumn() . ($row - 1))->applyFromArray($styleArray);
-    
-        // AUTO-SIZE COLUMNS AFTER DATA IS INSERTED
-        foreach (range('A', $sheet->getHighestColumn()) as $columnID) {
+        $sheet->getStyle('A1:AH' . ($row - 1))->applyFromArray($styleArray);
+
+        // AUTO RESIZE
+        function getColumnRange($start, $end) {
+            $columns = [];
+            for ($i = $start; $i <= $end; $i++) {
+                $columns[] = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($i);
+            }
+            return $columns;
+        }
+        
+        // Usage
+        $startColumn = 1; 
+        $endColumn = 34;
+        
+        $columns = getColumnRange($startColumn, $endColumn);
+        
+        foreach ($columns as $columnID) {
             $sheet->getColumnDimension($columnID)->setAutoSize(true);
         }
     

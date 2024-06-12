@@ -26,7 +26,7 @@
     </div>
 </div>
 <script>
-document.getElementById('ageCountBtn').addEventListener('click', function() {
+document.getElementById('submitBtn').addEventListener('click', function() {
     const startAge = document.getElementById('startAge').value;
     const endAge = document.getElementById('endAge').value;
 
@@ -54,6 +54,13 @@ document.getElementById('ageCountBtn').addEventListener('click', function() {
         });
     })
     .catch(error => console.error('Error:', error));
+});
+
+document.getElementById('excelBtn').addEventListener('click', function() {
+    const form = document.getElementById('ageForm');
+    form.setAttribute('action', '{{ route("age.export") }}');
+    form.setAttribute('method', 'GET');
+    form.submit();
 });
 </script>
 @endsection

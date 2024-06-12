@@ -1,4 +1,4 @@
-<form action="{{ route('age.export') }}" method="GET">
+<form id="ageForm">
     @csrf
     <span class="fs-4"><i class="fa-solid fa-handshake m-3"></i>Beneficiary count report</span>
     <div class="row align-items-end mt-4">
@@ -23,7 +23,7 @@
             </select>
         </div>
         <div class="col-md-4 d-flex justify-content-md-start">
-            <button id="ageCountBtn" class="btn btn-primary mt-4 mt-md-0">Generate</button>
+            <button type="button" id="submitBtn" class="btn btn-primary mt-4 mt-md-0">Submit</button>
         </div>
     </div>
     <hr>
@@ -31,6 +31,6 @@
         <span id="AgeCount" class="fs-1"></span>
     </div>
     <div class="d-grid gap-2 text-center">
-        <button class="btn btn-primary mt-4 mt-lg-0">Generate</button>
+        <button type="button" id="excelBtn" class="btn btn-primary mt-4 mt-lg-0">Generate Excel</button>
     </div>
 </form>
