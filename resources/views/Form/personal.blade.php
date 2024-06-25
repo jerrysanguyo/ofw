@@ -86,8 +86,8 @@
                             <div class="col-md-2">
                                 <label for="residence_id" class="form-label">Residence type:</label>
                                 <select name="residence_id" id="residence_id" class="form-select">
-                                    @foreach($listOfResidence as $city)
-                                        <option value="{{ $city->id }}" {{ (isset($userAddress) && $userAddress->residence_id == $city->id) ? 'selected' : '' }}>{{ $city->name }}</option>
+                                    @foreach($listOfResidence as $residence)
+                                        <option value="{{ $residence->id }}" {{ (isset($userAddress) && $userAddress->residence_id == $residence->id) ? 'selected' : '' }}>{{ $residence->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
