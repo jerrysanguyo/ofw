@@ -25,7 +25,19 @@ class ApplicantController extends Controller
             'details'
         ));
     }
+
+    public function edit(User $applicant)
+    {
+        $details = $applicant->load(['userAddress', 'userAddress.barangay', 'userAddress.city', 'userAddress.residence', 'userInfo', 'userPrevious', 'userHousehold', 'userNeeds']);
     
+        return view('Applicant.Edit', compact('details'));
+    }
+    
+    public function update(UpdateUserRequest $request, User $user)
+    {
+        //
+    }
+
     public function destroy(string $id)
     {
         //

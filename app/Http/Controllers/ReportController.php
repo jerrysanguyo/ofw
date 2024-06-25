@@ -70,9 +70,9 @@ class ReportController extends Controller
     
         // HEADER
         $headers = [
-            'FULL NAME', 'EMAIL ADDRESS', 'CONTACT NUMBER', 'BIRTHDATE', 'AGE',
-            'GENDER', 'BIRTHPLACE', 'RELIGION', 'CIVIL STATUS','PRESENT JOB',
-            'EDUCATIONAL ATTAINMENT', 'VOTERS?', 'ADDRESS', 'YEARS OF RESIDENCE IN TAGUIG', 'TYPE OF RESIDENCE',
+            'FULL NAME', 'ADDRESS', 'CONTACT NUMBER', 'BIRTHDATE', 'AGE', 'GENDER', 'CIVIL STATUS',
+            'EMAIL ADDRESS', 'BIRTHPLACE', 'RELIGION','PRESENT JOB',
+            'EDUCATIONAL ATTAINMENT', 'VOTERS?', 'YEARS OF RESIDENCE IN TAGUIG', 'TYPE OF RESIDENCE',
             'JOB TYPE', 'JOB', 'SUB JOB', 'CONTINENT', 'COUNTRY', 'YEARS IN ABROAD', 'CONTRACT', 'LAST DEPARTURE', 'LAST ARRIVAL', 'OWWA', 'INTENT TO RETURN?',
             'FULL NAME', 'RELATIONSHIP', 'BIRTHDATE', 'AGE', 'WORK', 'MONTHLY INCOME', 'VOTERS?',
             'NEEDS',
@@ -149,18 +149,18 @@ class ReportController extends Controller
             foreach ($filteredHouseholdData as $household) {
                 $data = [
                     $main->last_name . ', ' . $main->first_name . ' ' . $main->middle_name,
-                    $main->email,
+                    $main->userAddress->house_number . ' ' . $main->userAddress->barangay->name . ' ' . $main->userAddress->street . ' ' . $main->userAddress->city->name ?? '',
                     $main->contact_number,
                     $main->userInfo->birthdate ?? '',
                     $main->userInfo->age ?? '',
                     $main->userInfo->gender->name ?? '',
+                    $main->userInfo->civil->name ?? '',
+                    $main->email,
                     $main->userInfo->birthplace ?? '',
                     $main->userInfo->religion->name ?? '',
-                    $main->userInfo->civil->name ?? '',
                     $main->userInfo->present_job ?? '',
                     $main->userInfo->education->name ?? '',
                     $main->userInfo->voters ?? '',
-                    $main->userAddress->house_number . ' ' . $main->userAddress->barangay->name . ' ' . $main->userAddress->street . ' ' . $main->userAddress->city->name ?? '',
                     $main->userAddress->residence_years ?? '',
                     $main->userAddress->residence->name ?? '',
                     $main->userPrevious->job_type ?? '',

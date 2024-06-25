@@ -3,15 +3,26 @@
 @section('content')
 <div class="container-fluid">
     <div class="row justify-content-center">
-        <div class="col-md-12">
-            <div class="d-flex justify-content-between mb-1">
-                <span class="fs-3">Applicant details</span>
-                <a href="{{ route('admin.applicant.index') }}" class="text-decoration-none">
-                    <button class="btn btn-primary">
-                        Back
-                    </button>
-                </a>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="d-flex justify-content-between mb-1">
+                    <span class="fs-3">Applicant details</span>
+                    <div>
+                        <a href="{{ route('admin.applicant.edit', $details->id) }}" class="text-decoration-none">
+                            <button class="btn btn-primary">
+                                Update
+                            </button>
+                        </a>
+                        <a href="{{ route('admin.applicant.index') }}" class="text-decoration-none">
+                            <button class="btn btn-primary">
+                                Back
+                            </button>
+                        </a>
+                    </div>
+                </div>
             </div>
+        </div>
+        <div class="col-md-12">
             <div class="row">
                 <div class="col-lg-4">
                     <div class="card shadow border">
