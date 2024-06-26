@@ -28,6 +28,7 @@ use App\Models\Type_relation;
 use App\Http\Requests\UpdateUser_infoRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Requests\Updateuser_previous_jobRequest;
+use App\Http\Requests\UpdateUser_household_compositionRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -97,22 +98,23 @@ class ApplicantController extends Controller
     {
         $userValidated = $userRequest->validated();
         $infoValidated = $infoRequest->validated();
-        $previousVadated = $previousRequest->validated();
+        $previousValidated = $previousRequest->validated();
         $infoValidated['user_id'] = $applicant->id;
-        $previousVadated['user_id'] = $applicant->id;
-    
+        $previousValidated['user_id'] = $applicant->id;
+
         DB::beginTransaction();
         try {
-            // Find or create user address and user info records
-            $userAddress = User_address::firstOrCreate(['user_id' => $applicant->id]);
-            $userInfo = User_info::firstOrCreate(['user_id' => $applicant->id]);
-            $userPrevious = User_previous_job::firstOrCreate(['user_id' => $applicant->id]);
-            // update
+            // Find user address and user info records
+            $userAddress = User_address::where('user_id', $applicant->id)->first();
+            $userInfo = User_info::where('user_id', $applicant->id)->first();
+            $userPrevious = User_previous_job::where('user_id', $applicant->id)->first();
+
+            // Update records
             $applicant->update($userValidated);
             $userInfo->update($infoValidated);
             $userAddress->update($infoValidated);
-            $userPrevious->update($previousVadated);
-    
+            $userPrevious->update($previousValidated);
+
             DB::commit();
             return redirect()->route('admin.applicant.edit', $applicant->id)->with('success', 'Applicant details updated successfully.');
         } catch (\Exception $e) {
@@ -122,7 +124,22 @@ class ApplicantController extends Controller
         }
     }
     
-    
+    public function houseUpdate(UpdateUser_household_compositionRequest $request, User_household_composition $applicant)
+    {
+        $validated = $request->validated();
+        DB::beginTransaction();
+        try{
+            $applicant->update($validated);
+
+            return redirect()->route('admin.applicant.edit', $applicant->id)
+                ->with('success', 'Household composition updated successfully.');
+        } catch(\Exception $e) {
+            DB::rollBack();
+            Log::error('Failed to update household composition', ['error' => $e->getMessage()]);
+            return redirect()->route('admin.applicant.edit', $applicant->id)
+                ->with('error', 'Failed to update household composition.');
+        }
+    }
 
     public function destroy(string $id)
     {

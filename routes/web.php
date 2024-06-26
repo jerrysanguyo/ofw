@@ -95,6 +95,8 @@ Route::middleware(['auth', Admin_role::class])->group(function() {
         Route::resource('/previous', PreviousController::class);
         Route::resource('/needs', NeedContoller::class);
         Route::resource('/applicant', ApplicantController::class);
+        Route::PUT('/applicant/{applicant}/household/update', [ApplicantController::class, 'houseUpdate'])
+            ->name('applicant.houseUpdate');
         // report
         Route::resource('/report', ReportController::class);
         Route::post('/home/ageCount', [ReportController::class, 'getAgeCount'])

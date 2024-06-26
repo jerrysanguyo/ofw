@@ -115,7 +115,7 @@
             @endforeach
         </select>
     </div>
-    <div class="col-lg-3">
+    <div class="col-lg-3 mb-3">
         <label for="present_job" class="form-label">Present job:</label>
         <input type="text" name="present_job" id="present_job" class="form-control" value="{{ $details->userInfo->present_job ?? '' }}">
     </div>
