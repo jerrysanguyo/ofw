@@ -7,6 +7,7 @@ use App\DataTables\GlobalDataTable;
 use App\Models\User;
 use App\Models\User_info;
 use App\Models\User_address;
+use App\Models\User_previous_job;
 use App\Models\User_household_composition;
 use App\Models\User_need;
 use App\Models\Type_barangay;
@@ -26,6 +27,7 @@ use App\Models\Type_owwa;
 use App\Models\Type_relation;
 use App\Http\Requests\UpdateUser_infoRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\Updateuser_previous_jobRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -91,21 +93,25 @@ class ApplicantController extends Controller
         ));
     }
     
-    public function update(UpdateUserRequest $userRequest, UpdateUser_infoRequest $infoRequest, User $applicant)
+    public function update(UpdateUserRequest $userRequest, UpdateUser_infoRequest $infoRequest, Updateuser_previous_jobRequest $previousRequest, User $applicant)
     {
         $userValidated = $userRequest->validated();
         $infoValidated = $infoRequest->validated();
+        $previousVadated = $previousRequest->validated();
         $infoValidated['user_id'] = $applicant->id;
+        $previousVadated['user_id'] = $applicant->id;
     
         DB::beginTransaction();
         try {
             // Find or create user address and user info records
             $userAddress = User_address::firstOrCreate(['user_id' => $applicant->id]);
             $userInfo = User_info::firstOrCreate(['user_id' => $applicant->id]);
+            $userPrevious = User_previous_job::firstOrCreate(['user_id' => $applicant->id]);
             // update
             $applicant->update($userValidated);
             $userInfo->update($infoValidated);
             $userAddress->update($infoValidated);
+            $userPrevious->update($previousVadated);
     
             DB::commit();
             return redirect()->route('admin.applicant.edit', $applicant->id)->with('success', 'Applicant details updated successfully.');
