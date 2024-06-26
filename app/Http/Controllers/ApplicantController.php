@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\DataTables\GlobalDataTable;
 use App\Models\User;
+use App\Models\User_info;
+use App\Models\User_address;
 use App\Models\User_household_composition;
 use App\Models\User_need;
 use App\Models\Type_barangay;
@@ -22,6 +24,10 @@ use App\Models\Type_country;
 use App\Models\Type_contract;
 use App\Models\Type_owwa;
 use App\Models\Type_relation;
+use App\Http\Requests\UpdateUser_infoRequest;
+use App\Http\Requests\UpdateUserRequest;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ApplicantController extends Controller
 {
@@ -85,10 +91,32 @@ class ApplicantController extends Controller
         ));
     }
     
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateUserRequest $userRequest, UpdateUser_infoRequest $infoRequest, User $applicant)
     {
-        //
+        $userValidated = $userRequest->validated();
+        $infoValidated = $infoRequest->validated();
+        $infoValidated['user_id'] = $applicant->id;
+    
+        DB::beginTransaction();
+        try {
+            // Find or create user address and user info records
+            $userAddress = User_address::firstOrCreate(['user_id' => $applicant->id]);
+            $userInfo = User_info::firstOrCreate(['user_id' => $applicant->id]);
+            // update
+            $applicant->update($userValidated);
+            $userInfo->update($infoValidated);
+            $userAddress->update($infoValidated);
+    
+            DB::commit();
+            return redirect()->route('admin.applicant.edit', $applicant->id)->with('success', 'Applicant details updated successfully.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Failed to update user information', ['error' => $e->getMessage()]);
+            return redirect()->route('admin.applicant.edit', $applicant->id)->with('error', 'Failed to update applicant details.');
+        }
     }
+    
+    
 
     public function destroy(string $id)
     {
