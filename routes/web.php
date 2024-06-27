@@ -95,8 +95,10 @@ Route::middleware(['auth', Admin_role::class])->group(function() {
         Route::resource('/previous', PreviousController::class);
         Route::resource('/needs', NeedContoller::class);
         Route::resource('/applicant', ApplicantController::class);
-        Route::PUT('/applicant/{applicant}/household/update', [ApplicantController::class, 'houseUpdate'])
+        Route::PUT('/applicant/{household}/household/update', [ApplicantController::class, 'houseUpdate'])
             ->name('applicant.houseUpdate');
+        Route::PUT('/applicant/{need}/need/update', [ApplicantController::class, 'needUpdate'])
+            ->name('applicant.needUpdate');
         // report
         Route::resource('/report', ReportController::class);
         Route::post('/home/ageCount', [ReportController::class, 'getAgeCount'])

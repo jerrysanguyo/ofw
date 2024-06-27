@@ -3,8 +3,8 @@
     <div class="col-lg-4">
         <label for="job_type" class="form-label">Job type:</label>
         <select name="job_type" id="job_type" class="form-select">
-            <option value="landbase" {{ $userPrevious->job_type == 'landbase' ? 'selected' : '' }}>Landbased</option>
-            <option value="seabase" {{ $userPrevious->job_type == 'seabase' ? 'selected' : '' }}>Seabased</option>
+            <option value="landbase" {{ isset($userPrevious) && $userPrevious->job_type == 'landbase' ? 'selected' : '' }}>Landbased</option>
+            <option value="seabase" {{ isset($userPrevious) && $userPrevious->job_type == 'seabase' ? 'selected' : '' }}>Seabased</option>
         </select>
     </div>
     <div class="col-lg-4">
@@ -12,7 +12,7 @@
         <select name="job_id" id="job_id" class="form-select">
             <option value="">choose..</option>
             @foreach($listOfJob as $job)
-                <option value="{{ $job->id }}" {{ $userPrevious->job_id == $job->id ? 'selected' : '' }}>{{ $job->name }}</option>
+                <option value="{{ $job->id }}" {{ isset($userPrevious) && $userPrevious->job_id == $job->id ? 'selected' : '' }}>{{ $job->name }}</option>
             @endforeach
         </select>
     </div>
@@ -29,7 +29,7 @@
         <select name="continent_id" id="continent_id" class="form-select">
             <option value="">choose..</option>
             @foreach($listOfContinent as $continent)
-                <option value="{{ $continent->id }}" {{ $userPrevious->continent_id == $continent->id ? 'selected' : '' }}>{{ $continent->name }}</option>
+                <option value="{{ $continent->id }}" {{ isset($userPrevious) && $userPrevious->continent_id == $continent->id ? 'selected' : '' }}>{{ $continent->name }}</option>
             @endforeach
         </select>
     </div>
@@ -49,7 +49,7 @@
         <label for="contract_id" class="form-label">Status of last Contract:</label>
         <select name="contract_id" id="contract_id" class="form-select">
             @foreach($listOfContract as $contract)
-                <option value="{{ $contract->id }}" {{ $userPrevious->contract_id == $contract->id ? 'selected' : '' }}>{{ $contract->name }}</option>
+                <option value="{{ $contract->id }}" {{ isset($userPrevious) && $userPrevious->contract_id == $contract->id ? 'selected' : '' }}>{{ $contract->name }}</option>
             @endforeach
         </select>
     </div>
@@ -67,18 +67,19 @@
         <label for="owwa_id" class="form-label">Owwa membership:</label>
         <select name="owwa_id" id="owwa_id" class="form-select">
             @foreach($listOfOwwa as $owwa)
-                <option value="{{ $owwa->id }}" {{ $userPrevious->owwa_id == $owwa->id ? 'selected' : '' }}>{{ $owwa->name }}</option>
+                <option value="{{ $owwa->id }}" {{ isset($userPrevious) && $userPrevious->owwa_id == $owwa->id ? 'selected' : '' }}>{{ $owwa->name }}</option>
             @endforeach
         </select>
     </div>
     <div class="col-lg-4">
         <label for="intent_return" class="form-label">Intent to return abroad?:</label>
         <select name="intent_return" id="intent_return" class="form-select">
-            <option value="yes" {{ $userPrevious->intent_return == 'yes' ? 'selected' : '' }}>Yes</option>
-            <option value="no" {{ $userPrevious->intent_return == 'no' ? 'selected' : '' }}>No</option>
+            <option value="yes" {{ isset($userPrevious) && $userPrevious->intent_return == 'yes' ? 'selected' : '' }}>Yes</option>
+            <option value="no" {{ isset($userPrevious) && $userPrevious->intent_return == 'no' ? 'selected' : '' }}>No</option>
         </select>
     </div>
 </div>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const jobSelect = document.getElementById('job_id');

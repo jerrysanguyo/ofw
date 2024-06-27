@@ -29,6 +29,7 @@ use App\Http\Requests\UpdateUser_infoRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Requests\Updateuser_previous_jobRequest;
 use App\Http\Requests\UpdateUser_household_compositionRequest;
+use App\Http\Requests\UpdateUser_needRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -70,7 +71,7 @@ class ApplicantController extends Controller
         $household = User_household_composition::where('user_id', $applicant->id)->get();
         $listOfNeeds = User_need::where('user_id', $applicant->id)->get();
 
-        $details = $applicant->load(['userAddress', 'userAddress.barangay', 'userAddress.city', 'userAddress.residence', 'userInfo', 'userPrevious', 'userHousehold', 'userNeeds']);
+        $details = $applicant->load(['userAddress', 'userInfo', 'userPrevious', 'userHousehold', 'userNeeds']);
         $userPrevious = $details->userPrevious;
 
         return view('Applicant.Edit', compact(
@@ -124,20 +125,49 @@ class ApplicantController extends Controller
         }
     }
     
-    public function houseUpdate(UpdateUser_household_compositionRequest $request, User_household_composition $applicant)
+    public function houseUpdate(UpdateUser_household_compositionRequest $request, User_household_composition $household)
     {
         $validated = $request->validated();
         DB::beginTransaction();
-        try{
-            $applicant->update($validated);
-
-            return redirect()->route('admin.applicant.edit', $applicant->id)
+        try {
+            $household->update($validated);
+            DB::commit();
+    
+            return redirect()->route('admin.applicant.edit', $household->user_id)
                 ->with('success', 'Household composition updated successfully.');
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             DB::rollBack();
-            Log::error('Failed to update household composition', ['error' => $e->getMessage()]);
-            return redirect()->route('admin.applicant.edit', $applicant->id)
+            Log::error('Failed to update household composition', [
+                'error' => $e->getMessage(),
+                'id' => $household->id,
+                'data' => $validated,
+            ]);
+    
+            return redirect()->route('admin.applicant.edit', $household->user_id)
                 ->with('error', 'Failed to update household composition.');
+        }
+    }
+
+    public function needUpdate(UpdateUser_needRequest $request, User_need $need)
+    {  
+        $validated = $request->validated();
+        DB::beginTransaction();
+        try{
+            $need->update($validated);
+            DB::commit();
+
+            return redirect()->route('admin.applicant.edit', $need->user_id)
+                ->with('success', 'Need updated successfully.');
+        } catch (\Exemption $e) {
+            DB::rollBack();
+            Log::error('Failed to update needs.', [
+                'error' => $e->getMessage(),
+                'id' => $need->id,
+                'data' => $validated,
+            ]);
+
+            return redirect()->route('admin.applicant.edit', $need->user_id)
+                ->with('error', 'Failed to update needs.');
         }
     }
 

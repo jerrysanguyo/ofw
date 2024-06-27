@@ -12,7 +12,6 @@ class User_household_composition extends Model
     
     protected $table='user_household_compositions';
     protected $fillable=[
-        'user_id',
         'full_name',
         'relation_id',
         'birthdate',
