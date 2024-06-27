@@ -12,6 +12,7 @@ class Type_relation extends Model
     protected $table = 'type_relations';
     protected $fillable = [
         'name',
+        'remarks',
         'created_by',
         'updated_by',
     ];

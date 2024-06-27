@@ -12,6 +12,7 @@ class Type_owwa extends Model
     protected $table = 'type_owwas';
     protected $fillable = [
         'name',
+        'remarks',
         'created_by',
         'updated_by',
     ];

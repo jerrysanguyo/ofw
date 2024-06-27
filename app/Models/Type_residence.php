@@ -12,6 +12,7 @@ class Type_residence extends Model
     protected $table = 'type_residences';
     protected $fillable = [
         'name',
+        'remarks',
         'created_by',
         'updated_by',
     ];

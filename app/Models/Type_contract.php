@@ -12,6 +12,7 @@ class Type_contract extends Model
     protected $table = 'Type_contracts';
     protected $fillable = [
         'name',
+        'remarks',
         'created_by',
         'updated_by',
     ];

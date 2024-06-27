@@ -12,6 +12,7 @@ class Type_gender extends Model
     protected $table = 'type_genders';
     protected $fillable = [
         'name',
+        'remarks',
         'created_by',
         'updated_by',
     ];

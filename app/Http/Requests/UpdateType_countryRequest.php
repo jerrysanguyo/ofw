@@ -23,6 +23,7 @@ class UpdateType_countryRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
+            'remarks' => 'nullable|string|max:255',
             'updated_by' =>  'integer|exists:users,id',
             'continent_id' =>  'integer|exists:type_continents,id',
         ];

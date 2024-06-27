@@ -31,20 +31,22 @@
                     <table class="table table-striped" id="subjob-table">
                         <thead>
                             <tr>
-                                <th>Job Type</th>
                                 <th>Sub job name</th>
+                                <th>Job Type</th>
                                 <th>Created</th>
                                 <th>Updated</th>
+                                <th>Remarks</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($listOfSubJob as $subjob)
                             <tr>
-                                <td>{{ $subjob->job->name }}</td>
                                 <td>{{ $subjob->name }}</td>
+                                <td>{{ $subjob->job->name }}</td>
                                 <td>{{ $subjob->createdBy->first_name ?? 'N/A'  }} - {{ $subjob->created_at }}</td>
                                 <td>{{ $subjob->updatedBy->first_name ?? 'N/A' }} - {{ $subjob->updated_at }}</td>
+                                <td>{{ $subjob->remarks ?? 'N/A' }}</td>
                                 <td>
                                     <div class="dropdown">
                                         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">

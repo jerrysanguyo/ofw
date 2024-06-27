@@ -12,6 +12,7 @@ class Type_sub_job extends Model
     protected $table = 'type_sub_jobs';
     protected $fillable = [
         'name',
+        'remarks',
         'job_id',
         'created_by',
         'updated_by',

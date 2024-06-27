@@ -31,8 +31,14 @@
                     <form action="{{ route('admin.barangay.update', ['barangay' => $barangay->id]) }}" method="post">
                         @csrf
                         @method('PUT')
-                        <label for="name" class="form-label">Barangay name:</label>
-                        <input type="text" name="name" id="name" class="form-control" value="{{ $barangay->name }}">
+                        <div class="col-lg-12">
+                            <label for="name" class="form-label">Barangay name:</label>
+                            <input type="text" name="name" id="name" class="form-control" value="{{ $barangay->name }}">
+                        </div>
+                        <div class="col-lg-12">
+                            <label for="remarks" class="form-label">Remarks:</label>
+                            <input type="text" name="remarks" id="remarks" class="form-control" value="{{ $barangay->remarks ?? '' }}">
+                        </div>
                         <input type="submit" value="Update" class="btn btn-primary mt-3">
                     </form>
                 </div>

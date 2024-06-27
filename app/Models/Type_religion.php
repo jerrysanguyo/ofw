@@ -12,6 +12,7 @@ class Type_religion extends Model
     protected $table = 'type_religions';
     protected $fillable = [
         'name',
+        'remarks',
         'created_by',
         'updated_by',
     ];

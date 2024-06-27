@@ -12,6 +12,7 @@ class Type_city extends Model
     protected $table = 'type_cities';
     protected $fillable = [
         'name',
+        'remarks',
         'created_by',
         'updated_by',
     ];

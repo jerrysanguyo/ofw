@@ -12,6 +12,7 @@ class Type_educational_attainment extends Model
     protected $table = 'type_educational_attainments';
     protected $fillable = [
         'name',
+        'remarks',
         'created_by',
         'updated_by',
     ];

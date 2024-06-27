@@ -34,6 +34,7 @@
                                 <th>contract name</th>
                                 <th>Created</th>
                                 <th>Updated</th>
+                                <th>Remarks</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -43,6 +44,7 @@
                                 <td>{{ $contract->name }}</td>
                                 <td>{{ $contract->createdBy->first_name ?? 'N/A'  }} - {{ $contract->created_at }}</td>
                                 <td>{{ $contract->updatedBy->first_name ?? 'N/A' }} - {{ $contract->updated_at }}</td>
+                                <td>{{ $contract->remarks ?? 'N/A' }}</td>
                                 <td>
                                     <div class="dropdown">
                                         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">

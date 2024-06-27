@@ -34,6 +34,7 @@
                                 <th>relation name</th>
                                 <th>Created</th>
                                 <th>Updated</th>
+                                <th>Remarks</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -43,6 +44,7 @@
                                 <td>{{ $relation->name }}</td>
                                 <td>{{ $relation->createdBy->first_name ?? 'N/A'  }} - {{ $relation->created_at }}</td>
                                 <td>{{ $relation->updatedBy->first_name ?? 'N/A' }} - {{ $relation->updated_at }}</td>
+                                <td>{{ $relation->remarks ?? 'N/A' }}</td>
                                 <td>
                                     <div class="dropdown">
                                         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">

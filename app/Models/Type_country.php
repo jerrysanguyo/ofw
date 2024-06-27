@@ -12,6 +12,7 @@ class Type_country extends Model
     protected $table = 'Type_countries';
     protected $fillable = [
         'name',
+        'remarks',
         'continent_id',
         'created_by',
         'updated_by',

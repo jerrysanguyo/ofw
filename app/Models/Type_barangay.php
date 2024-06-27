@@ -14,6 +14,7 @@ class Type_barangay extends Model
         'name',
         'created_by',
         'updated_by',
+        'remarks',
     ];
 
     public static function getAllBarangay() {

@@ -12,6 +12,7 @@ class Type_civil_status extends Model
     protected $table = 'Type_civil_statuses';
     protected $fillable = [
         'name',
+        'remarks',
         'created_by',
         'updated_by',
     ];

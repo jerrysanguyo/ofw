@@ -23,6 +23,7 @@ class StoreType_sub_jobRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
+            'remarks' => 'nullable|string|max:255',
             'job_id' =>  'integer|exists:type_jobs,id',
             'created_by' =>  'integer|exists:users,id',
             'updated_by' =>  'integer|exists:users,id',

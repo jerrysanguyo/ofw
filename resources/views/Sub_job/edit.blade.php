@@ -31,15 +31,23 @@
                     <form action="{{ route('admin.subjob.update', ['subjob' => $subjob->id]) }}" method="post">
                         @csrf
                         @method('PUT')
-                        <label for="name" class="form-label">subjob name:</label>
-                        <input type="text" name="name" id="name" class="form-control" value="{{ $subjob->name }}">
-                        <label for="job" class="form-label">Job:</label>
-                        <select name="job_id" id="job" class="form-select">
-                            <option value="{{ $subjob->job_id }}">{{ $subjob->job->name }}</option>
-                            @foreach($listOfJob as $job)
-                                <option value="{{ $job->id }}">{{ $job->name }}</option>
-                            @endforeach
-                        </select>
+                        <div class="col-lg-12">
+                            <label for="name" class="form-label">subjob name:</label>
+                            <input type="text" name="name" id="name" class="form-control" value="{{ $subjob->name }}">
+                        </div>
+                        <div class="col-lg-12">
+                            <label for="job" class="form-label">Job:</label>
+                            <select name="job_id" id="job" class="form-select">
+                                <option value="{{ $subjob->job_id }}">{{ $subjob->job->name }}</option>
+                                @foreach($listOfJob as $job)
+                                    <option value="{{ $job->id }}">{{ $job->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-lg-12">
+                            <label for="remarks" class="form-label">Remarks:</label>
+                            <input type="text" name="remarks" id="remarks" class="form-control" value="{{ $subjob->remarks ?? 'N/A' }}">
+                        </div>
                         <input type="submit" value="Update" class="btn btn-primary mt-3">
                     </form>
                 </div>

@@ -35,6 +35,7 @@
                                 <th>Continent name</th>
                                 <th>Created</th>
                                 <th>Updated</th>
+                                <th>Remarks</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -45,6 +46,7 @@
                                 <td>{{ $country->continent->name }}</td>
                                 <td>{{ $country->createdBy->first_name ?? 'N/A'  }} - {{ $country->created_at }}</td>
                                 <td>{{ $country->updatedBy->first_name ?? 'N/A' }} - {{ $country->updated_at }}</td>
+                                <td>{{ $country->remarks ?? 'N/A' }}</td>
                                 <td>
                                     <div class="dropdown">
                                         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">

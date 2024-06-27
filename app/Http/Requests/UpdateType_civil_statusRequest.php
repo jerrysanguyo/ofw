@@ -15,6 +15,7 @@ class UpdateType_civil_statusRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
+            'remarks' => 'nullable|string|max:255',
             'updated_by' =>  'integer|exists:users,id',
         ];
     }

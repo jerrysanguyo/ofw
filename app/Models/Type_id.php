@@ -12,6 +12,7 @@ class Type_id extends Model
     protected $table = 'type_ids';
     protected $fillable = [
         'name',
+        'remarks',
         'created_by',
         'updated_by',
     ];

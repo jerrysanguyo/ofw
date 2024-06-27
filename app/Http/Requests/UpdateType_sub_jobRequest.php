@@ -23,6 +23,7 @@ class UpdateType_sub_jobRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
+            'remarks' => 'nullable|string|max:255',
             'job_id' =>  'integer|exists:type_jobs,id',
             'updated_by' =>  'integer|exists:users,id',
         ];

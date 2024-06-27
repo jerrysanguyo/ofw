@@ -34,6 +34,7 @@
                                 <th>gender name</th>
                                 <th>Created</th>
                                 <th>Updated</th>
+                                <th>Remarks</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -43,6 +44,7 @@
                                 <td>{{ $gender->name }}</td>
                                 <td>{{ $gender->createdBy->first_name ?? 'N/A'  }} - {{ $gender->created_at }}</td>
                                 <td>{{ $gender->updatedBy->first_name ?? 'N/A' }} - {{ $gender->updated_at }}</td>
+                                <td>{{ $gender->remarks ?? 'N/A' }}</td>
                                 <td>
                                     <div class="dropdown">
                                         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">

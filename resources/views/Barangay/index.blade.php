@@ -34,15 +34,17 @@
                                 <th>Barangay name</th>
                                 <th>Created</th>
                                 <th>Updated</th>
+                                <th>Remarks</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($listOfBarangay as $barangay)
                             <tr>
-                                <td>{{ $barangay->name }}</td>
+                            <td>{{ $barangay->name }}</td>
                                 <td>{{ $barangay->createdBy->first_name ?? 'N/A'  }} - {{ $barangay->created_at }}</td>
                                 <td>{{ $barangay->updatedBy->first_name ?? 'N/A' }} - {{ $barangay->updated_at }}</td>
+                                <td>{{ $barangay->remarks ?? 'N/A' }}</td>
                                 <td>
                                     <div class="dropdown">
                                         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
