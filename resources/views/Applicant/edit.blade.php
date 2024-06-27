@@ -29,7 +29,7 @@
             @method('PUT')
             <div class="col-lg-12">
                 <div class="card shadow border">
-                    <div class="card-body">
+                    <div class="card-body overflow-auto">
                         @include('Applicant.Partial.personal')
                         @include('Applicant.Partial.previous')
                         <div class="col-lg-12 d-flex justify-content-end mt-3">
@@ -43,14 +43,14 @@
     <div class="row mt-3">
         <div class="col-lg-6">
             <div class="card shadow border">
-                <div class="card-body" style="height:450px;">
+                <div class="card-body overflow-auto" style="height:450px;">
                     @include('Applicant.Partial.household')
                 </div>
             </div>
         </div>
         <div class="col-lg-6">
             <div class="card shadow border">
-                <div class="card-body" style="height:450px;">
+                <div class="card-body overflow-auto" style="height:450px;">
                     @include('Applicant.Partial.needs')
                 </div>
             </div>
