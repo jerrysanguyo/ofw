@@ -169,6 +169,11 @@
                                         <i class="fa-solid fa-building mx-3" style="color: #B197FC;"></i> Barangay
                                     </a>
                                 </li>
+                                <li class="nav-item fs-7 {{ Request::is('admin.need.index') ? 'active' : '' }}">
+                                    <a href="{{ route('admin.need.index') }}" class="nav-link">
+                                        <i class="fa-solid fa-building mx-3" style="color: #B197FC;"></i> Need
+                                    </a>
+                                </li>
                                 <li class="nav-item fs-7 {{ Request::is('admin.city.index') ? 'active' : '' }}">
                                     <a href="{{ route('admin.city.index') }}" class="nav-link">
                                         <i class="fa-solid fa-building-columns mx-3" style="color: #B197FC;"></i> City

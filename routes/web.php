@@ -26,6 +26,7 @@ use App\Http\Controllers\NeedContoller;
 use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\TypeNeedController;
 
 /*
 |--------------------------------------------------------------------------
@@ -94,6 +95,7 @@ Route::middleware(['auth', Admin_role::class])->group(function() {
         Route::resource('/personal', PersonalController::class);
         Route::resource('/previous', PreviousController::class);
         Route::resource('/needs', NeedContoller::class);
+        Route::resource('/need', TypeNeedController::class);
         Route::resource('/applicant', ApplicantController::class);
         Route::PUT('/applicant/{household}/household/update', [ApplicantController::class, 'houseUpdate'])
             ->name('applicant.houseUpdate');

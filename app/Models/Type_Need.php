@@ -14,6 +14,19 @@ class Type_Need extends Model
         'name',
         'remarks',
         'updated_by',
-        'created_by'
+        'created_by',
     ];
+
+    public static function getAllNeed() 
+    {
+        return self::All();
+    }
+
+    public function createdBy() {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function updatedBy() {
+        return $this->belongsTo(User::class, 'updated_by');
+    }
 }

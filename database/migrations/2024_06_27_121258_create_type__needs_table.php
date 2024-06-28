@@ -11,13 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('type__needs', function (Blueprint $table) {
+        Schema::create('type_needs', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('updated_by')->constrained('users');
             $table->string('remarks');
             $table->timestamps();
+        });
+
+        Schema::table('user_needs', function (Blueprint $table) {
+            $table->dropColumn('needs');
+            $table->foreignId('need_id')->after('id')->cosntrained('type_needs');
         });
     }
 
@@ -26,6 +31,12 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('type__needs');
+        Schema::table('user_needs', function(Blueprint $table) {
+            $table->dropForeignId(['need_id']);
+            $table->dropColumn('need_id');
+            $table->string('needs');
+        });
+
+        Schema::dropIfExists('type_needs');
     }
 };
