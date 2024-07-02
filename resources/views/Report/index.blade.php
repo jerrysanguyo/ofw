@@ -1,4 +1,5 @@
 @extends('layouts.app')
+
 @section('content')
 <div class="container-fluid">
     <div class="row">
@@ -12,14 +13,12 @@
         <div class="col-lg-4">
             <div class="card border shadow">
                 <div class="card-body">
-                    
                 </div>
             </div>
         </div>
         <div class="col-lg-4">
             <div class="card border shadow">
                 <div class="card-body">
-                    
                 </div>
             </div>
         </div>
@@ -27,8 +26,9 @@
 </div>
 <script>
 document.getElementById('submitBtn').addEventListener('click', function() {
-    const startAge = document.getElementById('startAge').value;
-    const endAge = document.getElementById('endAge').value;
+    const ageBracket = document.getElementById('ageBracket').value.split('-');
+    const startAge = ageBracket[0];
+    const endAge = ageBracket[1];
 
     fetch('{{ route("admin.home.ageCount") }}', {
         method: 'POST',
@@ -57,10 +57,7 @@ document.getElementById('submitBtn').addEventListener('click', function() {
 });
 
 document.getElementById('excelBtn').addEventListener('click', function() {
-    const form = document.getElementById('ageForm');
-    form.setAttribute('action', '{{ route("age.export") }}');
-    form.setAttribute('method', 'GET');
-    form.submit();
-});
+        document.getElementById('ageForm').submit();
+    });
 </script>
 @endsection

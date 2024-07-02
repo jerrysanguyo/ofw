@@ -15,7 +15,8 @@ class UpdateUser_needRequest extends FormRequest
     {
         return [
             'user_id' => 'integer|exists:users,id',
-            'needs' => 'required|string|max:255',
+            'need_id' => 'required|array',
+            'need_id.*' => 'integer|exists:type_needs,id',
         ];
     }
 }

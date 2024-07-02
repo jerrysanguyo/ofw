@@ -171,7 +171,7 @@
                                 </li>
                                 <li class="nav-item fs-7 {{ Request::is('admin.need.index') ? 'active' : '' }}">
                                     <a href="{{ route('admin.need.index') }}" class="nav-link">
-                                        <i class="fa-solid fa-building mx-3" style="color: #B197FC;"></i> Need
+                                        <i class="fa-solid fa-bowl-food mx-3" style="color: #B197FC;"></i> Need
                                     </a>
                                 </li>
                                 <li class="nav-item fs-7 {{ Request::is('admin.city.index') ? 'active' : '' }}">

@@ -21,12 +21,12 @@ class ReportController extends Controller
 
     public function getAgeCount(Request $request)
     {
-        $startAge = $request->input('startAge');
-        $endAge = $request->input('endAge');
+        $startAge = (int)$request->input('startAge');
+        $endAge = (int)$request->input('endAge');
     
         $result = [];
     
-        if ($startAge && $endAge) {
+        if ($startAge !== null && $endAge !== null) {
             for ($age = $startAge; $age <= $endAge; $age++) {
                 $count = User_household_composition::where('age', $age)->count();
                 if ($count > 0) {
@@ -40,9 +40,13 @@ class ReportController extends Controller
 
     public function ageExcel(Request $request)
     {
-        $startAge = $request->input('startAge');
-        $endAge = $request->input('endAge');
-    
+        $ageBracket = $request->input('ageBracket');
+        list($startAge, $endAge) = explode('-', $ageBracket);
+
+        if ($endAge == '99') {
+            $endAge = 99; // Set a high value for "21-above years old"
+        }
+
         $userMain = User::with([
             'userInfo.religion',
             'userInfo.gender',
@@ -58,27 +62,27 @@ class ReportController extends Controller
             'userPrevious.contract',
             'userPrevious.owwa',
             'userHousehold.relationship',
-            'userNeeds',
+            'userNeeds.typeNeeds',
         ])
         ->whereHas('userHousehold', function($query) use ($startAge, $endAge) {
             $query->whereBetween('age', [$startAge, $endAge]);
         })
         ->get();
-    
+
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
-    
+
         // HEADER
         $headers = [
             'FULL NAME', 'ADDRESS', 'CONTACT NUMBER', 'BIRTHDATE', 'AGE', 'GENDER', 'CIVIL STATUS',
-            'EMAIL ADDRESS', 'BIRTHPLACE', 'RELIGION','PRESENT JOB',
+            'EMAIL ADDRESS', 'BIRTHPLACE', 'RELIGION', 'PRESENT JOB',
             'EDUCATIONAL ATTAINMENT', 'VOTERS?', 'YEARS OF RESIDENCE IN TAGUIG', 'TYPE OF RESIDENCE',
             'JOB TYPE', 'JOB', 'SUB JOB', 'CONTINENT', 'COUNTRY', 'YEARS IN ABROAD', 'CONTRACT', 'LAST DEPARTURE', 'LAST ARRIVAL', 'OWWA', 'INTENT TO RETURN?',
             'FULL NAME', 'RELATIONSHIP', 'BIRTHDATE', 'AGE', 'WORK', 'MONTHLY INCOME', 'VOTERS?',
             'NEEDS',
         ];
         $sheet->fromArray($headers, null, 'A2');
-        
+
         // Merge cells for main headers
         foreach (range('A', 'Z') as $columnID) {
             $sheet->mergeCells("{$columnID}1:{$columnID}2");
@@ -111,7 +115,7 @@ class ReportController extends Controller
             ]
         ];
         $sheet->getStyle('Y1:AG1')->applyFromArray($beneficiariesStyleArray);
-        
+
         // HEADER STYLE
         $headerStyleArray = [
             'font' => [
@@ -133,19 +137,19 @@ class ReportController extends Controller
             ]
         ];
         $sheet->getStyle('A1:AH2')->applyFromArray($headerStyleArray);
-    
+
         // DATA
         $row = 3;
         foreach ($userMain as $main) {
             $filteredHouseholdData = $main->userHousehold->filter(function($household) use ($startAge, $endAge) {
                 return $household->age >= $startAge && $household->age <= $endAge;
             });
-    
+
             $needsData = [];
             foreach ($main->userNeeds as $needs) {
-                $needsData[] = $needs->needs ?? '';
+                $needsData[] = $needs->typeNeeds->name ?? '';
             }
-    
+
             foreach ($filteredHouseholdData as $household) {
                 $data = [
                     $main->last_name . ', ' . $main->first_name . ' ' . $main->middle_name,
@@ -183,11 +187,11 @@ class ReportController extends Controller
                     $household->voters ?? '',
                     implode(', ', $needsData)
                 ];
-    
+
                 $sheet->fromArray($data, null, 'A' . $row++);
             }
         }
-    
+
         // BORDER TO ALL CELL
         $styleArray = [
             'borders' => [
@@ -217,12 +221,12 @@ class ReportController extends Controller
         foreach ($columns as $columnID) {
             $sheet->getColumnDimension($columnID)->setAutoSize(true);
         }
-    
+
         $writer = new Xlsx($spreadsheet);
         $fileName = "AgeReport.xlsx";
         $temp_file = tempnam(sys_get_temp_dir(), $fileName);
         $writer->save($temp_file);
-    
+
         return response()->download($temp_file, $fileName, ['Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']);
     }
 }

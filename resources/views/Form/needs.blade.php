@@ -47,8 +47,12 @@
                         <div id="needs-container">
                             <div class="row mb-3">
                                 <div class="col-md-12">
-                                    <label for="needs" class="form-label">Need:</label>
-                                    <input type="text" name="needs[]" id="needs" class="form-control">
+                                    <label for="need_id" class="form-label">Need:</label>
+                                    <select name="need_id[]" id="need_id" class="form-select">
+                                        @foreach($listOfNeed as $needs)
+                                        <option value="{{ $needs->id }}">{{ $needs->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -71,8 +75,13 @@
                                 @method('PUT')
                                 <div class="row mb-3 align-items-end">
                                     <div class="col-md-11">
-                                        <label for="needs" class="form-label">Need:</label>
-                                        <input type="text" name="needs" id="needs" class="form-control" value="{{ $need->needs }}">
+                                        <label for="need_id" class="form-label">Need:</label>
+                                        <label for="need_id" class="form-label">Need:</label>
+                                        <select name="need_id" id="need_id" class="form-select">
+                                            @foreach($listOfNeed as $needs)
+                                                <option value="{{ $needs->id }}" {{ isset($need) && $need->need_id == $need->id ? 'selected' : '' }}>{{ $needs->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                     <div class="col-md-1 d-flex justify-content-md-start">
                                         <button type="submit" class="btn btn-primary">Update</button>
@@ -94,8 +103,12 @@
             newRow.classList.add('row', 'mb-3');
             newRow.innerHTML = `
                 <div class="col-md-12">
-                    <label for="needs" class="form-label">Need:</label>
-                    <input type="text" name="needs[]" id="needs" class="form-control">
+                    <label for="need_id" class="form-label">Need:</label>
+                    <select name="need_id[]" id="need_id" class="form-select">
+                        @foreach($listOfNeed as $needs)
+                        <option value="{{ $needs->id }}">{{ $needs->name }}</option>
+                        @endforeach
+                    </select>
                 </div>
             `;
             container.appendChild(newRow);

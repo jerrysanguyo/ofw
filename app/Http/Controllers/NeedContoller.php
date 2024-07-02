@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User_need;
+use App\Models\Type_need;
 use App\Http\Requests\StoreUser_needRequest;
 use App\Http\Requests\UpdateUser_needRequest;
 use Illuminate\Support\Facades\DB;
@@ -16,10 +17,12 @@ class NeedContoller extends Controller
         $userId = auth()->id();
         $user_need = User_need::where('user_id', $userId)->first();
         $listOfNeeds = User_need::where('user_id', $userId)->get();
+        $listOfNeed  = Type_need::getAllNeed();
 
         return view('Form.needs', compact(
             'user_need',
             'listOfNeeds',
+            'listOfNeed',
         ));
     }
     
@@ -30,10 +33,10 @@ class NeedContoller extends Controller
         
         DB::beginTransaction();
         try {
-            foreach ($validated['needs'] as $needs) {
+            foreach ($validated['need_id'] as $needs) {
                 User_need::create([
                     'user_id' => $userId,
-                    'needs' => $needs,
+                    'need_id' => $needs,
                 ]);
             }
             DB::commit();

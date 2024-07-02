@@ -13,7 +13,7 @@ class User_need extends Model
     protected $table = 'user_needs';
     protected $fillable = [
         'user_id',
-        'needs',
+        'need_id',
     ];
 
     public static function getAllNeeds() {
@@ -25,5 +25,17 @@ class User_need extends Model
         return self::select('need_id', DB::raw('count(*) as needsCount'))
                    ->groupBy('need_id')
                    ->get();
+    }
+
+    public function typeNeeds() {
+        return $this->belongsTo(Type_need::class, 'need_id');
+    }
+
+    public function createdBy() {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function updatedBy() {
+        return $this->belongsTo(User::class, 'updated_by');
     }
 }
