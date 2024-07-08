@@ -121,7 +121,7 @@
         <div class="card shadow border">
             <div class="card-body">
                 <span class="fs-4"><i class="fa-solid fa-house m-3" style="color: #FFD43B;"></i>Beneficiaries graph</span>
-                <canvas id="beneficiaryChart" style="width:100%; height: 530px"></canvas>
+                @include('HomePartial.graph.beneficiary')
             </div>
         </div>
     </div>
@@ -242,11 +242,11 @@
            });
        }
 
-        var beneficiaryLabels = @json($distinctBeneficiary->pluck('age'));
+        var beneficiaryLabels = @json($distinctBeneficiary->pluck('age_group'));
         var beneficiaryData = @json($distinctBeneficiary->pluck('beneficiaryCount'));
         createChart('beneficiaryChart', beneficiaryLabels, beneficiaryData, 'pie');
 
-       var needsLabels = @json($distinctNeeds->pluck('needs'));
+       var needsLabels = @json($distinctNeeds->pluck('type_name'));
        var needsData = @json($distinctNeeds->pluck('needsCount'));
        createChart('needsChart', needsLabels, needsData, 'doughnut');
 

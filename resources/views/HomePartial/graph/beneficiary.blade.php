@@ -1,0 +1,1 @@
+<canvas id="beneficiaryChart" style="width:100%; height: 530px"></canvas>

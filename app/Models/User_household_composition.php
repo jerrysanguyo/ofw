@@ -28,9 +28,15 @@ class User_household_composition extends Model
 
     public static function distinctBeneficiaryCount()
     {
-        return self::select('age', DB::raw('count(*) as beneficiaryCount'))
-                   ->groupBy('age')
-                   ->get();
+        return self::select(
+            DB::raw('CASE 
+                WHEN age BETWEEN 0 AND 10 THEN "0-10" 
+                WHEN age BETWEEN 11 AND 20 THEN "11-20" 
+                ELSE "21-above" 
+            END as age_group'),
+            DB::raw('count(*) as beneficiaryCount'))
+            ->groupBy('age_group')
+            ->get();
     }
 
     public function createdBy() {

@@ -22,8 +22,9 @@ class User_need extends Model
     
     public static function distinctNeedsCount()
     {
-        return self::select('need_id', DB::raw('count(*) as needsCount'))
-                   ->groupBy('need_id')
+        return self::select('type_needs.name as type_name', DB::raw('count(*) as needsCount'))
+                   ->join('type_needs', 'type_needs.id', '=', 'user_needs.need_id')
+                   ->groupBy('type_name')
                    ->get();
     }
 
