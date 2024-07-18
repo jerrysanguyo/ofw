@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Models\User_household_composition;
 use App\Models\User_info;
 use App\Models\User_need;
 use App\Models\User_address;
 use App\Models\User_previous_job;
 use App\Models\User;
+use App\Models\Type_country;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
@@ -16,7 +20,10 @@ class ReportController extends Controller
 {
     public function index()
     {
-        return view('Report.index');
+        $listOfCountry = Type_country::getAllCountry();
+        return view('Report.index', compact(
+            'listOfCountry',
+        ));
     }
 
     public function getAgeCount(Request $request)
@@ -38,13 +45,33 @@ class ReportController extends Controller
         return response()->json(['counts' => $result]);
     }    
 
+    public function getCountryCount(Request $request)
+    {
+        try {
+            $countryId = $request->query('country');
+            
+            if (!$countryId) {
+                return response()->json(['error' => 'Country ID is required'], 400);
+            }
+            
+            $count = DB::table('user_previous_jobs')
+                ->where('country_id', $countryId)
+                ->count();
+
+            return response()->json(['count' => $count]);
+        } catch (\Exception $e) {
+            Log::error('Error fetching country count: ' . $e->getMessage());
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
+
     public function ageExcel(Request $request)
     {
         $ageBracket = $request->input('ageBracket');
         list($startAge, $endAge) = explode('-', $ageBracket);
 
         if ($endAge == '99') {
-            $endAge = 99; // Set a high value for "21-above years old"
+            $endAge = 99; 
         }
 
         $userMain = User::with([

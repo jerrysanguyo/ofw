@@ -59,9 +59,11 @@ Route::middleware(['auth', User_role::class])->group(function() {
     });
 });
 
-Route::get('/get-sub-jobs/{jobId}', [PreviousController::class, 'getSubJobs'])->name('getSubJobs');
-Route::get('/get-countries/{continentId}', [PreviousController::class, 'getCountries'])->name('getCountries');
 Route::post('/get-countries-by-continent', [HomeController::class, 'getCountriesByContinent']);
+Route::get('/get-sub-jobs/{jobId}', [PreviousController::class, 'getSubJobs'])
+        ->name('getSubJobs');
+Route::get('/get-countries/{continentId}', [PreviousController::class, 'getCountries'])
+        ->name('getCountries');
 Route::get('/report/export', [ReportController::class, 'ageExcel'])
         ->name('age.export');
 
@@ -103,8 +105,12 @@ Route::middleware(['auth', Admin_role::class])->group(function() {
             ->name('applicant.needUpdate');
         // report
         Route::resource('/report', ReportController::class);
-        Route::post('/home/ageCount', [ReportController::class, 'getAgeCount'])
+        Route::post('/report/ageCount', [ReportController::class, 'getAgeCount'])
             ->name('home.ageCount');
+        // Route::post('/home/countryCount', [ReportController::class, 'getCountryCount'])
+        //     ->name('home.countryCount');
+        Route::get('/country-count', [ReportController::class, 'getCountryCount'])
+            ->name('country.count');
     });
 });
 
