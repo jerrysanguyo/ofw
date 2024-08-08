@@ -22,6 +22,7 @@ class TypeCountrySeeder extends Seeder
             'North America' => ['United States', 'Canada', 'Mexico', 'Guatemala', 'Honduras', 'El Salvador', 'Nicaragua', 'Costa Rica', 'Panama', 'Belize'],
             'Australia' => ['Australia', 'New Zealand', 'Papua New Guinea', 'Fiji', 'Solomon Islands', 'Vanuatu', 'Samoa', 'Tonga', 'Tuvalu', 'Nauru'],
             'South America' => ['Brazil', 'Argentina', 'Chile', 'Colombia', 'Peru', 'Venezuela', 'Ecuador', 'Bolivia', 'Paraguay', 'Uruguay'],
+            'Sea based' => ['Sea based'],
         ];
 
         foreach ($countries as $continent => $countryList) {

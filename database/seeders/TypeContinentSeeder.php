@@ -14,7 +14,7 @@ class TypeContinentSeeder extends Seeder
     public function run()
     {
         $continents = [
-            'Africa', 'Antarctica', 'Asia', 'Europe', 'North America', 'Australia', 'South America'
+            'Africa', 'Antarctica', 'Asia', 'Europe', 'North America', 'Australia', 'South America', 'Sea based'
         ];
 
         foreach ($continents as $continent) {
