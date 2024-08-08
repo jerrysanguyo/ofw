@@ -49,11 +49,11 @@
                             <div class="row household-row">
                                 <div class="col-lg-3">
                                     <label for="full_name" class="form-label">Full name</label>
-                                    <input type="text" name="full_name[]" class="form-control">
+                                    <input type="text" id="full_name" name="full_name[]" class="form-control">
                                 </div>
                                 <div class="col-lg-1">
                                     <label for="relation_id" class="form-label">Relationship</label>
-                                    <select name="relation_id[]" class="form-select">
+                                    <select name="relation_id[]" id="relation_id" class="form-select">
                                         @foreach($listOfRelation as $relation)
                                             <option value="{{ $relation->id }}">{{ $relation->name }}</option>
                                         @endforeach
@@ -61,23 +61,23 @@
                                 </div>
                                 <div class="col-lg-1">
                                     <label for="birthdate" class="form-label">Birthdate</label>
-                                    <input type="date" name="birthdate[]" class="form-control birthdate-input">
+                                    <input type="date" id="birthdate" name="birthdate[]" class="form-control birthdate-input">
                                 </div>
                                 <div class="col-lg-1">
                                     <label for="age" class="form-label">Age</label>
-                                    <input type="number" name="age[]" class="form-control age-input" readonly>
+                                    <input type="number" id="age" name="age[]" class="form-control age-input" readonly>
                                 </div>
                                 <div class="col-lg-3">
                                     <label for="work" class="form-label">Work</label>
-                                    <input type="text" name="work[]" class="form-control">
+                                    <input type="text" id="work" name="work[]" class="form-control">
                                 </div>
                                 <div class="col-lg-2">
                                     <label for="monthly_income" class="form-label">Monthly income</label>
-                                    <input type="text" name="monthly_income[]" class="form-control" value="0">
+                                    <input type="text" id="monthly_income" name="monthly_income[]" class="form-control" value="0">
                                 </div>
                                 <div class="col-lg-1">
                                     <label for="voters" class="form-label">Taguig voters?</label>
-                                    <select name="voters[]" class="form-select">
+                                    <select name="voters[]" id="voters" class="form-select">
                                         <option value="yes">Yes</option>
                                         <option value="no">No</option>
                                     </select>

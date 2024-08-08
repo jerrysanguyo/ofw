@@ -15,13 +15,13 @@ class StoreUser_household_compositionRequest extends FormRequest
     {
         return [
             'user_id'           => 'exists:users,id',
-            'full_name'         => 'required|max:255',
-            'relation_id'       => 'exists:type_relations,id',
-            'birthdate'         => 'required',
-            'age'               => 'required',
-            'work'              => 'required|max:255',
-            'monthly_income'    => 'required',
-            'voters'            => 'required',
+            'full_name.*'       => 'required|max:255',
+            'relation_id.*'     => 'exists:type_relations,id',
+            'birthdate.*'       => 'required|date',
+            'age.*'             => 'required|integer',
+            'work.*'            => 'required|max:255',
+            'monthly_income.*'  => 'required|numeric',
+            'voters.*'          => 'required|in:yes,no',
         ];
     }
 }

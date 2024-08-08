@@ -27,6 +27,7 @@ class HouseholdController extends Controller
 
     public function store(StoreUser_household_compositionRequest $request)
     {
+
         $validated = $request->validated();
 
         DB::beginTransaction();
