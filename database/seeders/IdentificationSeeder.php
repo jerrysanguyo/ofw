@@ -14,7 +14,7 @@ class IdentificationSeeder extends Seeder
             'PSA-issued Certificate of Live Birth',
             'Philippine Passport',
             'Unified Multi-purpose ldentification',
-            'Student License Permit or Non- Professional/Professional Driver License',
+            'Student\'s License Permit or Non- Professional/Professional\'s Driver License',
         ];
 
         foreach ($identifications as $identification) {

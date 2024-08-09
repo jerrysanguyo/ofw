@@ -14,6 +14,7 @@ use App\Http\Requests\Updateuser_previous_jobRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class PreviousController extends Controller
 {
@@ -21,19 +22,29 @@ class PreviousController extends Controller
     {
         $userId = auth()->id();
         $previousJob = User_previous_job::where('user_id', $userId)->first();
-    
         $listOfJob = Type_job::getAllJob();
-        $listOfContinent = Type_continent::getAllContinent();
         $listOfContract = Type_contract::getAllContract();
         $listOfOwwa = Type_owwa::getAllOwwa();
     
         return view('Form.previous', compact(
             'previousJob',
             'listOfJob',
-            'listOfContinent',
             'listOfContract',
             'listOfOwwa',
         ));
+    }
+
+    public function getJobType(Request $request)
+    {
+        $jobType = $request->input('job_type');
+        
+        if ($jobType === 'landbase') {
+            $listOfContinent = Type_continent::where('name', '!=', 'Sea based')->get();
+        } else {
+            $listOfContinent = Type_continent::where('name', 'Sea based')->get();
+        }
+        
+        return response()->json($listOfContinent);
     }
 
     public function getSubJobs($jobId)

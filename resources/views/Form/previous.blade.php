@@ -54,6 +54,7 @@
                             <div class="col-md-4">
                                 <label for="job_type" class="form-label">Job type:</label>
                                 <select name="job_type" id="job_type" class="form-select">
+                                    <option value="">choose..</option>
                                     <option value="landbase" {{ isset($previousJob) && $previousJob->job_type == 'landbase' ? 'selected' : '' }}>Landbased</option>
                                     <option value="seabase" {{ isset($previousJob) && $previousJob->job_type == 'seabase' ? 'selected' : '' }}>Seabased</option>
                                 </select>
@@ -79,9 +80,7 @@
                                 <label for="continent_id" class="form-label">Continent:</label>
                                 <select name="continent_id" id="continent_id" class="form-select">
                                     <option value="">choose..</option>
-                                    @foreach($listOfContinent as $continent)
-                                        <option value="{{ $continent->id }}" {{ isset($previousJob) && $previousJob->continent_id == $continent->id ? 'selected' : '' }}>{{ $continent->name }}</option>
-                                    @endforeach
+
                                 </select>
                             </div>
                             <div class="col-md-6">
@@ -138,35 +137,45 @@
     </div>
 </div>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const jobSelect = document.getElementById('job_id');
-        const subJobSelect = document.getElementById('sub_job_id');
+    $(document).ready(function() {
+        function fetchContinents(jobType, selectedContinentId = null) {
+            if (jobType) {
+                $.ajax({
+                    url: '/getJobType', 
+                    type: 'GET',
+                    data: { job_type: jobType },
+                    success: function(response) {
+                        $('#continent_id').empty(); 
+                        $('#continent_id').append('<option value="">choose..</option>');
+                        
+                        $.each(response, function(index, continent) {
+                            $('#continent_id').append('<option value="' + continent.id + '">' + continent.name + '</option>');
+                        });
 
-        function fetchSubJobs(jobId, selectedSubJobId = null) {
-            fetch(`/get-sub-jobs/${jobId}`)
-                .then(response => response.json())
-                .then(data => {
-                    subJobSelect.innerHTML = '';
-                    data.forEach(subJob => {
-                        const option = document.createElement('option');
-                        option.value = subJob.id;
-                        option.textContent = subJob.name;
-                        if (selectedSubJobId && subJob.id == selectedSubJobId) {
-                            option.selected = true;
+                        if (selectedContinentId) {
+                            $('#continent_id').val(selectedContinentId);
                         }
-                        subJobSelect.appendChild(option);
-                    });
+                    },
+                    error: function() {
+                        console.log('Error fetching data');
+                    }
                 });
+            } else {
+                $('#continent_id').empty();
+                $('#continent_id').append('<option value="">choose..</option>');
+            }
         }
 
-        jobSelect.addEventListener('change', function () {
-            fetchSubJobs(this.value);
+        $('#job_type').change(function() {
+            var jobType = $(this).val();
+            fetchContinents(jobType);
         });
 
-        @if(isset($previousJob) && $previousJob->job_id)
-            fetchSubJobs({{ $previousJob->job_id }}, {{ $previousJob->sub_job_id }});
+        @if(isset($previousJob) && $previousJob->continent_id)
+            fetchContinents('{{ $previousJob->job_type }}', {{ $previousJob->continent_id }});
         @endif
     });
+
     document.addEventListener('DOMContentLoaded', function () {
         const continentSelect = document.getElementById('continent_id');
         const countrySelect = document.getElementById('country_id');
@@ -194,6 +203,36 @@
 
         @if(isset($previousJob) && $previousJob->continent_id)
             fetchCountries({{ $previousJob->continent_id }}, {{ $previousJob->country_id }});
+        @endif
+    });
+    
+    document.addEventListener('DOMContentLoaded', function () {
+        const jobSelect = document.getElementById('job_id');
+        const subJobSelect = document.getElementById('sub_job_id');
+
+        function fetchSubJobs(jobId, selectedSubJobId = null) {
+            fetch(`/get-sub-jobs/${jobId}`)
+                .then(response => response.json())
+                .then(data => {
+                    subJobSelect.innerHTML = '';
+                    data.forEach(subJob => {
+                        const option = document.createElement('option');
+                        option.value = subJob.id;
+                        option.textContent = subJob.name;
+                        if (selectedSubJobId && subJob.id == selectedSubJobId) {
+                            option.selected = true;
+                        }
+                        subJobSelect.appendChild(option);
+                    });
+                });
+        }
+
+        jobSelect.addEventListener('change', function () {
+            fetchSubJobs(this.value);
+        });
+
+        @if(isset($previousJob) && $previousJob->job_id)
+            fetchSubJobs({{ $previousJob->job_id }}, {{ $previousJob->sub_job_id }});
         @endif
     });
 </script>

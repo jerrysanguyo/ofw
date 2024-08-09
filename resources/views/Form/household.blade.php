@@ -38,7 +38,6 @@
                         </div>
                     @endif
                     <span class="fs-6 text-danger">*Kindly put N/A if not applicable</span>
-                    @if($listOfComposition->isEmpty())
 
                     @php
                         $baseRoute = Auth::user()->role === 'admin' ? 'admin' : 'user';
@@ -73,7 +72,7 @@
                                 </div>
                                 <div class="col-lg-2">
                                     <label for="monthly_income" class="form-label">Monthly income</label>
-                                    <input type="text" id="monthly_income" name="monthly_income[]" class="form-control" value="0">
+                                    <input type="number" id="monthly_income" name="monthly_income[]" class="form-control" value="0">
                                 </div>
                                 <div class="col-lg-1">
                                     <label for="voters" class="form-label">Taguig voters?</label>
@@ -93,7 +92,8 @@
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </form>
-                    @else
+                    @if($listOfComposition->isNotEmpty())
+                    <hr>
                         @foreach($listOfComposition as $household)
                             <!-- Display existing household compositions -->
                             @php
@@ -141,7 +141,7 @@
                                     </div>
                                     <div class="col-md-2">
                                         <label for="monthly_income" class="form-label">Monthly income</label>
-                                        <input type="text" id="monthly_income" name="monthly_income" class="form-control" value="{{ $household->monthly_income }}">
+                                        <input type="number" id="monthly_income" name="monthly_income" class="form-control" value="{{ $household->monthly_income }}">
                                         @error('monthly_income')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -184,20 +184,31 @@ document.addEventListener("DOMContentLoaded", function() {
         return age;
     }
 
+    function updateVotersField(age, votersSelect) {
+        if (age < 18) {
+            votersSelect.value = 'no';
+        } else {
+            votersSelect.value = 'yes'; 
+        }
+    }
+
     function addEventListenersToRow(row) {
         const birthdateInput = row.querySelector('.birthdate-input');
         const ageInput = row.querySelector('.age-input');
+        const votersSelect = row.querySelector('#voters');
 
         birthdateInput.addEventListener('change', function() {
             const birthdate = new Date(this.value);
             const age = calculateAge(birthdate);
             ageInput.value = age;
+            updateVotersField(age, votersSelect);
         });
     }
 
     addRowButton.addEventListener('click', function() {
         const newRow = document.querySelector('.household-row').cloneNode(true);
         newRow.querySelectorAll('input').forEach(input => input.value = '');
+        newRow.querySelector('#voters').value = 'no'; // Set default value
         addEventListenersToRow(newRow);
         householdContainer.appendChild(newRow);
     });

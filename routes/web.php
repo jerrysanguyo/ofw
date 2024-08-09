@@ -60,12 +60,19 @@ Route::middleware(['auth', User_role::class])->group(function() {
 });
 
 Route::post('/get-countries-by-continent', [HomeController::class, 'getCountriesByContinent']);
+// Route::get('/locations', [HomeController::class, 'fetchLocations'])->name('locations.fetch');
+Route::get('/get-countries/{continentId}', [PreviousController::class, 'getCountries'])->name('getCountries');
+Route::get('/getJobType', [PreviousController::class, 'getJobType'])->name('getJobType');
+
 Route::get('/get-sub-jobs/{jobId}', [PreviousController::class, 'getSubJobs'])
         ->name('getSubJobs');
-Route::get('/get-countries/{continentId}', [PreviousController::class, 'getCountries'])
-        ->name('getCountries');
 Route::get('/report/export', [ReportController::class, 'ageExcel'])
         ->name('age.export');
+        
+Route::get('/get-continents', function() {
+    $continents = Continent::all(); // Assuming you have a Continent model
+    return response()->json($continents);
+});
 
 Route::middleware(['auth', Admin_role::class])->group(function() {
     Route::prefix('admin')->name('admin.')->group(function () {

@@ -15,7 +15,7 @@ class EducationSeeder extends Seeder
             'Secondary',
             'Upper secondary',
             'Vocational',
-            'Undergraduate',
+            'Bachelor\'s',
             'Graduate',
             'Doctoral'
         ];

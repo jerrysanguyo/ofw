@@ -12,10 +12,10 @@ class NeedsFactory extends Factory
     public function definition(): array
     {
         return [
-            // 'name' => $this->faker->name(),
-            // 'updated_by' => User::factory(),
-            // 'created_by' => Uer::factory(),
-            // 'remarks' => $this->fake->sentence(),
+            'name' => $this->faker->name(),
+            'updated_by' => User::factory(),
+            'created_by' => Uer::factory(),
+            'remarks' => $this->fake->sentence(),
         ];
     }
 }

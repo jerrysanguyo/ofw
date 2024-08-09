@@ -37,8 +37,7 @@
                             </ul>
                         </div>
                     @endif
-                    <span class="fs-6 text-danger">*Kindly put N/A if not applicable</span>
-                    @if(!$user_need)                    
+                    <span class="fs-6 text-danger">*Kindly put N/A if not applicable</span>                   
                     @php
                         $baseRoute = Auth::user()->role === 'admin' ? 'admin' : 'user';
                     @endphp
@@ -65,7 +64,8 @@
                             <button type="submit" class="btn btn-primary"> Submit </button>
                         </div>
                     </form>
-                    @else
+                    @if($user_need)
+                        <hr>
                         @foreach($listOfNeeds as $need)
                             @php
                                 $baseRoute = Auth::user()->role === 'admin' ? 'admin' : 'user';
@@ -76,10 +76,9 @@
                                 <div class="row mb-3 align-items-end">
                                     <div class="col-md-11">
                                         <label for="need_id" class="form-label">Need:</label>
-                                        <label for="need_id" class="form-label">Need:</label>
                                         <select name="need_id" id="need_id" class="form-select">
                                             @foreach($listOfNeed as $needs)
-                                                <option value="{{ $needs->id }}" {{ isset($need) && $need->need_id == $need->id ? 'selected' : '' }}>{{ $needs->name }}</option>
+                                                <option value="{{ $needs->id }}" {{ $need->need_id == $needs->id ? 'selected' : '' }}>{{ $needs->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>

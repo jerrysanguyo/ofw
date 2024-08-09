@@ -18,7 +18,7 @@ class NeedContoller extends Controller
         $user_need = User_need::where('user_id', $userId)->first();
         $listOfNeeds = User_need::where('user_id', $userId)->get();
         $listOfNeed  = Type_need::getAllNeed();
-
+    
         return view('Form.needs', compact(
             'user_need',
             'listOfNeeds',
@@ -41,7 +41,7 @@ class NeedContoller extends Controller
             }
             DB::commit();
             $baseRoute = Auth::user()->role === 'admin' ? 'admin' : 'user';
-            return redirect()->route($baseRoute . '.home')->with('success', 'Needs created successfully.');
+            return redirect()->route($baseRoute . '.create')->with('success', 'Needs created successfully.');
         } catch (\Exception $e) {
             DB::rollBack();
     
