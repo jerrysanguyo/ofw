@@ -22,7 +22,8 @@ class SubJobSeeder extends Seeder
             'Manufacturing' => ['Fabricator', 'Material handler', 'Machine operator', 'Equipment technician', 'Production supervisor', 'Warehouse manager', 'Plant manager', 'Safety coordinator', 'Quality control specialist', 'Automation engineer'],
             'Finance' => ['Bookkeeper', 'Accountant', 'Financial advisor', 'Actuary', 'Auditor', 'Financial controller', 'Investment banker', 'Portfolio manager', 'Financial analyst', 'Chief financial officer (CFO)'],
             'Business Administration' => ['Office administrator', 'Executive assistant', 'Business consultant', 'Sales manager', 'Research analyst', 'Human resources manager', 'Compliance officer', 'Director of development', 'Operations officer', 'Chief executive officer (CEO)'],
-            'Technology' => ['IT technician', 'Web developer', 'Security analyst', 'Software developer', 'Systems engineer', 'Database administrator', 'Computer programmer', 'UI designer', 'Data scientist', 'Network architect']
+            'Technology' => ['IT technician', 'Web developer', 'Security analyst', 'Software developer', 'Systems engineer', 'Database administrator', 'Computer programmer', 'UI designer', 'Data scientist', 'Network architect'],
+            'Sea Based' => ['Sea Based']
         ];
 
         foreach ($subJobs as $job => $subJobValue) {

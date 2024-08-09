@@ -24,6 +24,7 @@ class JobSeeder extends Seeder
             'Finance',
             'Business Administrtion',
             'Technology',
+            'Sea Based'
         ];
 
         foreach ($jobs as $job) {
