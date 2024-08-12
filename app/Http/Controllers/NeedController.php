@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
-class NeedContoller extends Controller
+class NeedController extends Controller
 {
     public function create()
     {

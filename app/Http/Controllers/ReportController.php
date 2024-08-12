@@ -210,7 +210,7 @@ class ReportController extends Controller
                     $household->birthdate ?? '',
                     $household->age ?? '',
                     $household->work ?? '',
-                    $household->monthly_income ?? '',
+                    $household->monthly_income ?? '0',
                     $household->voters ?? '',
                     implode(', ', $needsData)
                 ];
