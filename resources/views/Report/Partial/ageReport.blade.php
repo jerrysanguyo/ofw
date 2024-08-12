@@ -1,4 +1,4 @@
-<form id="ageForm" action="{{ route('age.export') }}" method="GET">
+<form id="ageForm" action="{{ route('admin.age.export') }}" method="GET">
     @csrf
     <span class="fs-4"><i class="fa-solid fa-handshake m-3"></i>Beneficiary count report</span>
     <div class="row align-items-end mt-4">

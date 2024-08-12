@@ -49,7 +49,8 @@ class User_previous_job extends Model
         return $this->belongsTo(Type_continent::class, 'continent_id');
     }
 
-    public function country() {
+    public function country()
+    {
         return $this->belongsTo(Type_country::class, 'country_id');
     }
 

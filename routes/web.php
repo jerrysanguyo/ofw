@@ -42,7 +42,6 @@ Route::post('/get-countries-by-continent', [HomeController::class, 'getCountries
 Route::get('/get-countries/{continentId}', [PreviousController::class, 'getCountries'])->name('getCountries');
 Route::get('/getJobType', [PreviousController::class, 'getJobType'])->name('getJobType');
 Route::get('/get-sub-jobs/{jobId}', [PreviousController::class, 'getSubJobs'])->name('getSubJobs');
-Route::get('/report/export/age', [ReportController::class, 'ageExcel'])->name('age.export');
 
 Route::get('/get-continents', function() {
     $continents = \App\Models\Continent::all();
@@ -52,8 +51,10 @@ Route::get('/get-continents', function() {
 
 Route::middleware(['auth', User_role::class])->group(function() {
     Route::prefix('user')->name('user.')->group(function () {
+        //home
         Route::get('/home', [HomeController::class, 'index'])->name('home');
 
+        //resource
         Route::resources([
             '/household' => HouseholdController::class,
             '/personal' => PersonalController::class,
@@ -66,11 +67,18 @@ Route::middleware(['auth', User_role::class])->group(function() {
 
 Route::middleware(['auth', Admin_role::class])->group(function() {
     Route::prefix('admin')->name('admin.')->group(function () {
-        // home
+        //home-dashboard
         Route::get('/home', [HomeController::class, 'index'])->name('home');
         Route::post('/home/applicantCount', [HomeController::class, 'getApplicantCount'])->name('home.applicantCount');
         Route::post('/ofw-count', [HomeController::class, 'getOFWCount'])->name('home.getOFWCount');
         Route::get('/geochart', [HomeController::class, 'showGeoChart']);
+
+        //report-export
+        Route::get('/report/export/country', [ReportController::class, 'countryExport'])->name('country.export');
+        Route::get('/report/export/age', [ReportController::class, 'ageExcel'])->name('age.export');
+        //report-count
+        Route::post('/report/ageCount', [ReportController::class, 'getAgeCount'])->name('home.ageCount');
+        Route::get('/country-count', [ReportController::class, 'getCountryCount'])->name('country.count');
         
         // resource
         Route::resources([
@@ -98,14 +106,11 @@ Route::middleware(['auth', Admin_role::class])->group(function() {
             '/report' => ReportController::class,
         ]);
 
+        //form-update
         Route::put('/applicant/{household}/household/update', [ApplicantController::class, 'houseUpdate'])
             ->name('applicant.houseUpdate');
         Route::put('/applicant/{need}/need/update', [ApplicantController::class, 'needUpdate'])
             ->name('applicant.needUpdate');
-        
-        // report
-        Route::post('/report/ageCount', [ReportController::class, 'getAgeCount'])->name('home.ageCount');
-        Route::get('/country-count', [ReportController::class, 'getCountryCount'])->name('country.count');
     });
 });
 

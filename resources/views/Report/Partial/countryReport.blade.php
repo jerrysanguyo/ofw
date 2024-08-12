@@ -1,4 +1,4 @@
-<form id="countryForm" action="#" method="GET">
+<form id="countryForm" action="{{ route('admin.country.export') }}" method="GET">
     @csrf
     <span class="fs-4"><i class="fa-solid fa-handshake m-3"></i>Country count report</span>
     <div class="row align-items-end mt-4">

@@ -15,6 +15,8 @@ use App\Models\User;
 use App\Models\Type_country;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use App\Exports\CountryReportExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ReportController extends Controller
 {
@@ -255,5 +257,17 @@ class ReportController extends Controller
         $writer->save($temp_file);
 
         return response()->download($temp_file, $fileName, ['Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']);
+    }
+
+    public function countryExport(Request $request)
+    {
+        $request->validate([
+            'country' => 'required|exists:Type_countries,id',
+        ]);
+
+        $country = Type_country::findOrFail($request->input('country'));
+        $fileName = 'users_from_' . strtolower(str_replace(' ', '_', $country->name)) . '.xlsx';
+
+        return Excel::download(new CountryReportExport($country), $fileName);
     }
 }
