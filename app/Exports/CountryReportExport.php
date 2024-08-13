@@ -8,8 +8,8 @@ use App\Exports\Traits\ExcelStylingTrait;
 
 class CountryReportExport implements WithMapping, WithHeadings, FromCollection, WithStyles, WithCustomStartCell, WithEvents
 {
-    use ExcelStylingTrait;  // Include the trait to use the shared logic
-
+    use ExcelStylingTrait; 
+    
     protected $country;
 
     public function __construct(Type_country $country)
