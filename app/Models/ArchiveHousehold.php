@@ -9,7 +9,7 @@ class ArchiveHousehold extends Model
 {
     use HasFactory;
     
-    protected $table='archive_addresses';
+    protected $table='archive_households';
     protected $fillable=[
         'user_archive_id',
         'full_name',

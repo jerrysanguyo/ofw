@@ -26,18 +26,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($listOfArchiveUser as $user)
+                    @foreach($listOfArchiveUser as $import)
                     <tr>
-                        <td>{{ $user->first_name . ' ' . $user->middle_name . ' ' . $user->last_name }}</td>
-                        <td>{{ $user->email }}</td>
-                        <td>{{ $user->contact_number }}</td>
+                        <td>{{ $import->first_name . ' ' . $import->middle_name . ' ' . $import->last_name }}</td>
+                        <td>{{ $import->email }}</td>
+                        <td>{{ $import->contact_number }}</td>
                         <td>
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Action
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="{{ route('admin.import.edit', ['import' => $user->id]) }}">Update</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('admin.import.edit', ['import' => $import->id]) }}">Update</a></li>
+                                    <li>
+                                        <form id="delete-form-{{ $import->id }}" action="{{ route('admin.import.destroy', ['import' => $import->id]) }}" method="POST">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="button" class="dropdown-item" onclick="confirmDelete({{ $import->id }})">Delete import</button>
+                                        </form>
+                                    </li>
                                 </ul>
                             </div>
                         </td>
@@ -58,6 +65,12 @@
             "order": [[0, "desc"]],
         });
     });
+
+    function confirmDelete(id) {
+        if (confirm('Are you sure you want to delete this imported data?')) {
+            document.getElementById('delete-form-' + id).submit();
+        }
+    }
     </script>
 @endpush
 @endsection

@@ -30,7 +30,7 @@ class ArchiveUser extends Model
     public function userArchiveAddress()
     {
         return $this->hasOne(ArchiveAddress::class, 'user_archive_id', 'id');
-    } 
+    }
 
     public function userArchivePrevious()
     {
@@ -45,5 +45,18 @@ class ArchiveUser extends Model
     public function userArchiveNeeds()
     {
         return $this->hasMany(ArchiveNeed::class, 'user_archive_id', 'id');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($user) {
+            $user->userArchiveInfo()->delete();
+            $user->userArchiveAddress()->delete();
+            $user->userArchivePrevious()->delete();
+            $user->userArchiveHousehold()->delete();
+            $user->userArchiveNeeds()->delete();
+        });
     }
 }
