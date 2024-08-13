@@ -100,24 +100,18 @@ class ArchiveUserImport implements ToModel, WithHeadingRow
     {
         $needs = explode(',', $row['need']);
     
-        \Log::info('Processing needs for user: ' . $archiveUser->email, ['needs' => $needs]);
-    
         foreach ($needs as $needValue) {
             $trimmedNeedValue = trim($needValue);
             $needModel = Type_Need::where('name', $trimmedNeedValue)->first();
     
             if ($needModel) {
-                \Log::info('Found need: ' . $trimmedNeedValue . ' for user: ' . $archiveUser->email);
-    
                 $archiveUser->userArchiveNeeds()->updateOrCreate(
                     [
                         'user_archive_id' => $archiveUser->id,
                         'need_id'         => $needModel->id,
                     ]
                 );
-            } else {
-                \Log::warning("Need not found: " . $trimmedNeedValue . ' for user: ' . $archiveUser->email);
-            }
+            } 
         }
     }
     
