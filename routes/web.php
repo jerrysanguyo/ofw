@@ -29,7 +29,8 @@ use App\Http\Controllers\{
     ApplicantController,
     HomeController,
     ReportController,
-    TypeNeedController
+    TypeNeedController,
+    ImportController
 };
 
 Route::get('/', function () {
@@ -104,6 +105,7 @@ Route::middleware(['auth', Admin_role::class])->group(function() {
             '/need' => TypeNeedController::class,
             '/applicant' => ApplicantController::class,
             '/report' => ReportController::class,
+            '/import' => ImportController::class,
         ]);
 
         //form-update
@@ -111,6 +113,9 @@ Route::middleware(['auth', Admin_role::class])->group(function() {
             ->name('applicant.houseUpdate');
         Route::put('/applicant/{need}/need/update', [ApplicantController::class, 'needUpdate'])
             ->name('applicant.needUpdate');
+
+        //import
+        Route::post('/import', [ImportController::class, 'userImport'])->name('archive.import');
     });
 });
 

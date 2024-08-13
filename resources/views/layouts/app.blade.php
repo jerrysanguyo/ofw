@@ -163,6 +163,11 @@
                                         <i class="fa-solid fa-chart-simple mx-3" style="color: #B197FC;"></i> Report
                                     </a>
                                 </li>
+                                <li class="nav-item fs-7 {{ Request::is('admin.import.index') ? 'active' : '' }}">
+                                    <a href="{{ route('admin.import.index') }}" class="nav-link">
+                                        <i class="fa-solid fa-chart-simple mx-3" style="color: #B197FC;"></i> Archive
+                                    </a>
+                                </li>
                                 <li class="side-nav-title mb-3">CMS</li>
                                 <li class="nav-item fs-7 {{ Request::is('admin.barangay.index') ? 'active' : '' }}">
                                     <a href="{{ route('admin.barangay.index') }}" class="nav-link">

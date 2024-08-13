@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class Type_sub_job extends Model
 {
@@ -36,5 +37,10 @@ class Type_sub_job extends Model
 
     public function job() {
         return $this->belongsTo(Type_job::class, 'job_id');
+    }
+
+    public static function findByNameOrFail($name)
+    {
+        return self::where('name', $name)->firstOrFail();
     }
 }

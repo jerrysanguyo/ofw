@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class Type_country extends Model
 {
@@ -36,5 +37,10 @@ class Type_country extends Model
 
     public function continent() {
         return $this->belongsTo(Type_continent::class, 'continent_id');
+    }
+
+    public static function findByNameOrFail($name)
+    {
+        return self::where('name', $name)->firstOrFail();
     }
 }
