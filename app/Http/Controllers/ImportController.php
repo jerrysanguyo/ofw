@@ -6,12 +6,17 @@ use App\Models\ArchiveUser;
 use Illuminate\Http\Request;
 use App\Imports\ArchiveUserImport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\DataTables\GlobalDataTable;
 
 class ImportController extends Controller
 {
-    public function index()
+    public function index(GlobalDataTable $dataTable)
     {
-        return view('Import.index');
+        $listOfArchiveUser = ArchiveUser::getAllArchiveUser();
+
+        return $dataTable->render('Import.index', compact(
+            'listOfArchiveUser',
+        ));
     }
 
     public function userImport(Request $request)

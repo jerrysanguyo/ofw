@@ -17,6 +17,11 @@ class ArchiveUser extends Model
         'contact_number',
     ];
 
+    public static function getAllArchiveUser()
+    {
+        return self::all();
+    }
+
     public function userArchiveInfo()
     {
         return $this->hasOne(ArchiveInfo::class, 'user_archive_id', 'id');

@@ -42,7 +42,7 @@ class ArchiveUserImport implements ToModel, WithHeadingRow
                 $continent = Type_continent::findByNameOrFail($row['continent']);
                 $country = Type_country::findByNameOrFail($row['country']);
                 $contract = Type_contract::findByNameOrFail($row['contract']);
-                $owwa = Type_owwa::findByNameOrFail($row['contract']);
+                $owwa = Type_owwa::findByNameOrFail($row['owwa']);
 
                 $archiveUser = ArchiveUser::updateOrCreate(
                     ['email' => $row['email']],
@@ -79,6 +79,7 @@ class ArchiveUserImport implements ToModel, WithHeadingRow
             }
         });
     }
+    
     protected function updateOrCreateAddress($archiveUser, array $row, $city, $barangay, $residence)
     {
         $archiveUser->userArchiveAddress()->updateOrCreate(
@@ -115,11 +116,11 @@ class ArchiveUserImport implements ToModel, WithHeadingRow
 
     protected function updateOrCreatePrevious($archiveUser, array $row, $job, $sub_job, $continent, $country, $contract, $owwa)
     {
-        $departure = Carbon::createFromFormat('m/d/y', $row['departure'])->format('Y-m-d');
-        $arrival = Carbon::createFromFormat('m/d/y', $row['arrival'])->format('Y-m-d');
+        $departure = Carbon::createFromFormat('m/d/Y', $row['departure'])->format('Y-m-d');
+        $arrival = Carbon::createFromFormat('m/d/Y', $row['arrival'])->format('Y-m-d');
 
         $archiveUser->userArchivePrevious()->updateOrCreate(
-            ['user_archive_id'  =>  $archive->id],
+            ['user_archive_id'  =>  $archiveUser->id],
             [
                 'job_type'  =>  $row['job_type'],
                 'job_id'    =>  $job->id,
