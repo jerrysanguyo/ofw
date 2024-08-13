@@ -165,7 +165,7 @@
                                 </li>
                                 <li class="nav-item fs-7 {{ Request::is('admin.import.index') ? 'active' : '' }}">
                                     <a href="{{ route('admin.import.index') }}" class="nav-link">
-                                        <i class="fa-solid fa-chart-simple mx-3" style="color: #B197FC;"></i> Archive
+                                        <i class="fa-solid fa-box-archive mx-3" style="color: #B197FC;"></i> Archive
                                     </a>
                                 </li>
                                 <li class="side-nav-title mb-3">CMS</li>

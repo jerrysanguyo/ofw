@@ -197,6 +197,8 @@ return [
 
     ],
 
+    'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+
     /*
     |--------------------------------------------------------------------------
     | Class Aliases
