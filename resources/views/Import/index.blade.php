@@ -5,7 +5,7 @@
     <div class="d-flex justify-content-between mb-1">
         <span class="fs-3">Archived data</span>
         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create">
-                Add need
+                Import data
         </button>
         @include('import.create')
     </div>
