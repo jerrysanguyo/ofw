@@ -12,6 +12,10 @@
                 @include('Barangay.create')
             </div>
             <div class="card shadow border">
+                <form action="{{ route('admin.cms.export', $modelType='barangay') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-primary m-3"><i class="fa-solid fa-file-excel"></i> - Export excel</button>
+                </form>
                 <div class="card-body">
                     @if(session('success'))
                         <div class="alert alert-success">

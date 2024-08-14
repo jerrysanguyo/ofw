@@ -30,7 +30,8 @@ use App\Http\Controllers\{
     HomeController,
     ReportController,
     TypeNeedController,
-    ImportController
+    ImportController,
+    ExportController,
 };
 
 Route::get('/', function () {
@@ -116,6 +117,8 @@ Route::middleware(['auth', Admin_role::class])->group(function() {
 
         //import
         Route::post('/import', [ImportController::class, 'userImport'])->name('archive.import');
+        //CMS export
+        Route::post('/export/{modelType}', [ExportController::class, 'export'])->name('cms.export');
     });
 });
 
